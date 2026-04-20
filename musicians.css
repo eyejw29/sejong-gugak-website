@@ -1,0 +1,114 @@
+/* ==================================================================
+   세종국악 — 단원 소개 쇼케이스 (members grid + modal + recruit)
+   about.html #musicians 및 향후 별도 페이지에서 재사용
+   ================================================================== */
+
+/* SECTIONS */
+.sec{position:relative;z-index:2;max-width:var(--max-w);margin:0 auto;padding:48px 44px;}
+.sec-hd{display:grid;grid-template-columns:auto auto 1fr;gap:24px;align-items:center;margin-bottom:32px;}
+.sec-glyph{font-family:var(--font-serif-kr);font-weight:800;font-size:64px;line-height:1;color:var(--dancheong-red);letter-spacing:-.02em;}
+.sec-titles .sec-eb{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg2);margin-bottom:4px;}
+.sec-titles h2{font-family:var(--font-serif-kr);font-weight:800;font-size:40px;line-height:1;letter-spacing:-.02em;margin:0;}
+.sec-line{height:1px;background:var(--ink);align-self:end;margin-bottom:6px;}
+
+/* JUMP NAV (sticky) */
+.mjump{position:sticky;top:64px;z-index:40;background:rgba(246,241,232,0.94);backdrop-filter:blur(10px);border-top:1px solid var(--border-hairline);border-bottom:1px solid var(--border-hairline);padding:12px 44px;margin:0 -44px;}
+.mjump-inner{max-width:var(--max-w);margin:0 auto;display:flex;gap:6px;overflow-x:auto;white-space:nowrap;}
+.mjump a{font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:8px 14px;border:1px solid var(--border-hairline);color:var(--fg2);transition:all var(--dur-fast) var(--ease-gentle);text-decoration:none;}
+.mjump a:hover{background:var(--ink);color:var(--hanji);border-color:var(--ink);}
+
+/* Member cards grid */
+.members-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:20px;}
+.mcard{background:var(--paper);border:1px solid var(--border-hairline);padding:0 0 18px;cursor:pointer;transition:all var(--dur-base) var(--ease-gentle);position:relative;overflow:hidden;}
+.mcard::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--dancheong-red);transform:scaleX(0);transform-origin:left;transition:transform var(--dur-base) var(--ease-gentle);z-index:2;}
+.mcard:hover{border-color:var(--ink);transform:translateY(-2px);}
+.mcard:hover::before{transform:scaleX(1);}
+.mphoto{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:center top;filter:saturate(0.9) contrast(1.04);display:block;background:var(--stone-100);transition:filter var(--dur-base) var(--ease-gentle);}
+.mcard:hover .mphoto{filter:saturate(1.1) contrast(1.08);}
+.mphoto.noph{display:flex;align-items:center;justify-content:center;font-family:var(--font-serif-kr);font-weight:800;font-size:80px;color:var(--fg3);background:var(--hanji-deep);}
+.mname{font-family:var(--font-serif-kr);font-weight:700;font-size:18px;margin:14px 14px 4px;letter-spacing:-.01em;}
+.mrole{font-family:var(--font-sans-kr);font-weight:400;font-size:12px;line-height:1.4;color:var(--fg2);margin:0 14px;word-break:keep-all;}
+.mcard[data-detail]::after{content:"프로필 →";position:absolute;bottom:14px;right:14px;font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--dancheong-red);font-weight:600;}
+.mcard[data-detail] .mrole{padding-bottom:18px;}
+
+/* MODAL */
+.modal-bg{position:fixed;inset:0;background:rgba(26,22,20,0.72);backdrop-filter:blur(6px);z-index:200;display:none;align-items:center;justify-content:center;padding:24px;animation:fade 0.25s ease-out;}
+.modal-bg.on{display:flex;}
+@keyframes fade{from{opacity:0;}to{opacity:1;}}
+.modal{max-width:720px;width:100%;background:var(--paper);padding:0;position:relative;max-height:90vh;overflow-y:auto;animation:up 0.28s cubic-bezier(.2,.6,.2,1);}
+@keyframes up{from{transform:translateY(24px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.modal .mhead{display:grid;grid-template-columns:160px 1fr;gap:0;align-items:stretch;}
+.modal .mphoto-lg{width:160px;height:200px;object-fit:cover;object-position:center top;display:block;}
+.modal .mphoto-lg.noph{display:flex;align-items:center;justify-content:center;font-family:var(--font-serif-kr);font-weight:800;font-size:72px;color:var(--hanji);background:var(--ink);}
+.modal .mtxt{padding:24px 28px;background:var(--ink);color:var(--hanji);display:flex;flex-direction:column;justify-content:center;gap:8px;}
+.modal .mtxt .role{font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--geumbak-gold);}
+.modal .mtxt .nm{font-family:var(--font-serif-kr);font-weight:800;font-size:36px;line-height:1;letter-spacing:-.02em;}
+.modal .mbody{padding:28px;}
+.modal .mbody ul{list-style:none;padding:0;margin:0;}
+.modal .mbody li{font-size:14px;line-height:1.85;color:var(--fg1);padding:8px 0;border-bottom:1px solid var(--border-hairline);word-break:keep-all;}
+.modal .mbody li:last-child{border-bottom:0;}
+.modal .mbody li::before{content:"—";color:var(--dancheong-red);margin-right:10px;font-weight:700;}
+.modal .mfoot{padding:20px 28px;border-top:1px solid var(--border-strong);display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--hanji-deep);}
+.modal .mfoot .link{font-family:var(--font-sans-kr);font-weight:700;font-size:13px;color:var(--dancheong-red);display:inline-flex;gap:6px;align-items:center;text-decoration:none;}
+.modal .close{background:transparent;border:1px solid var(--ink);color:var(--ink);padding:10px 16px;font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;cursor:pointer;}
+.modal .close:hover{background:var(--ink);color:var(--hanji);}
+
+/* RECRUIT BANNER */
+.recruit{position:relative;z-index:2;max-width:var(--max-w);margin:40px auto 0;padding:64px 44px;background:var(--ink);color:var(--hanji);}
+.recruit-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:64px;align-items:center;}
+.recruit .eb{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--geumbak-gold);margin-bottom:18px;display:inline-flex;align-items:center;gap:10px;}
+.recruit h2{font-family:var(--font-serif-kr);font-weight:800;font-size:56px;line-height:1.05;letter-spacing:-.03em;margin:0 0 24px;word-break:keep-all;}
+.recruit h2 .red{color:var(--dancheong-red);}
+.recruit p{font-size:16px;line-height:1.85;color:rgba(246,241,232,0.85);margin:0 0 20px;word-break:keep-all;max-width:520px;}
+.recruit .ctas{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap;}
+.recruit .btn-p{background:var(--dancheong-red);color:var(--hanji);padding:16px 24px;font-size:13px;font-weight:700;letter-spacing:.04em;display:inline-flex;gap:8px;align-items:center;transition:background var(--dur-fast) var(--ease-gentle);border:0;text-decoration:none;}
+.recruit .btn-p:hover{background:var(--dancheong-red-dark);}
+.recruit .btn-g{background:transparent;color:var(--hanji);padding:16px 24px;font-size:13px;font-weight:700;letter-spacing:.04em;border:1px solid rgba(246,241,232,0.4);display:inline-flex;gap:8px;align-items:center;text-decoration:none;}
+.recruit .btn-g:hover{background:var(--hanji);color:var(--ink);border-color:var(--hanji);}
+.recruit-side{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:rgba(246,241,232,0.12);}
+.recruit-card{background:var(--ink);padding:24px 22px;display:flex;flex-direction:column;gap:8px;border-left:3px solid var(--geumbak-gold);}
+.recruit-card .ch{font-family:var(--font-serif-kr);font-weight:800;font-size:36px;color:var(--geumbak-gold);line-height:1;}
+.recruit-card h4{font-family:var(--font-serif-kr);font-weight:700;font-size:17px;margin:0;}
+.recruit-card .d{font-size:13px;line-height:1.6;color:rgba(246,241,232,0.7);}
+.recruit-card.red{border-left-color:var(--dancheong-red);}
+.recruit-card.red .ch{color:var(--dancheong-red);}
+
+/* Live notices block inside recruit */
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--dancheong-red);display:inline-block;box-shadow:0 0 0 0 rgba(184,52,42,0.7);animation:pulse 2s infinite;}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(184,52,42,0.6);}70%{box-shadow:0 0 0 10px rgba(184,52,42,0);}100%{box-shadow:0 0 0 0 rgba(184,52,42,0);}}
+.open-notices{background:rgba(246,241,232,0.06);border:1px solid rgba(246,241,232,0.12);margin:32px 0 0;padding:20px 24px;}
+.on-head{display:flex;align-items:center;gap:10px;padding-bottom:14px;border-bottom:1px solid rgba(246,241,232,0.14);margin-bottom:10px;}
+.on-head .ic{font-size:16px;}
+.on-head strong{font-family:var(--font-serif-kr);font-weight:700;font-size:16px;color:var(--hanji);flex:1;}
+.on-head .all{font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--geumbak-gold);display:inline-flex;gap:4px;align-items:center;text-decoration:none;}
+.on-head .all:hover{color:var(--hanji);}
+.on-row{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:12px 4px;border-bottom:1px solid rgba(246,241,232,0.08);color:rgba(246,241,232,0.9);transition:color var(--dur-fast) var(--ease-gentle);text-decoration:none;}
+.on-row:last-child{border-bottom:0;}
+.on-row:hover{color:var(--geumbak-gold);}
+.on-row .badge{font-family:var(--font-mono);font-size:9px;letter-spacing:.12em;padding:3px 8px;background:var(--dancheong-red);color:var(--hanji);flex-shrink:0;font-weight:700;}
+.on-row .t{font-size:13px;line-height:1.4;word-break:keep-all;}
+.on-row .d{font-family:var(--font-mono);font-size:11px;color:var(--geumbak-gold);letter-spacing:.08em;flex-shrink:0;}
+
+/* Responsive */
+@media (max-width:1200px){
+  .members-grid{grid-template-columns:repeat(5,1fr);}
+}
+@media (max-width:900px){
+  .members-grid{grid-template-columns:repeat(3,1fr);}
+  .recruit-grid{grid-template-columns:1fr;gap:32px;}
+  .sec-hd{grid-template-columns:auto 1fr;}
+  .sec-glyph{font-size:44px;}
+  .sec-titles h2{font-size:30px;}
+  .recruit h2{font-size:40px;}
+  .mjump-inner{gap:4px;}
+  .mjump a{padding:8px 10px;font-size:9px;}
+  .modal .mhead{grid-template-columns:120px 1fr;}
+  .modal .mphoto-lg{width:120px;height:150px;}
+  .modal .mtxt .nm{font-size:28px;}
+}
+@media (max-width:600px){
+  .members-grid{grid-template-columns:repeat(2,1fr);gap:12px;}
+  .mname{font-size:16px;margin:12px 12px 3px;}
+  .mrole{font-size:11px;margin:0 12px;}
+  .recruit-side{grid-template-columns:1fr;}
+}
