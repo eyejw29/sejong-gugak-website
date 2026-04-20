@@ -129,6 +129,23 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
 .recruit-card.red{border-left-color:var(--dancheong-red);}
 .recruit-card.red .ch{color:var(--dancheong-red);}
 
+/* Live notices block inside recruit */
+.recruit .eb{display:inline-flex;align-items:center;gap:10px;}
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--dancheong-red);display:inline-block;box-shadow:0 0 0 0 rgba(184,52,42,0.7);animation:pulse 2s infinite;}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(184,52,42,0.6);}70%{box-shadow:0 0 0 10px rgba(184,52,42,0);}100%{box-shadow:0 0 0 0 rgba(184,52,42,0);}}
+.open-notices{background:rgba(246,241,232,0.06);border:1px solid rgba(246,241,232,0.12);margin:32px 0 0;padding:20px 24px;}
+.on-head{display:flex;align-items:center;gap:10px;padding-bottom:14px;border-bottom:1px solid rgba(246,241,232,0.14);margin-bottom:10px;}
+.on-head .ic{font-size:16px;}
+.on-head strong{font-family:var(--font-serif-kr);font-weight:700;font-size:16px;color:var(--hanji);flex:1;}
+.on-head .all{font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--geumbak-gold);display:inline-flex;gap:4px;align-items:center;}
+.on-head .all:hover{color:var(--hanji);}
+.on-row{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:12px 4px;border-bottom:1px solid rgba(246,241,232,0.08);color:rgba(246,241,232,0.9);transition:color var(--dur-fast) var(--ease-gentle);}
+.on-row:last-child{border-bottom:0;}
+.on-row:hover{color:var(--geumbak-gold);}
+.on-row .badge{font-family:var(--font-mono);font-size:9px;letter-spacing:.12em;padding:3px 8px;background:var(--dancheong-red);color:var(--hanji);flex-shrink:0;font-weight:700;}
+.on-row .t{font-size:13px;line-height:1.4;word-break:keep-all;}
+.on-row .d{font-family:var(--font-mono);font-size:11px;color:var(--geumbak-gold);letter-spacing:.08em;flex-shrink:0;}
+
 /* FOOTER */
 .ftr{position:relative;z-index:2;background:var(--ink);color:var(--hanji);padding:96px 44px 40px;margin-top:80px;}
 .ftr .c{max-width:var(--max-w);margin:0 auto;}
@@ -198,9 +215,9 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
   <div class="page-hero-row">
     <h1>단원 소개<span class="it">Musicians &amp; Conductors</span></h1>
     <div class="idx">
-      <span class="big">33</span>
-      <span>MUSICIANS FEATURED</span>
-      <span>— 13 Sections</span>
+      <span class="big">32</span>
+      <span>MEMBERS ON ROSTER</span>
+      <span>— 12 Sections</span>
     </div>
   </div>
 </section>
@@ -212,8 +229,8 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
       1992년 창단 이래 <strong>1,750여 명의 연주자</strong>가 세종을 거쳐갔습니다. 국악기와 양악기가 한 편성 안에서 대화하는 <strong>대한민국 최초의 양·국악 혼합편성 관현악단</strong> — 지금 무대 위에 서는 얼굴을 만나보세요.
     </div>
     <div class="intro-stats">
-      <div class="cell"><span class="num">33<span class="u">명</span></span><span class="lb">2026 Active Members</span></div>
-      <div class="cell"><span class="num">13<span class="u">부</span></span><span class="lb">Sections · 악기부</span></div>
+      <div class="cell"><span class="num">32<span class="u">명</span></span><span class="lb">2026 Active Roster</span></div>
+      <div class="cell"><span class="num">12<span class="u">부</span></span><span class="lb">Sections · 악기부</span></div>
       <div class="cell"><span class="num">34<span class="u">Y</span></span><span class="lb">Heritage · 창단 이래</span></div>
     </div>
   </div>
@@ -222,19 +239,18 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
 <!-- JUMP NAV -->
 <nav class="jump" aria-label="악기부 바로가기">
   <div class="jump-inner">
-    <a href="#sec-leadership">지휘진</a>
-    <a href="#sec-concertmaster">악장</a>
+    <a href="#sec-leadership">지휘진·악장</a>
+    <a href="#sec-planning">기획·연수</a>
     <a href="#sec-gayageum">가야금</a>
-    <a href="#sec-haegeum">해금</a>
     <a href="#sec-geomungo">거문고</a>
-    <a href="#sec-ajaeng">아쟁</a>
     <a href="#sec-daegeum">대금</a>
-    <a href="#sec-piri">피리·태평소</a>
+    <a href="#sec-piri">피리</a>
+    <a href="#sec-haegeum">해금</a>
+    <a href="#sec-ajaeng">아쟁</a>
     <a href="#sec-percussion">타악</a>
     <a href="#sec-vocal">소리</a>
-    <a href="#sec-western_winds">양악</a>
-    <a href="#sec-training">기획·연수</a>
-    <a href="#sec-others">객원·명예</a>
+    <a href="#sec-guest">객원</a>
+    <a href="#sec-honor">명예</a>
     <a href="#recruit" style="color:var(--dancheong-red);border-color:var(--dancheong-red);font-weight:700;">단원 모집 →</a>
   </div>
 </nav>
@@ -245,46 +261,23 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
   <div class="sec-hd">
     <div class="sec-glyph">指</div>
     <div class="sec-titles">
-      <div class="sec-eb">Leadership & Conductors · 4명</div>
-      <h2>대표 · 지휘진</h2>
+      <div class="sec-eb">Conductors & Concertmaster · 3명</div>
+      <h2>지휘진 · 악장</h2>
     </div>
     <div class="sec-line"></div>
   </div>
   <div class="members-grid">
-    <div class="mcard" data-name="박호성" data-role="창단 및 초대지휘자" data-bio='- 세종국악관현악단 창단(1992) 및 초대지휘자(~2014)\n- 제15대 서울시국악관현악단 단장 및 상임지휘자\n- 제6대 국립민속국악원 원장\n- 제5, 6대 부산시립국악관현악단 예술감독 겸 수석지휘자\n- 성균관대학교 공연예술학 박사\n- 대한민국 신지식인문화예술대상' data-detail="member-parkhosung.html">
+    <div class="mcard" data-name="박호성" data-role="창단 및 초대지휘자" data-bio="- 세종국악관현악단 창단(1992) 및 초대지휘자(~2014)||- 제15대 서울시국악관현악단 단장 및 상임지휘자||- 제6대 국립민속국악원 원장||- 제5, 6대 부산시립국악관현악단 예술감독 겸 수석지휘자||- 성균관대학교 공연예술학 박사||- 대한민국 신지식인문화예술대상||- 국가무형문화재 제1호 종묘제례악 이수자||- (사)한국정악원 이사, (사)한민족문화교류협의회 이사" data-detail="member-parkhosung.html">
       <img class="mphoto" src="assets/photos/members/all/m61-박호성.jpg" alt="박호성 창단 및 초대지휘자" loading="lazy">
       <div class="mname">박호성</div>
       <div class="mrole">창단 및 초대지휘자</div>
     </div>
-    <div class="mcard" data-name="박상우" data-role="지휘자 및  총괄 팀장" data-bio='- 추계예술대학교 국악작곡 전공 졸업 및 한양대학교 지휘 전공 석사\n- Italia Firenze Scuola di Musica IL TRILLO Conducting Diploma\n- 2017 경기문화재단 상주단체 육성지원사업 신작개발 위촉작곡가\n- 2016 - 2020경기도교육청 주최 국악오케스트라 지휘자\n- 한국문화예술위원회, 예술경영지원센터, 한국문화예술회관연합회 등 사업공연 다수 지휘\n- 해피콘서트, 달달한음악회, 송년음악회, 신년음악회 등 기획공연 다수 지휘' data-detail="member.html">
+    <div class="mcard" data-name="박상우" data-role="지휘자 및  총괄 팀장" data-bio="- 추계예술대학교 국악작곡 전공 졸업 및 한양대학교 지휘 전공 석사||- Italia Firenze Scuola di Musica IL TRILLO Conducting Diploma||- 2017 경기문화재단 상주단체 육성지원사업 신작개발 위촉작곡가||- 2016 - 2020경기도교육청 주최 국악오케스트라 지휘자||- 한국문화예술위원회, 예술경영지원센터, 한국문화예술회관연합회 등 사업공연 다수 지휘||- 해피콘서트, 달달한음악회, 송년음악회, 신년음악회 등 기획공연 다수 지휘||- 충주시립우륵국악단, 대전시립연정국악단 등 객원 지휘||- 세종국악관현악단 &amp; 세종국악심포니오케스트라 공연기획 및 음악정보팀 총괄 팀장 역임" data-detail="member.html">
       <img class="mphoto" src="assets/photos/members/all/m32-박상우.jpg" alt="박상우 지휘자 및  총괄 팀장" loading="lazy">
       <div class="mname">박상우</div>
       <div class="mrole">지휘자 및  총괄 팀장</div>
     </div>
-    <div class="mcard" data-name="김혜성" data-role="대표 겸 예술감독" data-bio='세종국악관현악단 &amp; 세종국악심포니오케스트라 대표 겸 예술감독 (2015—현재)\n여민동락(與民同樂)의 음악정신을 계승한 2대 대표\n국악기·양악기 혼합편성 심포니오케스트라 체제로 악단 운영 확장\n한국문화예술위원회·예술경영지원센터·한국문화예술회관연합회 연계 사업 총괄\nK-Music 전문오케스트라로서의 국제 무대 확장 주도' >
-      <img class="mphoto" src="assets/photos/members/kim-hyesung.jpg" alt="김혜성 대표 겸 예술감독" loading="lazy">
-      <div class="mname">김혜성</div>
-      <div class="mrole">대표 겸 예술감독</div>
-    </div>
-    <div class="mcard" data-name="김수민" data-role="총괄 과장(명예 직원)" data-bio='- 국립국악중, 고등학교 졸업(2012)\n- 한양대학교 음악대학 국악과(가야금전공) 졸업(2018)\n- 2020구로아트밸리 신년음악회 기획 진행,  군포시 주최 한여름쿨페스티벌 4회 기획,\n경기문화재단 상주단체 육성지원사업 약 10여회 기획, 한국문화예술위원회 공연예술 사업 약 20여회,\n2021창작국악오페라코미크 인당수의 우렁총각&amp;lt;용궁출신입니다만&amp;gt;기획 진행,\n경기도교육청 주최 꿈의 학교  등 약 40여회의 무대 공연 기획 및 진행' >
-      <img class="mphoto" src="assets/photos/members/all/m3-김수민.jpg" alt="김수민 총괄 과장(명예 직원)" loading="lazy">
-      <div class="mname">김수민</div>
-      <div class="mrole">총괄 과장(명예 직원)</div>
-    </div>
-  </div>
-</section>
-
-<section class="sec" id="sec-concertmaster">
-  <div class="sec-hd">
-    <div class="sec-glyph">首</div>
-    <div class="sec-titles">
-      <div class="sec-eb">Concertmaster · 1명</div>
-      <h2>악장</h2>
-    </div>
-    <div class="sec-line"></div>
-  </div>
-  <div class="members-grid">
-    <div class="mcard" data-name="곽재혁" data-role="악장 (피리, 태평소)" data-bio='- 한국예술종합학교 전통예술원 졸업\n- 국가무형유산 피리정악 및 대취타 이수자\n- 제21회 전국국악경연대회 관악부 금상\n- 제20회 KBS국악대경연 종합 대상\n- 제10회 ARKO한국창작음악제 협연\n- 세종국악관현악단&amp;세종국악심포니오케스트라 악장' >
+    <div class="mcard" data-name="곽재혁" data-role="악장 (피리, 태평소)" data-bio="- 한국예술종합학교 전통예술원 졸업||- 국가무형유산 피리정악 및 대취타 이수자||- 제21회 전국국악경연대회 관악부 금상||- 제20회 KBS국악대경연 종합 대상||- 제10회 ARKO한국창작음악제 협연||- 세종국악관현악단&amp;세종국악심포니오케스트라 악장">
       <img class="mphoto" src="assets/photos/members/all/m37-곽재혁.jpg" alt="곽재혁 악장 (피리, 태평소)" loading="lazy">
       <div class="mname">곽재혁</div>
       <div class="mrole">악장 (피리, 태평소)</div>
@@ -292,9 +285,32 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
   </div>
 </section>
 
+<section class="sec" id="sec-planning">
+  <div class="sec-hd">
+    <div class="sec-glyph">企</div>
+    <div class="sec-titles">
+      <div class="sec-eb">Planning & Interns · 2명</div>
+      <h2>기획 · 연수단원</h2>
+    </div>
+    <div class="sec-line"></div>
+  </div>
+  <div class="members-grid">
+    <div class="mcard" data-name="채다운" data-role="공연기획팀 팀원(연수단원)" data-bio="- 세종국악관현악단&amp;세종국악오케스트라 공연기획팀 팀원">
+      <img class="mphoto" src="assets/photos/members/all/m36-채다운.jpg" alt="채다운 공연기획팀 팀원(연수단원)" loading="lazy">
+      <div class="mname">채다운</div>
+      <div class="mrole">공연기획팀 팀원(연수단원)</div>
+    </div>
+    <div class="mcard" data-name="김다원" data-role="공연정보팀 팀원(작곡, 연수단원)" data-bio="-한국예술종합학교 전통예술원 한국음악작곡전공 전문사 졸업||-김다원 작곡발표회 다수 개최 및 개최예정||(인천문화재단, 서울문화재단, 한국문화예술위원회 등 사업 선정)||-2025 제1회 동아창작국악제 참여 작곡가 및 홍보팀장 및 제 2회 동아창작국악제 준비팀장||-2024 제 40회 동아국악콩쿠르 일반부 작곡부문 동상||-2024 제5회 우파 국립예술대학 국제 작곡 콩쿠르||「Волны Агидели (Waves of Agidel)」 Laureate II Prize (2위)– 한국인 최초||-2023 강원작품개발지원 창작공모 '강원별곡' 입상">
+      <img class="mphoto" src="assets/photos/members/all/m67-김다원.jpg" alt="김다원 공연정보팀 팀원(작곡, 연수단원)" loading="lazy">
+      <div class="mname">김다원</div>
+      <div class="mrole">공연정보팀 팀원(작곡, 연수단원)</div>
+    </div>
+  </div>
+</section>
+
 <section class="sec" id="sec-gayageum">
   <div class="sec-hd">
-    <div class="sec-glyph">絃</div>
+    <div class="sec-glyph">伽</div>
     <div class="sec-titles">
       <div class="sec-eb">Gayageum · 伽倻琴 · 6명</div>
       <h2>가야금부</h2>
@@ -302,63 +318,35 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
     <div class="sec-line"></div>
   </div>
   <div class="members-grid">
-    <div class="mcard" data-name="김소민" data-role="가야금(현악 수석)" data-bio='- 국립국악고등학교 졸업\n- 서울대학교 국악과 졸업\n- 국가무형문화재 제23호 가야금산조 및 병창 전수자\n- 제9회 의정부죽파가야금경연대회 대학부 수상\n- 제2회 창작국악경연대회 &amp;lt;국악내일&amp;gt; 수상\n- 세종국악관현악현악단 가야금 단원' >
+    <div class="mcard" data-name="김소민" data-role="가야금(현악 수석)" data-bio="- 국립국악고등학교 졸업||- 서울대학교 국악과 졸업||- 국가무형문화재 제23호 가야금산조 및 병창 전수자||- 제9회 의정부죽파가야금경연대회 대학부 수상||- 제2회 창작국악경연대회 &amp;lt;국악내일&amp;gt; 수상||- 세종국악관현악현악단 가야금 단원">
       <img class="mphoto" src="assets/photos/members/all/m4-김소민.jpg" alt="김소민 가야금(현악 수석)" loading="lazy">
       <div class="mname">김소민</div>
       <div class="mrole">가야금(현악 수석)</div>
     </div>
-    <div class="mcard" data-name="박서영" data-role="가야금(현악 차석)" data-bio='- 이화여자대학교 한국음악과 석사 재학\n- 국가무형유산 가야금산조 및 병창 전수자\n- 제25회 대전전국국악경연대회 고등부 우수상\n- 제16회 증평전국국악경연대회 기악부문 대상\n- 제16회 직지전국국악대제전 기악부문 차상\n- 세종국악관현악단 가야금 단원' >
+    <div class="mcard" data-name="박서영" data-role="가야금(현악 차석)" data-bio="- 이화여자대학교 한국음악과 석사 재학||- 국가무형유산 가야금산조 및 병창 전수자||- 제25회 대전전국국악경연대회 고등부 우수상||- 제16회 증평전국국악경연대회 기악부문 대상||- 제16회 직지전국국악대제전 기악부문 차상||- 세종국악관현악단 가야금 단원">
       <img class="mphoto" src="assets/photos/members/all/m5-박서영.jpg" alt="박서영 가야금(현악 차석)" loading="lazy">
       <div class="mname">박서영</div>
       <div class="mrole">가야금(현악 차석)</div>
     </div>
-    <div class="mcard" data-name="이가진" data-role="가야금" data-bio='- 수원대학교 음악대학 국악과 졸업\n- 숙명여자대학교 전통문화예술대학원 문화예술학 석사\n- 제9회 파주시 전국국악경연대회 장려상\n- 제1회 이가진 가야금 독주회 &#39;跳躍&#39;\n- 세종국악관현악단 가야금 단원' >
+    <div class="mcard" data-name="이가진" data-role="가야금" data-bio="- 수원대학교 음악대학 국악과 졸업||- 숙명여자대학교 전통문화예술대학원 문화예술학 석사||- 제9회 파주시 전국국악경연대회 장려상||- 제1회 이가진 가야금 독주회 '跳躍'||- 세종국악관현악단 가야금 단원">
       <img class="mphoto" src="assets/photos/members/all/m58-이가진.jpg" alt="이가진 가야금" loading="lazy">
       <div class="mname">이가진</div>
       <div class="mrole">가야금</div>
     </div>
-    <div class="mcard" data-name="정혜윤" data-role="가야금" data-bio='- 이화여자대학교 일반대학원 한국음악과 석사 재학\n- 국가무형문화재 제23호 가야금산조 및 병창 전수자\n- 전남도립국악단 청춘락 협연\n- 제32회 전국국악경연대회 종합대상\n- 세종국악관현악단 가야금 단원' >
+    <div class="mcard" data-name="정혜윤" data-role="가야금" data-bio="- 이화여자대학교 일반대학원 한국음악과 석사 재학||- 국가무형문화재 제23호 가야금산조 및 병창 전수자||- 전남도립국악단 청춘락 협연||- 제32회 전국국악경연대회 종합대상||- 세종국악관현악단 가야금 단원">
       <img class="mphoto" src="assets/photos/members/all/m12-정혜윤.jpg" alt="정혜윤 가야금" loading="lazy">
       <div class="mname">정혜윤</div>
       <div class="mrole">가야금</div>
     </div>
-    <div class="mcard" data-name="김민호" data-role="가야금" data-bio='-' >
+    <div class="mcard" data-name="김민호" data-role="가야금" data-bio="-">
       <img class="mphoto" src="assets/photos/members/all/m65-김민호.jpg" alt="김민호 가야금" loading="lazy">
       <div class="mname">김민호</div>
       <div class="mrole">가야금</div>
     </div>
-    <div class="mcard" data-name="이지원" data-role="가야금" data-bio='-' >
+    <div class="mcard" data-name="이지원" data-role="가야금" data-bio="-">
       <img class="mphoto" src="assets/photos/members/all/m7-이지원.jpg" alt="이지원 가야금" loading="lazy">
       <div class="mname">이지원</div>
       <div class="mrole">가야금</div>
-    </div>
-  </div>
-</section>
-
-<section class="sec" id="sec-haegeum">
-  <div class="sec-hd">
-    <div class="sec-glyph">胡</div>
-    <div class="sec-titles">
-      <div class="sec-eb">Haegeum · 奚琴 · 3명</div>
-      <h2>해금부</h2>
-    </div>
-    <div class="sec-line"></div>
-  </div>
-  <div class="members-grid">
-    <div class="mcard" data-name="유하은" data-role="해금" data-bio='- 국립전통예술 중, 고등학교 졸업\n- 이화여자대학교 한국음악과 졸업 및 동대학원 석사 입학 예정\n- 추담전국국악대회 일반부 최우수상\n- 제29회 대통령상 한밭국악전국대회 우수상\n- 영산 국악 콩쿠르 수상자 연주회\n- 세종국악관현악단 해금 단원' >
-      <img class="mphoto" src="assets/photos/members/all/m30-유하은.jpg" alt="유하은 해금" loading="lazy">
-      <div class="mname">유하은</div>
-      <div class="mrole">해금</div>
-    </div>
-    <div class="mcard" data-name="김남희" data-role="해금" data-bio='-' >
-      <img class="mphoto" src="assets/photos/members/all/m48-김남희.jpg" alt="김남희 해금" loading="lazy">
-      <div class="mname">김남희</div>
-      <div class="mrole">해금</div>
-    </div>
-    <div class="mcard" data-name="김지윤" data-role="해금" data-bio='-' >
-      <img class="mphoto" src="assets/photos/members/all/m52-김지윤.jpg" alt="김지윤 해금" loading="lazy">
-      <div class="mname">김지윤</div>
-      <div class="mrole">해금</div>
     </div>
   </div>
 </section>
@@ -373,7 +361,7 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
     <div class="sec-line"></div>
   </div>
   <div class="members-grid">
-    <div class="mcard" data-name="김나영" data-role="거문고" data-bio='- 추계예술대학교 일반대학원 박사과정\n- 제17회 악성 옥보고 거문고 경연대회 일반부 대상\n- 제13회 가야국악대전 일반부 대상\n- 제6회 난계국악단 차세대 명인 발굴 프로젝트 청어람 협연\n- 세종국악관현악단 거문고 단원' >
+    <div class="mcard" data-name="김나영" data-role="거문고" data-bio="- 추계예술대학교 일반대학원 박사과정||- 제17회 악성 옥보고 거문고 경연대회 일반부 대상||- 제13회 가야국악대전 일반부 대상||- 제6회 난계국악단 차세대 명인 발굴 프로젝트 청어람 협연||- 세종국악관현악단 거문고 단원">
       <img class="mphoto" src="assets/photos/members/all/m1-김나영.jpg" alt="김나영 거문고" loading="lazy">
       <div class="mname">김나영</div>
       <div class="mrole">거문고</div>
@@ -381,43 +369,20 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
   </div>
 </section>
 
-<section class="sec" id="sec-ajaeng">
-  <div class="sec-hd">
-    <div class="sec-glyph">鉦</div>
-    <div class="sec-titles">
-      <div class="sec-eb">Ajaeng · 牙箏 · 1명</div>
-      <h2>아쟁부</h2>
-    </div>
-    <div class="sec-line"></div>
-  </div>
-  <div class="members-grid">
-    <div class="mcard" data-name="김정희" data-role="아쟁" data-bio='- 국가무형문화제 제1호 종묘제례악 이수자\n- 포천시립민속예술단 단원 역임\n- 나주시립삼현육각 비상임 단원 역임\n- 사회적기업 “아트앤트” 단원 역임\n- 세종국악관현악단 지도단원 및 수석단원 역임\n- 세종국악관현악단 아쟁 단원' >
-      <img class="mphoto" src="assets/photos/members/all/m20-김정희.jpg" alt="김정희 아쟁" loading="lazy">
-      <div class="mname">김정희</div>
-      <div class="mrole">아쟁</div>
-    </div>
-  </div>
-</section>
-
 <section class="sec" id="sec-daegeum">
   <div class="sec-hd">
-    <div class="sec-glyph">笛</div>
+    <div class="sec-glyph">笒</div>
     <div class="sec-titles">
-      <div class="sec-eb">Daegeum · 大笒 · 2명</div>
+      <div class="sec-eb">Daegeum · 大笒 · 1명</div>
       <h2>대금부</h2>
     </div>
     <div class="sec-line"></div>
   </div>
   <div class="members-grid">
-    <div class="mcard" data-name="박예은" data-role="대금" data-bio='- 용인대학교 국악과 졸업\n- 제20호 중요무형문화재 대금정악 이수자\n- 한양대학교 대학원 국악학과 석사 졸업\n- 컨템포러리 국악 그룹 &#39;울림&#39; 대표\n- 세종국악관현악단 대금 단원' >
+    <div class="mcard" data-name="박예은" data-role="대금" data-bio="- 용인대학교 국악과 졸업||- 제20호 중요무형문화재 대금정악 이수자||- 한양대학교 대학원 국악학과 석사 졸업||- 컨템포러리 국악 그룹 '울림' 대표||- 세종국악관현악단 대금 단원">
       <img class="mphoto" src="assets/photos/members/all/m38-박예은.png" alt="박예은 대금" loading="lazy">
       <div class="mname">박예은</div>
       <div class="mrole">대금</div>
-    </div>
-    <div class="mcard" data-name="강인숙" data-role="대금(명예 단원)" data-bio='- 수원대학교 음악대학 국악과 졸업\n- 서울시 교육청 소속 예체능 진로 고문\n- 서울시 동부교육청 소속 예체능 진로 고문\n- 미국 샌프란시스코 문화원 초청 공연\n- 캐나다 토론토 문화원 초청 공연\n- 세종국악관현악단 대금 단원' >
-      <img class="mphoto" src="assets/photos/members/all/m9-강인숙.jpg" alt="강인숙 대금(명예 단원)" loading="lazy">
-      <div class="mname">강인숙</div>
-      <div class="mrole">대금(명예 단원)</div>
     </div>
   </div>
 </section>
@@ -427,15 +392,61 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
     <div class="sec-glyph">篳</div>
     <div class="sec-titles">
       <div class="sec-eb">Piri · 篳篥 · 1명</div>
-      <h2>피리·태평소부</h2>
+      <h2>피리부</h2>
     </div>
     <div class="sec-line"></div>
   </div>
   <div class="members-grid">
-    <div class="mcard" data-name="이예진" data-role="피리" data-bio='- 국립국악 중, 고등학교 졸업\n- 한양대학교 음악대학 국악과 졸업\n- 서울시청소년국악단 단원\n- 세종국악관현악단 피리 단원' >
+    <div class="mcard" data-name="이예진" data-role="피리" data-bio="- 국립국악 중, 고등학교 졸업||- 한양대학교 음악대학 국악과 졸업||- 서울시청소년국악단 단원||- 세종국악관현악단 피리 단원">
       <img class="mphoto" src="assets/photos/members/all/m63-이예진.jpg" alt="이예진 피리" loading="lazy">
       <div class="mname">이예진</div>
       <div class="mrole">피리</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="sec-haegeum">
+  <div class="sec-hd">
+    <div class="sec-glyph">奚</div>
+    <div class="sec-titles">
+      <div class="sec-eb">Haegeum · 奚琴 · 3명</div>
+      <h2>해금부</h2>
+    </div>
+    <div class="sec-line"></div>
+  </div>
+  <div class="members-grid">
+    <div class="mcard" data-name="유하은" data-role="해금" data-bio="- 국립전통예술 중, 고등학교 졸업||- 이화여자대학교 한국음악과 졸업 및 동대학원 석사 입학 예정||- 추담전국국악대회 일반부 최우수상||- 제29회 대통령상 한밭국악전국대회 우수상||- 영산 국악 콩쿠르 수상자 연주회||- 세종국악관현악단 해금 단원">
+      <img class="mphoto" src="assets/photos/members/all/m30-유하은.jpg" alt="유하은 해금" loading="lazy">
+      <div class="mname">유하은</div>
+      <div class="mrole">해금</div>
+    </div>
+    <div class="mcard" data-name="김남희" data-role="해금" data-bio="-">
+      <img class="mphoto" src="assets/photos/members/all/m48-김남희.jpg" alt="김남희 해금" loading="lazy">
+      <div class="mname">김남희</div>
+      <div class="mrole">해금</div>
+    </div>
+    <div class="mcard" data-name="김지윤" data-role="해금" data-bio="-">
+      <img class="mphoto" src="assets/photos/members/all/m52-김지윤.jpg" alt="김지윤 해금" loading="lazy">
+      <div class="mname">김지윤</div>
+      <div class="mrole">해금</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="sec-ajaeng">
+  <div class="sec-hd">
+    <div class="sec-glyph">箏</div>
+    <div class="sec-titles">
+      <div class="sec-eb">Ajaeng · 牙箏 · 1명</div>
+      <h2>아쟁부</h2>
+    </div>
+    <div class="sec-line"></div>
+  </div>
+  <div class="members-grid">
+    <div class="mcard" data-name="김정희" data-role="아쟁" data-bio="- 국가무형문화제 제1호 종묘제례악 이수자||- 포천시립민속예술단 단원 역임||- 나주시립삼현육각 비상임 단원 역임||- 사회적기업 “아트앤트” 단원 역임||- 세종국악관현악단 지도단원 및 수석단원 역임||- 세종국악관현악단 아쟁 단원">
+      <img class="mphoto" src="assets/photos/members/all/m20-김정희.jpg" alt="김정희 아쟁" loading="lazy">
+      <div class="mname">김정희</div>
+      <div class="mrole">아쟁</div>
     </div>
   </div>
 </section>
@@ -444,21 +455,16 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
   <div class="sec-hd">
     <div class="sec-glyph">鼓</div>
     <div class="sec-titles">
-      <div class="sec-eb">Percussion · 打樂 · 2명</div>
+      <div class="sec-eb">Percussion · 打樂 · 1명</div>
       <h2>타악부</h2>
     </div>
     <div class="sec-line"></div>
   </div>
   <div class="members-grid">
-    <div class="mcard" data-name="손유진" data-role="타악" data-bio='- 부산예술고등학교 국악과 졸업\n- 단국대학교 국악과 졸업\n- 제45회 꿈과 감성이 있는 젊은 음악회(부산시립국악관현악단) 신모듬 3악장 ’놀이‘ 협연\n- 제5회 난계국악단 기획공연 ‘청어람’ 신모듬 3악장 ‘놀이’ 협연\n- 제24회 부산국악대전 고등부 부산예술문화단체 총연합회 이사장상 수상\n- 국악실내악그룹 헤아림 창단 멤버' >
+    <div class="mcard" data-name="손유진" data-role="타악" data-bio="- 부산예술고등학교 국악과 졸업||- 단국대학교 국악과 졸업||- 제45회 꿈과 감성이 있는 젊은 음악회(부산시립국악관현악단) 신모듬 3악장 ’놀이‘ 협연||- 제5회 난계국악단 기획공연 ‘청어람’ 신모듬 3악장 ‘놀이’ 협연||- 제24회 부산국악대전 고등부 부산예술문화단체 총연합회 이사장상 수상||- 국악실내악그룹 헤아림 창단 멤버||- 세종국악관현악단&amp;세종국악심포니오케스트라 단원">
       <img class="mphoto" src="assets/photos/members/all/m62-손유진.jpg" alt="손유진 타악" loading="lazy">
       <div class="mname">손유진</div>
       <div class="mrole">타악</div>
-    </div>
-    <div class="mcard" data-name="최진석" data-role="타악(명예 단원)" data-bio='- 추계예술대학교 졸업 및 동대 교육대학원 수료\n- 한밭 전국 국악 경연대회 우수상 수상\n- 해남 전국 고수 대회 우수상 수상\n- 우리춤대경연 타악 부분 대상 수상\n- 21C한국음악프로젝트 장려상\n- 부산영화의전당 융복합예술콘텐츠 &#39;똥&#39; 타악주자' >
-      <img class="mphoto" src="assets/photos/members/all/m24-최진석.jpg" alt="최진석 타악(명예 단원)" loading="lazy">
-      <div class="mname">최진석</div>
-      <div class="mrole">타악(명예 단원)</div>
     </div>
   </div>
 </section>
@@ -473,22 +479,22 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
     <div class="sec-line"></div>
   </div>
   <div class="members-grid">
-    <div class="mcard" data-name="윤하정" data-role="판소리" data-bio='- 용인대학교 국악과 졸업\n- 한양대학교 음악대학 국악과 석사 재학\n- 명창 박록주 전국국악대전 장려상 수상\n- 학생음협콩쿠르 판소리부문(대학, 대학원부) 대상 수상\n- (사)남도민요 보존회 회원, (사)만정 김소희 판소리 선양회 회원\n- 세종국악관현악단 소리 단원' >
+    <div class="mcard" data-name="윤하정" data-role="판소리" data-bio="- 용인대학교 국악과 졸업||- 한양대학교 음악대학 국악과 석사 재학||- 명창 박록주 전국국악대전 장려상 수상||- 학생음협콩쿠르 판소리부문(대학, 대학원부) 대상 수상||- (사)남도민요 보존회 회원, (사)만정 김소희 판소리 선양회 회원||- 세종국악관현악단 소리 단원">
       <img class="mphoto" src="assets/photos/members/all/m21-윤하정.jpg" alt="윤하정 판소리" loading="lazy">
       <div class="mname">윤하정</div>
       <div class="mrole">판소리</div>
     </div>
-    <div class="mcard" data-name="김다희" data-role="판소리" data-bio='-' >
+    <div class="mcard" data-name="김다희" data-role="판소리" data-bio="-">
       <img class="mphoto" src="assets/photos/members/all/m64-김다희.jpg" alt="김다희 판소리" loading="lazy">
       <div class="mname">김다희</div>
       <div class="mrole">판소리</div>
     </div>
-    <div class="mcard" data-name="김연서" data-role="경기민요" data-bio='-' >
+    <div class="mcard" data-name="김연서" data-role="경기민요" data-bio="-">
       <img class="mphoto" src="assets/photos/members/all/m35-김연서.jpg" alt="김연서 경기민요" loading="lazy">
       <div class="mname">김연서</div>
       <div class="mrole">경기민요</div>
     </div>
-    <div class="mcard" data-name="어보원" data-role="경기소리" data-bio='-' >
+    <div class="mcard" data-name="어보원" data-role="경기소리" data-bio="-">
       <img class="mphoto" src="assets/photos/members/all/m17-어보원.jpg" alt="어보원 경기소리" loading="lazy">
       <div class="mname">어보원</div>
       <div class="mrole">경기소리</div>
@@ -496,96 +502,112 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
   </div>
 </section>
 
-<section class="sec" id="sec-western_winds">
+<section class="sec" id="sec-guest">
   <div class="sec-hd">
-    <div class="sec-glyph">管</div>
+    <div class="sec-glyph">客</div>
     <div class="sec-titles">
-      <div class="sec-eb">Western Winds · 3명</div>
-      <h2>관악부 (양악)</h2>
+      <div class="sec-eb">Guest Musicians · 5명</div>
+      <h2>객원 단원</h2>
     </div>
     <div class="sec-line"></div>
   </div>
   <div class="members-grid">
-    <div class="mcard" data-name="최성현" data-role="바순(객원 단원)" data-bio='- 국민대학교 관현악과 바순전공 졸업\n- 경희대학교 대학원 음악교육전공 졸업\n- 화성시교향악단 수석 단원, 기전오케스트라 수석 단원\n- 시티필하모닉오케스트라 단원' >
-      <img class="mphoto" src="assets/photos/members/all/m14-최성현.jpg" alt="최성현 바순(객원 단원)" loading="lazy">
-      <div class="mname">최성현</div>
-      <div class="mrole">바순(객원 단원)</div>
-    </div>
-    <div class="mcard" data-name="최윤희" data-role="바순(객원 단원)" data-bio='- 국민대학교 졸업\n- 오페라 &#39;토스카&#39; 연주\n- 뮤페라 &#39;시바의 여왕&#39; 초연\n- 콘체르트 아트 하우스 바순,클라리넷,피아노 트리오 연주\n- 인천문화재단 유아예술 프로그램 엘림아트홀 솔로연주\n- 클바넷 앙상블 Member' >
-      <img class="mphoto" src="assets/photos/members/all/m27-최윤희.jpg" alt="최윤희 바순(객원 단원)" loading="lazy">
-      <div class="mname">최윤희</div>
-      <div class="mrole">바순(객원 단원)</div>
-    </div>
-    <div class="mcard" data-name="배기쁨" data-role="플룻/피콜로(객원 단원)" data-bio='- 숭실대학교 Conservatory졸업\n- Italy Istituto Musicale “Gaspare   Spontini” Diploma' >
-      <img class="mphoto" src="assets/photos/members/all/m28-배기쁨.jpg" alt="배기쁨 플룻/피콜로(객원 단원)" loading="lazy">
-      <div class="mname">배기쁨</div>
-      <div class="mrole">플룻/피콜로(객원 단원)</div>
-    </div>
-  </div>
-</section>
-
-<section class="sec" id="sec-training">
-  <div class="sec-hd">
-    <div class="sec-glyph">企</div>
-    <div class="sec-titles">
-      <div class="sec-eb">Planning & Interns · 2명</div>
-      <h2>기획 · 연수단원</h2>
-    </div>
-    <div class="sec-line"></div>
-  </div>
-  <div class="members-grid">
-    <div class="mcard" data-name="채다운" data-role="공연기획팀 팀원(연수단원)" data-bio='- 세종국악관현악단&amp;세종국악오케스트라 공연기획팀 팀원' >
-      <img class="mphoto" src="assets/photos/members/all/m36-채다운.jpg" alt="채다운 공연기획팀 팀원(연수단원)" loading="lazy">
-      <div class="mname">채다운</div>
-      <div class="mrole">공연기획팀 팀원(연수단원)</div>
-    </div>
-    <div class="mcard" data-name="김다원" data-role="공연정보팀 팀원(작곡, 연수단원)" data-bio='-한국예술종합학교 전통예술원 한국음악작곡전공 전문사 졸업\n-김다원 작곡발표회 다수 개최 및 개최예정\n(인천문화재단, 서울문화재단, 한국문화예술위원회 등 사업 선정)\n-2025 제1회 동아창작국악제 참여 작곡가 및 홍보팀장 및 제 2회 동아창작국악제 준비팀장\n-2024 제 40회 동아국악콩쿠르 일반부 작곡부문 동상\n-2024 제5회 우파 국립예술대학 국제 작곡 콩쿠르' >
-      <img class="mphoto" src="assets/photos/members/all/m67-김다원.jpg" alt="김다원 공연정보팀 팀원(작곡, 연수단원)" loading="lazy">
-      <div class="mname">김다원</div>
-      <div class="mrole">공연정보팀 팀원(작곡, 연수단원)</div>
-    </div>
-  </div>
-</section>
-
-<section class="sec" id="sec-others">
-  <div class="sec-hd">
-    <div class="sec-glyph">賓</div>
-    <div class="sec-titles">
-      <div class="sec-eb">Guest & Honorary · 3명</div>
-      <h2>객원·명예 단원</h2>
-    </div>
-    <div class="sec-line"></div>
-  </div>
-  <div class="members-grid">
-    <div class="mcard" data-name="이광혁" data-role="드럼(수석 객원 단원)" data-bio='- 現 명지대학교 사회교육원 실용음악과 출강\n- 前 관동대학교 실용음악과 겸임 교수\n- 前삼익  실용음악 아카데미 전임 강사\n- Dandy music studio 대표.\n- Lostrio.Heum. 1,2집 유발이의 소풍 최지훈 Trio.\n- Lonely hearts club 등 앨범 프로듀싱 및  발표' >
+    <div class="mcard" data-name="이광혁" data-role="드럼(수석 객원 단원)" data-bio="- 現 명지대학교 사회교육원 실용음악과 출강||- 前 관동대학교 실용음악과 겸임 교수||- 前삼익  실용음악 아카데미 전임 강사||- Dandy music studio 대표.||- Lostrio.Heum. 1,2집 유발이의 소풍 최지훈 Trio.||- Lonely hearts club 등 앨범 프로듀싱 및  발표">
       <img class="mphoto" src="assets/photos/members/all/m34-이광혁.jpg" alt="이광혁 드럼(수석 객원 단원)" loading="lazy">
       <div class="mname">이광혁</div>
       <div class="mrole">드럼(수석 객원 단원)</div>
     </div>
-    <div class="mcard" data-name="박정현" data-role="베이스(객원 단원)" data-bio='- 원광대 음악과 졸업\n- 고양필하모닉오케스트라 단원\n- 예술의전당 콘서트홀 여름실내악 연주\n- 서울문화재단 서울거리아티스트 금상수상\n- Gon Trio Vol.1 발매\n- 기전대 겸임교수 역임' >
+    <div class="mcard" data-name="최성현" data-role="바순(객원 단원)" data-bio="- 국민대학교 관현악과 바순전공 졸업||- 경희대학교 대학원 음악교육전공 졸업||- 화성시교향악단 수석 단원, 기전오케스트라 수석 단원||- 시티필하모닉오케스트라 단원">
+      <img class="mphoto" src="assets/photos/members/all/m14-최성현.jpg" alt="최성현 바순(객원 단원)" loading="lazy">
+      <div class="mname">최성현</div>
+      <div class="mrole">바순(객원 단원)</div>
+    </div>
+    <div class="mcard" data-name="최윤희" data-role="바순(객원 단원)" data-bio="- 국민대학교 졸업||- 오페라 '토스카' 연주||- 뮤페라 '시바의 여왕' 초연||- 콘체르트 아트 하우스 바순,클라리넷,피아노 트리오 연주||- 인천문화재단 유아예술 프로그램 엘림아트홀 솔로연주||- 클바넷 앙상블 Member">
+      <img class="mphoto" src="assets/photos/members/all/m27-최윤희.jpg" alt="최윤희 바순(객원 단원)" loading="lazy">
+      <div class="mname">최윤희</div>
+      <div class="mrole">바순(객원 단원)</div>
+    </div>
+    <div class="mcard" data-name="배기쁨" data-role="플룻/피콜로(객원 단원)" data-bio="- 숭실대학교 Conservatory졸업||- Italy Istituto Musicale “Gaspare   Spontini” Diploma">
+      <img class="mphoto" src="assets/photos/members/all/m28-배기쁨.jpg" alt="배기쁨 플룻/피콜로(객원 단원)" loading="lazy">
+      <div class="mname">배기쁨</div>
+      <div class="mrole">플룻/피콜로(객원 단원)</div>
+    </div>
+    <div class="mcard" data-name="박정현" data-role="베이스(객원 단원)" data-bio="- 원광대 음악과 졸업||- 고양필하모닉오케스트라 단원||- 예술의전당 콘서트홀 여름실내악 연주||- 서울문화재단 서울거리아티스트 금상수상||- Gon Trio Vol.1 발매||- 기전대 겸임교수 역임">
       <img class="mphoto" src="assets/photos/members/all/m25-박정현.jpg" alt="박정현 베이스(객원 단원)" loading="lazy">
       <div class="mname">박정현</div>
       <div class="mrole">베이스(객원 단원)</div>
     </div>
-    <div class="mcard" data-name="최광석" data-role="드럼(명예 단원)" data-bio='- 박완규,정단,이성욱,정동하(부활보컬)밴드 세션\n- 인순이 밴드(2005, 2008, 2011)전국 투어\n- 박완규 밴드(2011 ~ 2016)전국 투어\n- 구본승, 소향, &quot;사랑할수록&quot;김재희 ,심수봉 ,문주란, 최성수, 신효범,\n장사익, 송해, 포맨, J2M, 송정미, 김도향, 조항조, 오승근, 이상우, 박상민, 김경호 등 세션\n- KBS, MBC 관현악단 객원' >
+  </div>
+</section>
+
+<section class="sec" id="sec-honor">
+  <div class="sec-hd">
+    <div class="sec-glyph">賓</div>
+    <div class="sec-titles">
+      <div class="sec-eb">Honorary Musicians · 4명</div>
+      <h2>명예 단원</h2>
+    </div>
+    <div class="sec-line"></div>
+  </div>
+  <div class="members-grid">
+    <div class="mcard" data-name="최광석" data-role="드럼(명예 단원)" data-bio="- 박완규,정단,이성욱,정동하(부활보컬)밴드 세션||- 인순이 밴드(2005, 2008, 2011)전국 투어||- 박완규 밴드(2011 ~ 2016)전국 투어||- 구본승, 소향, &quot;사랑할수록&quot;김재희 ,심수봉 ,문주란, 최성수, 신효범,||장사익, 송해, 포맨, J2M, 송정미, 김도향, 조항조, 오승근, 이상우, 박상민, 김경호 등 세션||- KBS, MBC 관현악단 객원||- 현재 장윤정, 이상우, 예레미, 송정미, 세종국악관현악단 활동 중">
       <img class="mphoto" src="assets/photos/members/all/m23-최광석.jpg" alt="최광석 드럼(명예 단원)" loading="lazy">
       <div class="mname">최광석</div>
       <div class="mrole">드럼(명예 단원)</div>
     </div>
+    <div class="mcard" data-name="최진석" data-role="타악(명예 단원)" data-bio="- 추계예술대학교 졸업 및 동대 교육대학원 수료||- 한밭 전국 국악 경연대회 우수상 수상||- 해남 전국 고수 대회 우수상 수상||- 우리춤대경연 타악 부분 대상 수상||- 21C한국음악프로젝트 장려상||- 부산영화의전당 융복합예술콘텐츠 '똥' 타악주자">
+      <img class="mphoto" src="assets/photos/members/all/m24-최진석.jpg" alt="최진석 타악(명예 단원)" loading="lazy">
+      <div class="mname">최진석</div>
+      <div class="mrole">타악(명예 단원)</div>
+    </div>
+    <div class="mcard" data-name="강인숙" data-role="대금(명예 단원)" data-bio="- 수원대학교 음악대학 국악과 졸업||- 서울시 교육청 소속 예체능 진로 고문||- 서울시 동부교육청 소속 예체능 진로 고문||- 미국 샌프란시스코 문화원 초청 공연||- 캐나다 토론토 문화원 초청 공연||- 세종국악관현악단 대금 단원">
+      <img class="mphoto" src="assets/photos/members/all/m9-강인숙.jpg" alt="강인숙 대금(명예 단원)" loading="lazy">
+      <div class="mname">강인숙</div>
+      <div class="mrole">대금(명예 단원)</div>
+    </div>
+    <div class="mcard" data-name="김수민" data-role="총괄 과장(명예 직원)" data-bio="- 국립국악중, 고등학교 졸업(2012)||- 한양대학교 음악대학 국악과(가야금전공) 졸업(2018)||- 2020구로아트밸리 신년음악회 기획 진행,  군포시 주최 한여름쿨페스티벌 4회 기획,||경기문화재단 상주단체 육성지원사업 약 10여회 기획, 한국문화예술위원회 공연예술 사업 약 20여회,||2021창작국악오페라코미크 인당수의 우렁총각&amp;lt;용궁출신입니다만&amp;gt;기획 진행,||경기도교육청 주최 꿈의 학교  등 약 40여회의 무대 공연 기획 및 진행||- 세종국악관현악단 공연 기획팀 총괄 과장(2018.01-2024.02)">
+      <img class="mphoto" src="assets/photos/members/all/m3-김수민.jpg" alt="김수민 총괄 과장(명예 직원)" loading="lazy">
+      <div class="mname">김수민</div>
+      <div class="mrole">총괄 과장(명예 직원)</div>
+    </div>
   </div>
 </section>
-
 
 <!-- RECRUITMENT BANNER -->
 <section class="recruit" id="recruit">
   <div class="recruit-grid">
     <div>
-      <div class="eb">Audition · 2026</div>
+      <div class="eb">
+        <span class="live-dot"></span>Audition · 2026 · 현재 모집중
+      </div>
       <h2>함께 무대에 설<br><span class="red">다음 얼굴을</span> 찾습니다.</h2>
-      <p>세종국악관현악단은 상·하반기 정기 오디션, 상시 객원·연수단원 모집을 통해 새로운 단원을 받아들입니다. 국악·양악 모든 악기부에 <strong>지원 가능</strong>하며, 도전과 개척의 정신으로 함께 나아갈 진취적이고 열정적인 연주자를 기다립니다.</p>
-      <p>공고와 양식은 <a href="notices.html" style="color:var(--geumbak-gold);font-weight:700;border-bottom:1px solid var(--geumbak-gold);">공지사항 게시판</a>에서 확인하시고, 문의는 전화·이메일로 편하게 남겨주세요.</p>
+      <p>세종국악관현악단은 <strong>상·하반기 정기 오디션</strong>과 <strong>상시 객원·연수단원 모집</strong>을 통해 새로운 단원을 받아들입니다. 국악·양악 모든 악기부에 지원 가능하며, 도전과 개척의 정신으로 함께 나아갈 진취적이고 열정적인 연주자를 기다립니다.</p>
+
+      <div class="open-notices">
+        <div class="on-head">
+          <span class="ic">📣</span>
+          <strong>현재 진행 중인 공고</strong>
+          <a href="notices.html" class="all">전체 보기 <i class="ph ph-arrow-right"></i></a>
+        </div>
+        <a href="notices.html" class="on-row">
+          <span class="badge">FEATURED</span>
+          <span class="t">2026년도 상반기 신입단원(국악, 양악) 모집(추가) 공고 및 양식</span>
+          <span class="d">03·26</span>
+        </a>
+        <a href="notices.html" class="on-row">
+          <span class="badge">OPEN</span>
+          <span class="t">2026년도 상근 연수단원(기획자 1명, 연주자 1명) 모집</span>
+          <span class="d">01·31</span>
+        </a>
+        <a href="notices.html" class="on-row">
+          <span class="badge">INFO</span>
+          <span class="t">2026년도 공연기획팀 기획자(신입 및 경력자) 모집 공고</span>
+          <span class="d">11·06</span>
+        </a>
+      </div>
+
       <div class="ctas">
-        <a href="notices.html" class="btn-p">모집 공고 보기 <i class="ph ph-arrow-up-right"></i></a>
+        <a href="notices.html" class="btn-p">📋 공고란 전체 보기 <i class="ph ph-arrow-up-right"></i></a>
         <a href="inquiry.html" class="btn-g">오디션 문의하기</a>
       </div>
     </div>
@@ -680,7 +702,7 @@ const mfootDetail = document.getElementById('mfoot-detail');
 function openCard(card){
   const name = card.dataset.name;
   const role = card.dataset.role;
-  const bio = (card.dataset.bio || '').split(/\\n/).map(s => s.trim()).filter(Boolean);
+  const bio = (card.dataset.bio || '').split('||').map(s => s.trim().replace(/^-\s*/,'')).filter(s => s && s !== '-');
   const photo = card.querySelector('.mphoto');
   const detail = card.dataset.detail;
 
@@ -695,8 +717,8 @@ function openCard(card){
     mphotoLg.style.display = 'none';
   }
   mbodyUl.innerHTML = bio.length
-    ? bio.map(b => '<li>'+b.replace(/^-+\\s*/,'')+'</li>').join('')
-    : '<li style="color:var(--fg2);">프로필 정보가 준비 중입니다.</li>';
+    ? bio.map(b => '<li>'+b+'</li>').join('')
+    : '<li style="color:var(--fg2);">상세 프로필은 준비 중입니다. 자세한 내용은 전화(031-391-8784)로 문의 주세요.</li>';
   if (detail){ mfootDetail.href = detail; mfootDetail.style.display = 'inline-flex'; }
   else { mfootDetail.style.display = 'none'; }
   modalBg.classList.add('on');
