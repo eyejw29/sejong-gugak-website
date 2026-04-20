@@ -1,0 +1,242 @@
+/* =========================================================================
+   SEJONG GUGAK — design tokens
+   Ink-on-hanji with dancheong accents. See README.md for the full system.
+   ========================================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root {
+  /* ---------------- COLORS ---------------- */
+
+  /* Ink & hanji — the primary page surface */
+  --ink:            #1A1614;   /* near-black, warm */
+  --ink-soft:       #2B2623;
+  --hanji:          #F6F1E8;   /* warm cream, default background */
+  --hanji-deep:     #ECE4D1;   /* subtle card background */
+  --paper:          #FBF8F2;   /* highest-contrast surface (still not pure white) */
+
+  /* Dancheong accents — Korean temple palette */
+  --dancheong-red:      #B8342A;   /* 주홍, primary accent */
+  --dancheong-red-dark: #8E2520;
+  --dancheong-red-soft: #F2D7D3;   /* tint for badges */
+  --dancheong-blue:     #1F4B44;   /* 청록, secondary accent */
+  --dancheong-blue-dark:#143230;
+  --dancheong-blue-soft:#CFDCD8;
+  --geumbak-gold:       #B8894B;   /* 금박, premium series */
+  --geumbak-gold-soft:  #EDE0C9;
+
+  /* Stone neutrals — 5-step ramp hanji → ink */
+  --stone-50:       #F6F1E8;
+  --stone-100:      #E9E2D3;
+  --stone-200:      #C9C0AD;
+  --stone-300:      #8E8778;
+  --stone-400:      #5A544B;
+  --stone-500:      #1A1614;
+
+  /* Semantic */
+  --success: #5F8A6B;   /* 청자 celadon */
+  --warning: #D49A3B;   /* 사프란 saffron */
+  --danger:  #B8342A;   /* same as dancheong-red */
+  --info:    #1F4B44;   /* same as dancheong-blue */
+
+  /* Foreground / background semantic */
+  --fg1:    var(--ink);
+  --fg2:    var(--stone-400);
+  --fg3:    var(--stone-300);
+  --fg-on-ink:    var(--hanji);
+  --fg-accent:    var(--dancheong-red);
+  --bg1:    var(--hanji);
+  --bg2:    var(--hanji-deep);
+  --bg3:    var(--paper);
+  --bg-ink: var(--ink);
+
+  --border-hairline: rgba(26, 22, 20, 0.12);
+  --border-strong:   rgba(26, 22, 20, 0.88);
+  --border-on-ink:   rgba(246, 241, 232, 0.18);
+
+  /* ---------------- TYPOGRAPHY ---------------- */
+
+  --font-serif-kr:   'Nanum Myeongjo', 'Noto Serif KR', serif;
+  --font-sans-kr:    'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  --font-serif-en:   'Cormorant Garamond', 'Times New Roman', serif;
+  --font-sans-en:    'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-mono:       'IBM Plex Mono', ui-monospace, monospace;
+
+  /* Sizes — perfect-fourth scale (1.333) */
+  --size-12:  12px;
+  --size-14:  14px;
+  --size-16:  16px;
+  --size-20:  20px;
+  --size-24:  24px;
+  --size-32:  32px;
+  --size-44:  44px;
+  --size-60:  60px;
+  --size-80:  80px;
+  --size-108: 108px;
+
+  /* Leading */
+  --lh-tight:   1.1;
+  --lh-snug:    1.25;
+  --lh-normal:  1.55;
+  --lh-loose:   1.75;
+
+  /* Tracking */
+  --track-tight:  -0.02em;
+  --track-normal: 0;
+  --track-wide:   0.08em;
+  --track-wider:  0.14em;   /* for small-caps Latin eyebrows */
+
+  /* ---------------- SPACING (8-pt) ---------------- */
+  --s-0:  0;
+  --s-1:  4px;
+  --s-2:  8px;
+  --s-3:  12px;
+  --s-4:  16px;
+  --s-5:  24px;
+  --s-6:  32px;
+  --s-7:  48px;
+  --s-8:  64px;
+  --s-9:  96px;
+  --s-10: 128px;
+
+  /* ---------------- RADII ---------------- */
+  --radius-none: 0;
+  --radius-sm:   2px;
+  --radius-pill: 9999px;
+
+  /* ---------------- SHADOWS ---------------- */
+  --shadow-sm: 0 1px 2px rgba(26, 22, 20, 0.06);
+  --shadow-lg: 0 24px 48px -16px rgba(26, 22, 20, 0.18);
+
+  /* ---------------- MOTION ---------------- */
+  --ease-gentle: cubic-bezier(0.2, 0.6, 0.2, 1);
+  --dur-fast:   180ms;
+  --dur-base:   300ms;
+  --dur-slow:   500ms;
+
+  /* ---------------- LAYOUT ---------------- */
+  --max-w:        1280px;
+  --header-h-desktop: 74px;
+  --header-h-mobile:  56px;
+  --gutter:       24px;
+}
+
+/* =========================================================================
+   Semantic TYPE classes — use these, don't re-invent
+   ========================================================================= */
+
+.h-display {
+  font-family: var(--font-serif-kr);
+  font-weight: 800;
+  font-size: var(--size-108);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--track-tight);
+  color: var(--fg1);
+  word-break: keep-all;
+}
+.h1 {
+  font-family: var(--font-serif-kr);
+  font-weight: 800;
+  font-size: var(--size-80);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--track-tight);
+  color: var(--fg1);
+  word-break: keep-all;
+}
+.h2 {
+  font-family: var(--font-serif-kr);
+  font-weight: 700;
+  font-size: var(--size-60);
+  line-height: var(--lh-tight);
+  color: var(--fg1);
+  word-break: keep-all;
+}
+.h3 {
+  font-family: var(--font-serif-kr);
+  font-weight: 700;
+  font-size: var(--size-44);
+  line-height: var(--lh-snug);
+  color: var(--fg1);
+  word-break: keep-all;
+}
+.h4 {
+  font-family: var(--font-sans-kr);
+  font-weight: 700;
+  font-size: var(--size-32);
+  line-height: var(--lh-snug);
+  color: var(--fg1);
+}
+.h5 {
+  font-family: var(--font-sans-kr);
+  font-weight: 700;
+  font-size: var(--size-24);
+  line-height: var(--lh-snug);
+  color: var(--fg1);
+}
+.h6 {
+  font-family: var(--font-sans-kr);
+  font-weight: 700;
+  font-size: var(--size-20);
+  line-height: var(--lh-snug);
+  color: var(--fg1);
+}
+
+.eyebrow {
+  font-family: var(--font-sans-en);
+  font-weight: 600;
+  font-size: var(--size-12);
+  letter-spacing: var(--track-wider);
+  text-transform: uppercase;
+  color: var(--dancheong-red);
+}
+.eyebrow-kr {
+  font-family: var(--font-sans-kr);
+  font-weight: 500;
+  font-size: var(--size-14);
+  letter-spacing: var(--track-wide);
+  color: var(--dancheong-red);
+}
+
+.p-lead {
+  font-family: var(--font-sans-kr);
+  font-weight: 400;
+  font-size: var(--size-20);
+  line-height: var(--lh-loose);
+  color: var(--fg1);
+  word-break: keep-all;
+}
+.p {
+  font-family: var(--font-sans-kr);
+  font-weight: 400;
+  font-size: var(--size-16);
+  line-height: var(--lh-loose);
+  color: var(--fg1);
+  word-break: keep-all;
+}
+.p-sm {
+  font-family: var(--font-sans-kr);
+  font-weight: 400;
+  font-size: var(--size-14);
+  line-height: var(--lh-normal);
+  color: var(--fg2);
+  word-break: keep-all;
+}
+.caption {
+  font-family: var(--font-sans-kr);
+  font-weight: 400;
+  font-size: var(--size-12);
+  line-height: var(--lh-normal);
+  color: var(--fg3);
+}
+.meta-mono {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: var(--size-12);
+  letter-spacing: var(--track-normal);
+  color: var(--fg2);
+}
+.code {
+  font-family: var(--font-mono);
+  font-size: var(--size-14);
+  color: var(--fg1);
+}

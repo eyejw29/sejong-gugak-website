@@ -1,0 +1,674 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<title>세종국악관현악단 · 교육 · 아웃리치 · 파트너십</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+:root{--max-w:1360px;}
+html,body{margin:0;background:var(--bg1);color:var(--fg1);}
+body{font-family:var(--font-sans-kr);overflow-x:hidden;}
+a{color:inherit;text-decoration:none;}
+button{cursor:pointer;font-family:inherit;}
+::selection{background:var(--dancheong-red);color:var(--hanji);}
+
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.35  0 0 0 0 0.28  0 0 0 0 0.18  0 0 0 0.035 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
+  mix-blend-mode:multiply;opacity:.8;}
+
+/* HEADER */
+.hdr{position:fixed;top:0;left:0;right:0;z-index:60;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:56px;padding:22px 44px;transition:all var(--dur-base) var(--ease-gentle);}
+.hdr.scrolled{background:rgba(246,241,232,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border-hairline);padding:14px 44px;}
+.brand{display:flex;align-items:center;gap:14px;}
+.brand img{height:46px;transition:height var(--dur-base) var(--ease-gentle);}
+.hdr.scrolled .brand img{height:36px;}
+.brand .stk{display:flex;flex-direction:column;line-height:1;}
+.brand .kr{font-family:var(--font-serif-kr);font-weight:800;font-size:20px;letter-spacing:-.01em;}
+.brand .en{font-family:var(--font-serif-en);font-style:italic;font-size:10px;letter-spacing:.16em;color:var(--fg2);margin-top:5px;}
+.nav{display:flex;justify-content:center;gap:36px;}
+.nav a{font-size:14px;font-weight:500;padding:6px 2px;position:relative;letter-spacing:.02em;}
+.nav a::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:1px;background:var(--dancheong-red);transform:scaleX(0);transform-origin:left;transition:transform var(--dur-base) var(--ease-gentle);}
+.nav a:hover::after,.nav a.active::after{transform:scaleX(1);}
+.nav a.active{color:var(--dancheong-red);}
+.util{display:flex;align-items:center;gap:20px;}
+.util .t{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;color:var(--fg2);}
+.cta{background:var(--ink);color:var(--hanji);padding:13px 20px;font-size:12px;font-weight:700;border:0;letter-spacing:.04em;display:inline-flex;gap:8px;align-items:center;}
+.cta:hover{background:var(--dancheong-red);}
+.cta .dot{width:6px;height:6px;border-radius:50%;background:var(--dancheong-red);}
+
+/* HERO */
+.page-hero{position:relative;z-index:2;padding:160px 44px 72px;max-width:var(--max-w);margin:0 auto;}
+.crumb{display:flex;gap:10px;align-items:center;font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg2);margin-bottom:40px;}
+.crumb .sep{opacity:.4;}.crumb .now{color:var(--dancheong-red);}
+.page-hero-row{display:grid;grid-template-columns:1fr auto;gap:64px;align-items:end;padding-bottom:36px;border-bottom:1px solid var(--border-strong);}
+.page-hero h1{font-family:var(--font-serif-kr);font-weight:800;font-size:clamp(72px,9vw,140px);line-height:0.92;letter-spacing:-.04em;margin:0;word-break:keep-all;}
+.page-hero h1 .it{font-family:var(--font-serif-en);font-style:italic;font-size:0.42em;color:var(--dancheong-red);font-weight:400;display:inline-block;transform:translateY(-.35em);padding-left:12px;}
+.page-hero h1 small{display:block;font-family:var(--font-serif-en);font-style:italic;font-size:0.28em;color:var(--fg2);font-weight:400;margin-top:14px;letter-spacing:-.01em;}
+.page-hero .idx{display:flex;flex-direction:column;align-items:flex-end;gap:6px;font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;color:var(--fg2);}
+.page-hero .idx .big{font-family:var(--font-serif-en);font-style:italic;font-size:84px;line-height:0.8;color:var(--ink);letter-spacing:-.04em;margin-bottom:6px;}
+
+.intro-row{margin-top:40px;display:grid;grid-template-columns:1.1fr 1fr;gap:72px;align-items:start;}
+.intro-row .lead{font-family:var(--font-serif-kr);font-weight:700;font-size:26px;line-height:1.5;letter-spacing:-.015em;color:var(--ink);word-break:keep-all;}
+.intro-row .lead .red{color:var(--dancheong-red);}
+.intro-row .desc{font-size:14px;line-height:1.9;color:var(--fg1);word-break:keep-all;}
+.intro-row .desc p{margin:0 0 14px;}
+
+/* STATS STRIP */
+.stats{max-width:var(--max-w);margin:0 auto;padding:16px 44px 100px;position:relative;z-index:2;}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border-strong);border-bottom:1px solid var(--border-strong);}
+.st-cell{padding:32px 28px;border-right:1px solid var(--border-hairline);display:flex;flex-direction:column;gap:6px;}
+.st-cell:last-child{border-right:0;}
+.st-cell .k{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg2);}
+.st-cell .n{font-family:var(--font-serif-kr);font-weight:800;font-size:56px;line-height:1;letter-spacing:-.03em;color:var(--ink);}
+.st-cell .n .u{font-family:var(--font-serif-en);font-style:italic;font-weight:400;font-size:.38em;color:var(--dancheong-red);margin-left:6px;vertical-align:super;}
+.st-cell .d{font-size:12px;color:var(--fg2);line-height:1.6;word-break:keep-all;}
+
+/* TABS */
+.tabs{position:relative;z-index:2;max-width:var(--max-w);margin:0 auto;padding:0 44px;display:flex;gap:2px;background:var(--border-hairline);border:1px solid var(--border-strong);}
+.tabs{margin:0 44px 0;max-width:calc(var(--max-w) - 88px);}
+.tab{flex:1;padding:22px 24px;background:var(--hanji);text-align:left;cursor:pointer;border:0;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;transition:background var(--dur-fast) var(--ease-gentle);}
+.tab:hover{background:var(--paper);}
+.tab.active{background:var(--ink);color:var(--hanji);}
+.tab .n{font-family:var(--font-serif-en);font-style:italic;font-size:24px;line-height:1;color:var(--dancheong-red);}
+.tab.active .n{color:var(--geumbak-gold);}
+.tab .l{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg2);margin-bottom:4px;}
+.tab.active .l{color:rgba(246,241,232,0.6);}
+.tab .t{font-family:var(--font-serif-kr);font-weight:800;font-size:20px;letter-spacing:-.01em;}
+.tab .s{font-size:11px;color:var(--fg2);margin-top:4px;font-family:var(--font-serif-en);font-style:italic;}
+.tab.active .s{color:rgba(246,241,232,0.6);}
+
+/* PROGRAM PANEL */
+.panel{max-width:var(--max-w);margin:0 auto;padding:0 44px;position:relative;z-index:2;}
+.panel-sec{padding:88px 0;border-bottom:1px solid var(--border-strong);}
+.panel-sec:last-child{border-bottom:0;}
+.panel-hd{display:grid;grid-template-columns:auto 1fr auto;gap:32px;align-items:end;margin-bottom:48px;padding-bottom:20px;border-bottom:1px solid var(--border-hairline);}
+.panel-hd .anchor{font-family:var(--font-serif-en);font-style:italic;font-size:64px;line-height:0.8;color:var(--dancheong-red);letter-spacing:-.03em;}
+.panel-hd .mid .l{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--dancheong-red);margin-bottom:12px;}
+.panel-hd h2{font-family:var(--font-serif-kr);font-weight:800;font-size:56px;line-height:1;letter-spacing:-.03em;margin:0;}
+.panel-hd h2 .it{font-family:var(--font-serif-en);font-style:italic;font-weight:400;color:var(--fg2);font-size:.5em;margin-left:10px;}
+.panel-hd .meta{text-align:right;font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;color:var(--fg2);line-height:1.8;text-transform:uppercase;}
+.panel-hd .meta strong{display:block;font-family:var(--font-serif-kr);font-weight:700;font-size:15px;color:var(--ink);letter-spacing:-.005em;text-transform:none;margin-bottom:3px;}
+
+/* PROGRAM CARDS */
+.pg-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:20px;}
+.pg-feat{background:var(--ink);color:var(--hanji);position:relative;overflow:hidden;display:flex;flex-direction:column;min-height:460px;}
+.pg-feat::before{content:attr(data-g);position:absolute;font-family:var(--font-serif-kr);font-weight:800;font-size:380px;line-height:0.78;color:rgba(184,52,42,0.28);right:-30px;top:-40px;pointer-events:none;}
+.pg-feat .top{padding:32px 36px;position:relative;z-index:1;display:flex;justify-content:space-between;align-items:flex-start;}
+.pg-feat .top .tag{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--geumbak-gold);}
+.pg-feat .top .no{font-family:var(--font-serif-en);font-style:italic;font-size:32px;color:rgba(246,241,232,0.7);line-height:0.8;}
+.pg-feat .bd{padding:24px 36px 36px;position:relative;z-index:1;margin-top:auto;}
+.pg-feat .ty{font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--dancheong-red);margin-bottom:12px;}
+.pg-feat h3{font-family:var(--font-serif-kr);font-weight:800;font-size:40px;line-height:1.1;letter-spacing:-.02em;margin:0 0 14px;word-break:keep-all;}
+.pg-feat h3 small{display:block;font-family:var(--font-serif-en);font-style:italic;font-weight:400;font-size:15px;color:rgba(246,241,232,0.6);margin-top:4px;letter-spacing:-.005em;}
+.pg-feat .dsc{font-size:13px;line-height:1.8;color:rgba(246,241,232,0.82);max-width:440px;word-break:keep-all;}
+.pg-feat .foot{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid rgba(246,241,232,0.18);margin-top:24px;padding-top:20px;}
+.pg-feat .foot .fc{padding-right:18px;border-right:1px solid rgba(246,241,232,0.14);}
+.pg-feat .foot .fc:last-child{border-right:0;padding-right:0;padding-left:18px;}
+.pg-feat .foot .fc:nth-child(2){padding-left:18px;}
+.pg-feat .foot .fk{font-family:var(--font-mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(246,241,232,0.55);margin-bottom:4px;}
+.pg-feat .foot .fv{font-family:var(--font-serif-kr);font-weight:700;font-size:13px;letter-spacing:-.005em;}
+
+.pg-card{background:var(--paper);border:1px solid var(--border-hairline);padding:28px 30px 32px;display:flex;flex-direction:column;transition:border-color var(--dur-fast) var(--ease-gentle);cursor:pointer;}
+.pg-card:hover{border-color:var(--ink);}
+.pg-card .top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:32px;}
+.pg-card .top .no{font-family:var(--font-serif-en);font-style:italic;font-size:24px;color:var(--dancheong-red);line-height:1;}
+.pg-card .top .ch{font-family:var(--font-serif-kr);font-weight:800;font-size:40px;line-height:0.9;color:var(--ink);}
+.pg-card .ty{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dancheong-red);margin-bottom:10px;}
+.pg-card h4{font-family:var(--font-serif-kr);font-weight:800;font-size:24px;margin:0 0 10px;letter-spacing:-.015em;line-height:1.25;word-break:keep-all;}
+.pg-card h4 small{display:block;font-family:var(--font-serif-en);font-style:italic;font-weight:400;font-size:13px;color:var(--fg2);margin-top:4px;letter-spacing:-.005em;}
+.pg-card .dsc{font-size:13px;line-height:1.75;color:var(--fg1);word-break:keep-all;margin-bottom:20px;}
+.pg-card .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:16px;border-top:1px dashed var(--border-hairline);}
+.pg-card .tag{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;padding:4px 9px;border:1px solid var(--border-hairline);color:var(--fg2);background:var(--hanji);}
+.pg-card .tag.p{color:var(--dancheong-red);border-color:var(--dancheong-red);}
+
+/* CURRICULUM — stylized 4-week map */
+.curri{margin-top:48px;background:var(--paper);border:1px solid var(--border-hairline);padding:36px 40px;}
+.curri-hd{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--border-hairline);}
+.curri-hd .l{font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--dancheong-red);}
+.curri-hd h4{font-family:var(--font-serif-kr);font-weight:800;font-size:22px;margin:6px 0 0;letter-spacing:-.01em;}
+.curri-hd .dur{font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;color:var(--fg2);}
+.curri-hd .dur strong{font-family:var(--font-serif-en);font-style:italic;color:var(--dancheong-red);font-size:20px;margin-right:6px;}
+.weeks{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border-hairline);border:1px solid var(--border-hairline);}
+.week{background:var(--hanji);padding:22px 22px 24px;display:flex;flex-direction:column;gap:10px;}
+.week .num{font-family:var(--font-serif-en);font-style:italic;font-size:22px;color:var(--dancheong-red);}
+.week h5{font-family:var(--font-serif-kr);font-weight:800;font-size:17px;margin:0;letter-spacing:-.005em;line-height:1.3;word-break:keep-all;}
+.week ul{margin:8px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px;}
+.week li{font-size:12px;line-height:1.55;color:var(--fg2);padding-left:12px;position:relative;word-break:keep-all;}
+.week li::before{content:"—";position:absolute;left:0;color:var(--dancheong-red);}
+
+/* SCHOOL MAP — partnership list with map aesthetic */
+.ptr-layout{display:grid;grid-template-columns:1fr 1.2fr;gap:48px;align-items:start;}
+.map-col{background:var(--ink);color:var(--hanji);padding:40px;position:relative;aspect-ratio:4/5;overflow:hidden;}
+.map-col::before{content:"";position:absolute;inset:40px;border:1px dashed rgba(246,241,232,0.22);}
+.map-col .kicker{font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--geumbak-gold);position:relative;z-index:1;}
+.map-col h3{font-family:var(--font-serif-kr);font-weight:800;font-size:40px;letter-spacing:-.02em;line-height:1.1;margin:14px 0 0;position:relative;z-index:1;word-break:keep-all;}
+.map-col h3 small{display:block;font-family:var(--font-serif-en);font-style:italic;font-weight:400;font-size:14px;color:rgba(246,241,232,0.58);margin-top:6px;letter-spacing:-.005em;}
+.dots{position:absolute;inset:0;z-index:0;}
+.dot{position:absolute;width:12px;height:12px;border-radius:50%;background:var(--dancheong-red);box-shadow:0 0 0 4px rgba(184,52,42,0.2),0 0 0 12px rgba(184,52,42,0.08);animation:pulse 3s infinite;}
+.dot.b{background:var(--geumbak-gold);box-shadow:0 0 0 4px rgba(201,162,90,0.2),0 0 0 12px rgba(201,162,90,0.08);}
+.dot.s{width:7px;height:7px;box-shadow:0 0 0 3px rgba(246,241,232,0.12);background:rgba(246,241,232,0.8);}
+.dot-label{position:absolute;font-family:var(--font-mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(246,241,232,0.72);}
+.dot-label .v{display:block;font-family:var(--font-serif-kr);font-size:13px;color:var(--hanji);font-weight:700;letter-spacing:-.005em;text-transform:none;margin-top:3px;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.6;transform:scale(1.15);}}
+.map-col .legend{position:absolute;left:40px;bottom:40px;z-index:2;display:flex;flex-direction:column;gap:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;color:rgba(246,241,232,0.62);}
+.map-col .legend .lg{display:flex;align-items:center;gap:10px;}
+.map-col .legend .sw{width:10px;height:10px;border-radius:50%;}
+.map-col .tot{position:absolute;right:40px;bottom:40px;z-index:2;text-align:right;}
+.map-col .tot .tn{font-family:var(--font-serif-en);font-style:italic;font-size:72px;line-height:0.8;color:var(--geumbak-gold);letter-spacing:-.03em;}
+.map-col .tot .tl{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;color:rgba(246,241,232,0.6);text-transform:uppercase;margin-top:4px;}
+
+.ptr-list{display:flex;flex-direction:column;}
+.ptr-row{display:grid;grid-template-columns:60px 1fr auto auto;gap:24px;padding:18px 0;border-bottom:1px solid var(--border-hairline);align-items:center;cursor:pointer;transition:padding var(--dur-fast) var(--ease-gentle);}
+.ptr-row:first-child{border-top:1px solid var(--border-strong);}
+.ptr-row:hover{padding-left:8px;}
+.ptr-row .logo{width:60px;height:60px;border:1px solid var(--border-hairline);background:var(--paper);display:flex;align-items:center;justify-content:center;font-family:var(--font-serif-kr);font-weight:800;font-size:24px;color:var(--ink);flex-shrink:0;}
+.ptr-row.gov .logo{background:var(--ink);color:var(--geumbak-gold);border-color:var(--ink);}
+.ptr-row.edu .logo{background:var(--dancheong-red);color:var(--hanji);border-color:var(--dancheong-red);}
+.ptr-row .body h5{font-family:var(--font-serif-kr);font-weight:800;font-size:18px;margin:0 0 3px;letter-spacing:-.005em;}
+.ptr-row .body h5 small{font-family:var(--font-serif-en);font-style:italic;font-weight:400;font-size:12px;color:var(--fg2);margin-left:8px;}
+.ptr-row .body .d{font-size:12px;color:var(--fg2);line-height:1.55;word-break:keep-all;}
+.ptr-row .ty{font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dancheong-red);padding:4px 10px;border:1px solid var(--dancheong-red);white-space:nowrap;}
+.ptr-row.gov .ty{color:var(--geumbak-gold-dark);border-color:var(--geumbak-gold-dark);}
+.ptr-row.edu .ty{color:var(--ink);border-color:var(--ink);}
+.ptr-row .since{font-family:var(--font-mono);font-size:11px;color:var(--fg2);letter-spacing:.08em;min-width:80px;text-align:right;}
+
+/* REQUEST CTA */
+.req{position:relative;z-index:2;max-width:var(--max-w);margin:80px auto;padding:0 44px;}
+.req-box{background:var(--hanji-deep);border:1px solid var(--border-strong);padding:56px 56px 56px 0;display:grid;grid-template-columns:1fr 1.3fr;gap:72px;align-items:start;overflow:hidden;}
+.req-box .col-l{padding-left:56px;position:relative;}
+.req-box .col-l::before{content:"邀";position:absolute;left:0;top:-30px;font-family:var(--font-serif-kr);font-weight:800;font-size:200px;line-height:0.82;color:rgba(184,52,42,0.08);z-index:0;}
+.req-box .col-l .l{font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--dancheong-red);margin-bottom:14px;position:relative;}
+.req-box .col-l h2{font-family:var(--font-serif-kr);font-weight:800;font-size:48px;line-height:1.08;letter-spacing:-.025em;margin:0 0 18px;word-break:keep-all;position:relative;}
+.req-box .col-l h2 .red{color:var(--dancheong-red);}
+.req-box .col-l p{font-size:14px;line-height:1.85;color:var(--fg1);word-break:keep-all;margin:0 0 24px;position:relative;}
+.req-box .col-l .actions{display:flex;gap:10px;position:relative;}
+.req-box .btn-p{background:var(--ink);color:var(--hanji);padding:14px 20px;font-size:12px;font-weight:700;letter-spacing:.04em;border:0;display:inline-flex;gap:8px;align-items:center;}
+.req-box .btn-p:hover{background:var(--dancheong-red);}
+.req-box .btn-g{background:transparent;color:var(--ink);padding:14px 18px;font-size:12px;font-weight:700;letter-spacing:.04em;border:1px solid var(--ink);display:inline-flex;gap:8px;align-items:center;}
+
+/* Request checklist */
+.checklist{display:flex;flex-direction:column;gap:0;}
+.checklist .rh{font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--fg2);padding-bottom:10px;border-bottom:1px solid var(--border-strong);margin-bottom:10px;}
+.ci{display:grid;grid-template-columns:34px 1fr auto;gap:16px;padding:14px 0;border-bottom:1px dashed var(--border-hairline);align-items:center;}
+.ci:last-child{border-bottom:0;}
+.ci .chk{width:26px;height:26px;border:1.5px solid var(--ink);display:flex;align-items:center;justify-content:center;font-family:var(--font-serif-en);font-style:italic;font-size:13px;color:var(--hanji);background:var(--ink);}
+.ci .lb{font-family:var(--font-serif-kr);font-weight:700;font-size:15px;letter-spacing:-.005em;}
+.ci .lb small{display:block;font-family:var(--font-serif-en);font-style:italic;font-weight:400;font-size:11px;color:var(--fg2);margin-top:2px;letter-spacing:-.005em;}
+.ci .cost{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;color:var(--dancheong-red);font-weight:700;}
+.ci .cost small{display:block;font-family:var(--font-sans-kr);font-weight:400;font-size:10px;color:var(--fg2);letter-spacing:0;margin-top:2px;}
+
+/* FOOTER */
+.ftr{position:relative;z-index:2;background:var(--ink);color:var(--hanji);padding:72px 44px 40px;border-top:1px solid rgba(246,241,232,0.14);}
+.ftr .c{max-width:var(--max-w);margin:0 auto;}
+.ftr-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:56px;}
+.ftr-grid .col h4{font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(246,241,232,0.6);margin:0 0 16px;}
+.ftr-grid .col a.l{display:block;color:var(--hanji);font-size:13px;line-height:2.1;}
+.ftr-grid .col a.l:hover{color:var(--dancheong-red);}
+.ftr-addr{font-size:13px;line-height:1.9;color:rgba(246,241,232,0.7);}
+.ftr-addr strong{color:var(--hanji);}
+.ftr-bot{display:flex;justify-content:space-between;align-items:center;margin-top:56px;padding-top:24px;border-top:1px solid rgba(246,241,232,0.14);font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(246,241,232,0.5);}
+
+@media (max-width:1000px){
+  .page-hero-row,.intro-row,.stats-row,.tabs,.pg-grid,.weeks,.ptr-layout,.req-box{grid-template-columns:1fr;}
+  .req-box{padding:40px;}
+  .req-box .col-l{padding-left:0;}
+  .panel-hd{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr" id="hdr">
+  <a class="brand" href="index.html">
+    <img src="assets/logo-symbol.png" alt="">
+    <div class="stk"><span class="kr">세종국악관현악단</span><span class="en">Sejong Korean Music Orchestra</span></div>
+  </a>
+  <nav class="nav">
+    <a href="about.html">악단소개</a>
+    <a href="schedule.html">공연</a>
+    <a class="active" href="outreach.html">교육·아웃리치</a>
+    <a href="archive.html">아카이브</a>
+    <a href="inquiry.html">문의</a>
+  </nav>
+  <div class="util">
+    <span class="t">031·391·8784</span>
+    <button class="cta"><span class="dot"></span>섭외 문의</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="crumb"><span>Home</span><span class="sep">／</span><span class="now">Education & Outreach</span><span class="sep">／</span><span>Community</span></div>
+  <div class="page-hero-row">
+    <h1>교육·아웃리치.<span class="it">Reach.</span><small>— Education · Outreach · Partnerships.</small></h1>
+    <div class="idx"><span class="big">04</span><span>CHAPTER FOUR</span><span>— With the community</span></div>
+  </div>
+
+  <div class="intro-row">
+    <div class="lead">
+      무대는 공연장 바깥에도 있습니다. 학교와 도서관, 병원과 마을회관,<br>
+      <span class="red">국악이 닿지 않았던 모든 곳</span>에서 세종은 오늘도 연주합니다.
+    </div>
+    <div class="desc">
+      <p>세종국악관현악단은 '여민동락'의 정신을 교육·아웃리치·파트너십의 세 축으로 실천합니다. 공연장에 오시지 못하는 관객에게 직접 찾아가는 '찾아가는 음악회', 다음 세대를 위한 '어린이 오케스트라 교실', 그리고 지역·기관·해외 기관과의 지속적인 협력 사업을 통해 음악의 공공성을 넓혀가고 있습니다.</p>
+      <p>2025년 기준 연 86회의 교육·아웃리치 프로그램을 운영하며, 누적 관객 <strong style="color:var(--dancheong-red);font-weight:700;">120,000명</strong>을 만났습니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stats-row">
+    <div class="st-cell"><span class="k">Annual Reach</span><span class="n">86<span class="u">회/yr</span></span><span class="d">연간 운영 교육·아웃리치 프로그램</span></div>
+    <div class="st-cell"><span class="k">Cumulative Audience</span><span class="n">120k<span class="u">+</span></span><span class="d">2017년 이래 누적 참여·관람 관객</span></div>
+    <div class="st-cell"><span class="k">Partner Schools</span><span class="n">42<span class="u">교</span></span><span class="d">경기·서울·인천 협력 초·중·고등학교</span></div>
+    <div class="st-cell"><span class="k">Partner Institutions</span><span class="n">28<span class="u">곳</span></span><span class="d">공공기관·지자체·문화재단·해외 협력기관</span></div>
+  </div>
+</section>
+
+<!-- TABS -->
+<section>
+  <div class="tabs">
+    <button class="tab active">
+      <div class="n">01</div>
+      <div><div class="l">Program · 01</div><div class="t">찾아가는 음악회</div><div class="s">— Outreach Concerts.</div></div>
+    </button>
+    <button class="tab">
+      <div class="n">02</div>
+      <div><div class="l">Program · 02</div><div class="t">어린이 오케스트라</div><div class="s">— Youth Education.</div></div>
+    </button>
+    <button class="tab">
+      <div class="n">03</div>
+      <div><div class="l">Program · 03</div><div class="t">배리어프리 공연</div><div class="s">— Accessibility Programs.</div></div>
+    </button>
+    <button class="tab">
+      <div class="n">04</div>
+      <div><div class="l">Program · 04</div><div class="t">파트너십</div><div class="s">— Institutional Partners.</div></div>
+    </button>
+  </div>
+</section>
+
+<!-- PANEL: OUTREACH CONCERTS -->
+<div class="panel">
+  <section class="panel-sec" id="outreach">
+    <div class="panel-hd">
+      <div class="anchor">01</div>
+      <div class="mid">
+        <div class="l">Program · 01 — Outreach Concerts</div>
+        <h2>찾아가는 음악회.<span class="it">— Where the audience is.</span></h2>
+      </div>
+      <div class="meta"><strong>연 54회 · 2025</strong>경기·서울·인천 54개 기관<br>누적 48,000명 관객</div>
+    </div>
+
+    <div class="pg-grid">
+      <article class="pg-feat" data-g="樂">
+        <div class="top">
+          <div class="tag">Featured · Flagship Program</div>
+          <div class="no">N° 01</div>
+        </div>
+        <div class="bd">
+          <div class="ty">Outreach Concert · 찾아가는 무대</div>
+          <h3>생활 속의 국악.<small>— 'Gugak in Life' Tour.</small></h3>
+          <p class="dsc">관객이 공연장으로 오기 어렵다면, 우리가 찾아갑니다. 요양병원·복지시설·도서관·시립병원 등 문화 접근성이 제한된 공간에서 국악 실내악 편성(8–15명)으로 진행하는 소편성 프로그램. 연주 전 20분의 악기 해설이 포함됩니다.</p>
+          <div class="foot">
+            <div class="fc"><div class="fk">Format</div><div class="fv">소편성 · 8–15명</div></div>
+            <div class="fc"><div class="fk">Duration</div><div class="fv">60–75분 (해설 포함)</div></div>
+            <div class="fc"><div class="fk">Cost</div><div class="fv">무료 · 기관 후원 기반</div></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="pg-card">
+        <div class="top"><div class="no">N° 02</div><div class="ch">院</div></div>
+        <div class="ty">Hospital · 의료시설</div>
+        <h4>병원 속 국악<small>— Gugak at Hospitals.</small></h4>
+        <div class="dsc">군포·안산·수원 지역 7개 종합병원에서 연 12회. 환자·가족·의료진을 위한 30분 미니 콘서트. 독주·이중주 편성.</div>
+        <div class="tags"><span class="tag p">2–4명</span><span class="tag">30분</span><span class="tag">병동 순회</span></div>
+      </article>
+
+      <article class="pg-card">
+        <div class="top"><div class="no">N° 03</div><div class="ch">館</div></div>
+        <div class="ty">Public Library · 도서관</div>
+        <h4>도서관 음악회<small>— Library Concerts.</small></h4>
+        <div class="dsc">경기도 공공도서관 16곳과 정기 협력. 어린이 대상 오후 시간대, 성인 대상 저녁 시간대 2부 편성. 도서 추천과 연계.</div>
+        <div class="tags"><span class="tag">5–8명</span><span class="tag">45분</span><span class="tag p">가족 대상</span></div>
+      </article>
+    </div>
+  </section>
+
+<!-- PANEL 2 — YOUTH -->
+  <section class="panel-sec" id="youth">
+    <div class="panel-hd">
+      <div class="anchor">02</div>
+      <div class="mid">
+        <div class="l">Program · 02 — Youth Education</div>
+        <h2>어린이 오케스트라.<span class="it">— The next generation.</span></h2>
+      </div>
+      <div class="meta"><strong>연 24회 · 2025</strong>8기 수료생 배출<br>연 누적 1,400명 학생</div>
+    </div>
+
+    <div class="pg-grid">
+      <article class="pg-feat" data-g="童" style="background:linear-gradient(165deg,#2a3a26,#0f2a20);">
+        <div class="top">
+          <div class="tag">Flagship · 2017—Present</div>
+          <div class="no">N° 01</div>
+        </div>
+        <div class="bd">
+          <div class="ty">Youth Program · 교육</div>
+          <h3>어린이 국악 오케스트라 교실.<small>— Sejong Kids Orchestra School.</small></h3>
+          <p class="dsc">초등학교 3–6학년 대상, 1학기 8주 과정의 국악기 기초부터 합주까지. 단원이 직접 지도하는 마스터클래스 형식. 수료 시 군포문화예술회관 '어린이 정기연주회' 무대에 오릅니다. 악기 대여 무료.</p>
+          <div class="foot">
+            <div class="fc"><div class="fk">Grade</div><div class="fv">초등 3–6</div></div>
+            <div class="fc"><div class="fk">Session</div><div class="fv">8주 · 주 1회 90분</div></div>
+            <div class="fc"><div class="fk">Cost</div><div class="fv">연 5만원 · 저소득층 면제</div></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="pg-card">
+        <div class="top"><div class="no">N° 02</div><div class="ch">校</div></div>
+        <div class="ty">School Program · 학교 방문</div>
+        <h4>국악 체험 교실<small>— Gugak Experience Class.</small></h4>
+        <div class="dsc">초·중학교 방문 1회성 체험 프로그램. 악기 시연·체험·합주. 학교 음악실에서 2시간 진행. 경기·서울 42개 협력 학교.</div>
+        <div class="tags"><span class="tag">초·중등</span><span class="tag p">무료</span><span class="tag">2시간</span></div>
+      </article>
+
+      <article class="pg-card">
+        <div class="top"><div class="no">N° 03</div><div class="ch">夏</div></div>
+        <div class="ty">Summer Camp · 여름 캠프</div>
+        <h4>여름 국악 캠프<small>— Summer Gugak Camp.</small></h4>
+        <div class="dsc">매년 7월 말, 군포문화예술회관에서 4박 5일. 중·고등학생 40명 선발. 악기 집중 레슨·작곡 워크숍·수료 연주.</div>
+        <div class="tags"><span class="tag">중·고등</span><span class="tag">4박 5일</span><span class="tag p">40명 공모</span></div>
+      </article>
+    </div>
+
+    <!-- 8주 커리큘럼 -->
+    <div class="curri">
+      <div class="curri-hd">
+        <div>
+          <div class="l">Curriculum · 어린이 오케스트라 교실 커리큘럼</div>
+          <h4>8주간의 여정 — 악기에서 무대까지.</h4>
+        </div>
+        <div class="dur"><strong>8W</strong>총 12시간 교습</div>
+      </div>
+      <div class="weeks">
+        <div class="week">
+          <div class="num">W·01–02</div>
+          <h5>만남, 그리고 소리</h5>
+          <ul>
+            <li>악기별 소개 · 역사·구조</li>
+            <li>악기 만지고 소리 내기</li>
+            <li>본인 악기 선택</li>
+          </ul>
+        </div>
+        <div class="week">
+          <div class="num">W·03–04</div>
+          <h5>기본 주법</h5>
+          <ul>
+            <li>파지법·호흡·자세</li>
+            <li>기본 가락 10곡</li>
+            <li>동요를 국악기로</li>
+          </ul>
+        </div>
+        <div class="week">
+          <div class="num">W·05–06</div>
+          <h5>합주의 시작</h5>
+          <ul>
+            <li>파트 나누기·지휘자 도입</li>
+            <li>〈아리랑〉 편곡 합주</li>
+            <li>리허설 1차</li>
+          </ul>
+        </div>
+        <div class="week">
+          <div class="num">W·07–08</div>
+          <h5>무대 준비와 수료 연주</h5>
+          <ul>
+            <li>리허설 2·3차 · 의상 점검</li>
+            <li>군포예술회관 수료 연주회</li>
+            <li>수료증 · 기념 촬영</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- PANEL 3 — ACCESSIBILITY -->
+  <section class="panel-sec" id="access">
+    <div class="panel-hd">
+      <div class="anchor">03</div>
+      <div class="mid">
+        <div class="l">Program · 03 — Barrier-Free</div>
+        <h2>배리어프리 공연.<span class="it">— Barrier-Free Concerts.</span></h2>
+      </div>
+      <div class="meta"><strong>연 6회 · 2023—</strong>수어통역·자막·터치리딩<br>국악관현악계 최초</div>
+    </div>
+
+    <div class="pg-grid">
+      <article class="pg-feat" data-g="共" style="background:linear-gradient(165deg,#4a2520,#1a0f0c);">
+        <div class="top">
+          <div class="tag">Signature Program · 2023 Launch</div>
+          <div class="no">S·02</div>
+        </div>
+        <div class="bd">
+          <div class="ty">Accessibility · 접근성 프로그램</div>
+          <h3>설화와 국악심포니, 만나다.<small>— Korean Folk Tales, Reimagined.</small></h3>
+          <p class="dsc">시각·청각·지체장애 관객이 동등하게 즐길 수 있도록 설계된 국악관현악 공연. 수어통역·실시간 자막·음성해설·터치리딩(악기를 직접 만지는 리허설) · 전석 휠체어 접근 통로. 2023년 국악관현악계 최초로 시도되었습니다.</p>
+          <div class="foot">
+            <div class="fc"><div class="fk">Accessibility</div><div class="fv">수어·자막·해설·터치</div></div>
+            <div class="fc"><div class="fk">Venue</div><div class="fv">전석 무장애 동선</div></div>
+            <div class="fc"><div class="fk">Cost</div><div class="fv">장애인·동반 1인 무료</div></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="pg-card">
+        <div class="top"><div class="no">N° 02</div><div class="ch">手</div></div>
+        <div class="ty">Touch-Reading · 악기 체험</div>
+        <h4>악기를 만지다<small>— Touch The Instrument.</small></h4>
+        <div class="dsc">공연 1시간 전 시각장애 관객 대상 단원의 악기를 직접 만지고 소리를 듣는 리허설. 가야금·거문고·아쟁·장구·편종 등 국악기 중심.</div>
+        <div class="tags"><span class="tag p">정기 공연 前</span><span class="tag">30분</span><span class="tag">무료·예약제</span></div>
+      </article>
+
+      <article class="pg-card">
+        <div class="top"><div class="no">N° 03</div><div class="ch">聽</div></div>
+        <div class="ty">Relaxed Performance · 편안한 공연</div>
+        <h4>편안한 국악 콘서트<small>— Relaxed Gugak.</small></h4>
+        <div class="dsc">발달장애·자폐 스펙트럼·영유아 가족을 위한 저자극 공연. 조명 완화·소음 허용·자유 입퇴장. 연 2회 정기 편성.</div>
+        <div class="tags"><span class="tag">자유 입퇴장</span><span class="tag">조명 완화</span><span class="tag p">가족 동반</span></div>
+      </article>
+    </div>
+  </section>
+
+<!-- PANEL 4 — PARTNERSHIPS -->
+  <section class="panel-sec" id="partners">
+    <div class="panel-hd">
+      <div class="anchor">04</div>
+      <div class="mid">
+        <div class="l">Program · 04 — Partnerships</div>
+        <h2>파트너십.<span class="it">— Institutional collaborations.</span></h2>
+      </div>
+      <div class="meta"><strong>28개 기관 · Active</strong>공공·교육·해외 파트너<br>상주단체 · 위촉협력 포함</div>
+    </div>
+
+    <div class="ptr-layout">
+      <div class="map-col">
+        <div class="kicker">Partnership Map · 2025</div>
+        <h3>4개 권역, 28개 기관.<small>— Across four regions.</small></h3>
+
+        <div class="dots">
+          <!-- Seoul / Gyeonggi cluster -->
+          <div class="dot b" style="top:26%;left:32%;"></div>
+          <div class="dot-label" style="top:20%;left:38%;">SEOUL <span class="v">서울 · 9</span></div>
+
+          <div class="dot" style="top:36%;left:28%;"></div>
+          <div class="dot-label" style="top:41%;left:12%;">GYEONGGI <span class="v">경기·군포 · 11</span></div>
+
+          <div class="dot s" style="top:30%;left:24%;"></div>
+          <div class="dot s" style="top:34%;left:34%;"></div>
+          <div class="dot s" style="top:40%;left:30%;"></div>
+
+          <!-- Gangwon / regional -->
+          <div class="dot" style="top:20%;left:58%;"></div>
+          <div class="dot-label" style="top:14%;left:58%;">REGIONAL <span class="v">지방 · 4</span></div>
+
+          <!-- International -->
+          <div class="dot b" style="top:68%;left:68%;"></div>
+          <div class="dot-label" style="top:73%;left:60%;">INT'L <span class="v">해외 · 4</span></div>
+          <div class="dot s" style="top:72%;left:76%;"></div>
+          <div class="dot s" style="top:66%;left:62%;"></div>
+        </div>
+
+        <div class="legend">
+          <div class="lg"><span class="sw" style="background:var(--dancheong-red);"></span>공공·지자체</div>
+          <div class="lg"><span class="sw" style="background:var(--geumbak-gold);"></span>주요 허브</div>
+          <div class="lg"><span class="sw" style="background:rgba(246,241,232,0.8);"></span>협력 학교·기관</div>
+        </div>
+        <div class="tot">
+          <div class="tn">28</div>
+          <div class="tl">Active Partners</div>
+        </div>
+      </div>
+
+      <div class="ptr-list">
+        <div class="ptr-row gov">
+          <div class="logo">軍</div>
+          <div class="body">
+            <h5>군포문화재단<small>Gunpo Cultural Foundation</small></h5>
+            <div class="d">상주단체 지정 기관. 군포문화예술회관 연습실·공연장 제공, 정기연주회 공동 기획.</div>
+          </div>
+          <div class="ty">상주단체</div>
+          <div class="since">Since 2017</div>
+        </div>
+        <div class="ptr-row gov">
+          <div class="logo">京</div>
+          <div class="body">
+            <h5>경기문화재단<small>Gyeonggi Cultural Foundation</small></h5>
+            <div class="d">경기도 전문예술단체 지정. 교육·아웃리치 사업비 일부 지원, 경기지역 순회공연 협력.</div>
+          </div>
+          <div class="ty">지원·협력</div>
+          <div class="since">Since 2019</div>
+        </div>
+        <div class="ptr-row">
+          <div class="logo">國</div>
+          <div class="body">
+            <h5>국립국악원<small>National Gugak Center</small></h5>
+            <div class="d">위촉 신작 공동 제작, 작품 아카이빙 협력, 지휘자·단원 연수 프로그램 상호 파견.</div>
+          </div>
+          <div class="ty">예술 협력</div>
+          <div class="since">Since 2018</div>
+        </div>
+        <div class="ptr-row edu">
+          <div class="logo">韓</div>
+          <div class="body">
+            <h5>한국예술종합학교 전통예술원<small>K-Arts, School of Korean Traditional Arts</small></h5>
+            <div class="d">학생 단원 실습·인턴십, 공동 기획 연주회, 차세대 작곡가 위촉 발굴.</div>
+          </div>
+          <div class="ty">교육 파트너</div>
+          <div class="since">Since 2016</div>
+        </div>
+        <div class="ptr-row edu">
+          <div class="logo">漢</div>
+          <div class="body">
+            <h5>한양대학교 국악과<small>Hanyang Univ. Dept. of Korean Music</small></h5>
+            <div class="d">연주자 교육 실습 및 공동 연구. 현·관·타·양악 전공생 실습 파견.</div>
+          </div>
+          <div class="ty">교육 파트너</div>
+          <div class="since">Since 2020</div>
+        </div>
+        <div class="ptr-row">
+          <div class="logo">院</div>
+          <div class="body">
+            <h5>군포시 공공의료원<small>Gunpo Public Medical Center</small></h5>
+            <div class="d">병원 내 찾아가는 음악회 정기 파트너. 의료진·환자·가족 대상 월 1회 공연 제공.</div>
+          </div>
+          <div class="ty">아웃리치</div>
+          <div class="since">Since 2021</div>
+        </div>
+        <div class="ptr-row">
+          <div class="logo">韓</div>
+          <div class="body">
+            <h5>주(駐)베를린 한국문화원<small>Korean Cultural Center Berlin</small></h5>
+            <div class="d">유럽 순회공연 현지 협력 기관. 독일·프랑스 연주 일정 공동 기획·홍보.</div>
+          </div>
+          <div class="ty">해외</div>
+          <div class="since">Since 2024</div>
+        </div>
+        <div class="ptr-row">
+          <div class="logo">京</div>
+          <div class="body">
+            <h5>중국국립가극원<small>China National Opera House</small></h5>
+            <div class="d">한중 문화교류 협력 기관. 북경 초청공연 호스트, 작곡가·단원 상호 방문 사업.</div>
+          </div>
+          <div class="ty">해외</div>
+          <div class="since">Since 2022</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- REQUEST CTA -->
+<section class="req">
+  <div class="req-box">
+    <div class="col-l">
+      <div class="l">For Institutions · 기관·학교·기업</div>
+      <h2>세종을 <span class="red">초청</span>하세요.</h2>
+      <p>학교·공공기관·기업·지역 축제 등 세종국악관현악단의 교육·아웃리치 프로그램 섭외는 공연 3개월 전 신청을 권장드립니다. 프로그램 유형·예산·장소 조건에 따라 맞춤 편성이 가능합니다.</p>
+      <div class="actions">
+        <a class="btn-p" href="inquiry.html">섭외 신청서 작성 <i class="ph ph-arrow-up-right"></i></a>
+        <a class="btn-g" href="#">프로그램 브로셔 (PDF) <i class="ph ph-download-simple"></i></a>
+      </div>
+    </div>
+
+    <div class="checklist">
+      <div class="rh">What we can provide · 편성·조건 안내</div>
+      <div class="ci"><div class="chk">✓</div><div class="lb">소편성 앙상블<small>Small Ensemble — 8–15 players</small></div><div class="cost">₩ 협의<small>재단 지원 가능</small></div></div>
+      <div class="ci"><div class="chk">✓</div><div class="lb">중편성 실내악<small>Chamber Orchestra — 16–25 players</small></div><div class="cost">₩ 협의<small>재단 지원 가능</small></div></div>
+      <div class="ci"><div class="chk">✓</div><div class="lb">대편성 관현악<small>Full Orchestra — 35+ players</small></div><div class="cost">₩ 협의<small>정기·특별공연 한정</small></div></div>
+      <div class="ci"><div class="chk">✓</div><div class="lb">어린이 교육 프로그램<small>Youth Education Package</small></div><div class="cost">₩ 무료<small>재단·기업 후원 조건</small></div></div>
+      <div class="ci"><div class="chk">✓</div><div class="lb">배리어프리 패키지<small>Barrier-Free Package</small></div><div class="cost">₩ 무료<small>문체부 지원 사업</small></div></div>
+    </div>
+  </div>
+</section>
+
+<footer class="ftr">
+  <div class="c">
+    <div class="ftr-grid">
+      <div class="col">
+        <h4>Studio · Residence</h4>
+        <div class="ftr-addr">
+          <strong>세종국악관현악단 &amp; 세종국악심포니오케스트라</strong><br>
+          15820 경기도 군포시 고산로 599<br>군포문화예술회관 內<br><br>
+          T. 031-391-8784<br>E. sejong8784@hanmail.net
+        </div>
+      </div>
+      <div class="col"><h4>Outreach</h4><a class="l" href="#outreach">찾아가는 음악회</a><a class="l" href="#youth">어린이 오케스트라</a><a class="l" href="#access">배리어프리 공연</a><a class="l" href="#partners">파트너십</a></div>
+      <div class="col"><h4>Partnership</h4><a class="l" href="inquiry.html">섭외 신청</a><a class="l">후원·기부</a><a class="l">사업 파트너</a></div>
+      <div class="col"><h4>Inquiry</h4><a class="l" href="inquiry.html">관객 문의</a><a class="l" href="inquiry.html">공연 섭외</a><a class="l">오시는 길</a></div>
+    </div>
+    <div class="ftr-bot">
+      <div>© 2026 SEJONG GUGAK — ALL RIGHTS RESERVED</div>
+      <div>Education · Outreach · Partnerships</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const hdr = document.getElementById('hdr');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 30) hdr.classList.add('scrolled'); else hdr.classList.remove('scrolled');
+});
+document.querySelectorAll('.tab').forEach((t,i) => {
+  t.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    const targets = ['outreach','youth','access','partners'];
+    const el = document.getElementById(targets[i]);
+    if (el) {
+      const top = el.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({top, behavior:'smooth'});
+    }
+  });
+});
+</script>
+</body></html>

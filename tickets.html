@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<title>세종국악관현악단 · 예매처 안내</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+:root{--max-w:1360px;}
+html,body{margin:0;background:var(--bg1);color:var(--fg1);}
+body{font-family:var(--font-sans-kr);overflow-x:hidden;}
+a{color:inherit;text-decoration:none;}
+button{cursor:pointer;font-family:inherit;}
+::selection{background:var(--dancheong-red);color:var(--hanji);}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.35  0 0 0 0 0.28  0 0 0 0 0.18  0 0 0 0.035 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");mix-blend-mode:multiply;opacity:.8;}
+
+.hdr{position:fixed;top:0;left:0;right:0;z-index:60;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:56px;padding:22px 44px;transition:all var(--dur-base) var(--ease-gentle);}
+.hdr.scrolled{background:rgba(246,241,232,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border-hairline);padding:14px 44px;}
+.brand{display:flex;align-items:center;gap:14px;}
+.brand img{height:46px;}
+.hdr.scrolled .brand img{height:36px;}
+.brand .stk{display:flex;flex-direction:column;line-height:1;}
+.brand .kr{font-family:var(--font-serif-kr);font-weight:800;font-size:20px;letter-spacing:-.01em;}
+.brand .en{font-family:var(--font-serif-en);font-style:italic;font-size:10px;letter-spacing:.16em;color:var(--fg2);margin-top:5px;}
+.nav{display:flex;justify-content:center;gap:44px;}
+.nav a{font-size:14px;font-weight:500;padding:6px 2px;position:relative;letter-spacing:.02em;}
+.nav a::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:1px;background:var(--dancheong-red);transform:scaleX(0);transform-origin:left;transition:transform var(--dur-base) var(--ease-gentle);}
+.nav a:hover::after,.nav a.active::after{transform:scaleX(1);}
+.nav a.active{color:var(--dancheong-red);}
+.util{display:flex;align-items:center;gap:20px;}
+.util .t{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;color:var(--fg2);}
+.cta{background:var(--ink);color:var(--hanji);padding:13px 20px;font-size:12px;font-weight:700;border:0;letter-spacing:.04em;display:inline-flex;gap:8px;align-items:center;white-space:nowrap;}
+.cta .dot{width:6px;height:6px;border-radius:50%;background:var(--dancheong-red);}
+
+.page-hero{position:relative;z-index:2;padding:160px 44px 60px;max-width:var(--max-w);margin:0 auto;}
+.crumb{display:flex;gap:10px;align-items:center;font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg2);margin-bottom:40px;}
+.crumb .now{color:var(--dancheong-red);}
+.crumb .sep{opacity:.4;}
+.page-hero-row{display:grid;grid-template-columns:1fr auto;gap:64px;align-items:end;padding-bottom:40px;border-bottom:1px solid var(--border-strong);}
+.page-hero h1{font-family:var(--font-serif-kr);font-weight:800;font-size:clamp(72px,9vw,140px);line-height:0.9;letter-spacing:-.04em;margin:0;word-break:keep-all;}
+.page-hero h1 .it{font-family:var(--font-serif-en);font-style:italic;font-size:0.42em;color:var(--dancheong-red);font-weight:400;display:inline-block;transform:translateY(-.35em);padding-left:12px;}
+.page-hero .lead{max-width:380px;font-size:14px;line-height:1.8;color:var(--fg2);word-break:keep-all;}
+.page-hero .lead strong{color:var(--ink);}
+
+/* INTRO CALLOUT — how to buy */
+.how{position:relative;z-index:2;max-width:var(--max-w);margin:0 auto;padding:32px 44px 0;display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--border-strong);}
+.how > div{padding:32px 24px 32px 0;border-right:1px dashed var(--border-hairline);}
+.how > div:last-child{border-right:0;}
+.how .no{font-family:var(--font-serif-en);font-style:italic;font-size:14px;color:var(--dancheong-red);letter-spacing:.04em;margin-bottom:10px;}
+.how h4{font-family:var(--font-serif-kr);font-weight:700;font-size:22px;margin:0 0 10px;letter-spacing:-.01em;word-break:keep-all;}
+.how p{font-size:13px;line-height:1.75;color:var(--fg2);margin:0;word-break:keep-all;}
+
+/* VENDORS */
+.sec{position:relative;z-index:2;max-width:var(--max-w);margin:0 auto;padding:80px 44px 20px;}
+.sec-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:36px;padding-bottom:20px;border-bottom:1px solid var(--border-strong);}
+.sec-head .l{display:flex;align-items:baseline;gap:14px;flex:1;min-width:0;}
+.sec-head .no{font-family:var(--font-serif-en);font-style:italic;font-size:24px;color:var(--dancheong-red);}
+.sec-head h2{font-family:var(--font-serif-kr);font-weight:800;font-size:44px;margin:0;letter-spacing:-.02em;white-space:nowrap;word-break:keep-all;}
+.sec-head .r{font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;color:var(--fg2);text-transform:uppercase;}
+
+.vendors{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;}
+.vendor{position:relative;background:var(--paper);border:1px solid var(--border-strong);padding:32px;display:grid;grid-template-columns:120px 1fr auto;gap:28px;align-items:center;transition:all var(--dur-base) var(--ease-gentle);}
+.vendor:hover{border-color:var(--ink);transform:translateY(-2px);}
+.vendor .logo{height:80px;background:var(--ink);color:var(--hanji);display:flex;align-items:center;justify-content:center;font-family:var(--font-serif-en);font-style:italic;font-size:32px;letter-spacing:-.02em;position:relative;overflow:hidden;}
+.vendor .logo.interpark{background:#0068c3;}
+.vendor .logo.yes24{background:#00529c;}
+.vendor .logo.melon{background:#00cd3c;color:#000;}
+.vendor .logo.gunpo{background:var(--dancheong-red);font-family:var(--font-serif-kr);font-weight:800;font-size:22px;font-style:normal;letter-spacing:-.01em;}
+.vendor .logo.sac{background:var(--ink);color:var(--geumbak-gold);}
+.vendor .logo.gugak{background:#2b4a3a;color:var(--geumbak-gold);font-family:var(--font-serif-kr);font-weight:800;font-size:22px;font-style:normal;letter-spacing:-.01em;}
+.vendor .body{display:flex;flex-direction:column;gap:6px;}
+.vendor h3{font-family:var(--font-serif-kr);font-weight:700;font-size:22px;margin:0;letter-spacing:-.01em;}
+.vendor h3 .en{font-family:var(--font-serif-en);font-style:italic;font-size:14px;color:var(--fg2);font-weight:400;margin-left:10px;}
+.vendor .desc{font-size:13px;line-height:1.65;color:var(--fg2);word-break:keep-all;}
+.vendor .tags{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap;}
+.vendor .tags span{font-family:var(--font-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;background:var(--hanji-deep);color:var(--fg2);}
+.vendor .tags span.hot{background:var(--dancheong-red);color:var(--hanji);}
+.vendor .go{display:flex;flex-direction:column;align-items:flex-end;gap:8px;}
+.vendor .go .arrow{font-size:28px;color:var(--ink);}
+.vendor .go .phone{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;color:var(--fg2);}
+
+/* UPCOMING LIST — where each concert has direct vendor links */
+.upcoming-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:0;padding:80px 0 20px;border-bottom:1px solid var(--border-strong);}
+
+.upcoming{position:relative;z-index:2;max-width:var(--max-w);margin:0 auto;padding:0 44px;}
+.row-perf{display:grid;grid-template-columns:80px 180px 1fr 220px 240px;gap:32px;align-items:center;padding:28px 0;border-bottom:1px solid var(--border-hairline);position:relative;transition:background var(--dur-base) var(--ease-gentle);}
+.row-perf:hover{background:var(--paper);}
+.row-perf .date{display:flex;flex-direction:column;line-height:1;}
+.row-perf .date .d{font-family:var(--font-serif-en);font-style:italic;font-size:44px;color:var(--ink);letter-spacing:-.02em;}
+.row-perf .date .m{font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:var(--fg2);text-transform:uppercase;margin-top:6px;}
+.row-perf .date .t{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;color:var(--dancheong-red);margin-top:4px;font-weight:700;}
+.row-perf .han{font-family:var(--font-serif-kr);font-weight:800;font-size:72px;color:var(--ink);line-height:.85;letter-spacing:-.03em;opacity:.92;}
+.row-perf .ttl-col{display:flex;flex-direction:column;gap:4px;}
+.row-perf .eyebrow{font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dancheong-red);font-weight:700;}
+.row-perf h4{font-family:var(--font-serif-kr);font-weight:700;font-size:22px;margin:0;letter-spacing:-.01em;line-height:1.3;word-break:keep-all;}
+.row-perf .sub{font-size:12.5px;color:var(--fg2);margin-top:2px;word-break:keep-all;}
+.row-perf .venue-col{display:flex;flex-direction:column;font-size:12.5px;line-height:1.55;color:var(--fg2);}
+.row-perf .venue-col strong{color:var(--ink);font-family:var(--font-serif-kr);font-weight:700;font-size:14px;}
+.row-perf .price{font-family:var(--font-mono);font-size:10px;letter-spacing:.06em;color:var(--fg2);margin-top:6px;min-height:14px;}
+.row-perf .price.free{color:var(--dancheong-red);font-weight:700;letter-spacing:.1em;}
+.row-perf .price.tba{color:var(--fg3);}
+.row-perf .price.empty::before{content:"— 추후 공지";color:var(--fg3);letter-spacing:.1em;}
+.row-perf .vendor-chips{display:flex;flex-direction:column;gap:6px;}
+.row-perf .vc{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;border:1px solid var(--border-strong);font-family:var(--font-mono);font-size:10px;letter-spacing:.06em;background:transparent;color:var(--ink);text-transform:uppercase;font-weight:700;}
+.row-perf .vc:hover{background:var(--ink);color:var(--hanji);border-color:var(--ink);}
+.row-perf .vc.primary{background:var(--dancheong-red);color:var(--hanji);border-color:var(--dancheong-red);}
+.row-perf .vc.primary:hover{background:var(--ink);border-color:var(--ink);}
+.row-perf .vc .ext{font-size:12px;margin-left:8px;}
+
+/* NOTICES */
+.notices{position:relative;z-index:2;max-width:var(--max-w);margin:0 auto;padding:80px 44px;}
+.notices-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--border-strong);border-bottom:1px solid var(--border-strong);}
+.note{padding:32px 28px 32px 0;border-right:1px dashed var(--border-hairline);}
+.note:last-child{border-right:0;padding-right:0;}
+.note .lb{font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dancheong-red);font-weight:700;margin-bottom:14px;}
+.note h4{font-family:var(--font-serif-kr);font-weight:700;font-size:20px;margin:0 0 12px;letter-spacing:-.01em;}
+.note p{font-size:13px;line-height:1.75;color:var(--fg2);margin:0;word-break:keep-all;}
+
+/* HELPLINE */
+.helpline{position:relative;z-index:2;background:var(--ink);color:var(--hanji);padding:80px 44px;overflow:hidden;}
+.helpline::before{content:"問";position:absolute;font-family:var(--font-serif-kr);font-weight:800;font-size:520px;line-height:.8;color:rgba(246,241,232,0.04);right:-60px;top:-80px;}
+.helpline .c{max-width:var(--max-w);margin:0 auto;position:relative;z-index:1;display:grid;grid-template-columns:1fr auto;gap:48px;align-items:center;}
+.helpline .lb{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--geumbak-gold);margin-bottom:20px;}
+.helpline h3{font-family:var(--font-serif-kr);font-weight:800;font-size:52px;line-height:1.2;letter-spacing:-.02em;margin:0 0 16px;word-break:keep-all;}
+.helpline p{font-size:14px;line-height:1.75;color:rgba(246,241,232,0.75);max-width:620px;word-break:keep-all;margin:0;}
+.helpline .call{display:flex;flex-direction:column;align-items:flex-end;gap:16px;}
+.helpline .call .num{font-family:var(--font-serif-en);font-style:italic;font-size:64px;color:var(--geumbak-gold);letter-spacing:-.02em;line-height:1;}
+.helpline .call .hours{font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;color:rgba(246,241,232,0.6);text-transform:uppercase;}
+.helpline .call .mail{font-size:14px;color:var(--hanji);padding:12px 20px;border:1px solid rgba(246,241,232,0.3);font-family:var(--font-mono);letter-spacing:.06em;}
+
+/* FOOTER */
+.ftr{position:relative;z-index:2;background:#0f0c0b;color:var(--hanji);padding:72px 44px 40px;border-top:1px solid rgba(246,241,232,0.14);}
+.ftr .c{max-width:var(--max-w);margin:0 auto;}
+.ftr-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:56px;}
+.ftr-grid .col h4{font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(246,241,232,0.6);margin:0 0 16px;}
+.ftr-grid .col a.l{display:block;color:var(--hanji);font-size:13px;line-height:2.1;}
+.ftr-grid .col a.l:hover{color:var(--dancheong-red);}
+.ftr-addr{font-size:13px;line-height:1.9;color:rgba(246,241,232,0.7);}
+.ftr-addr strong{color:var(--hanji);}
+.ftr-bot{display:flex;justify-content:space-between;align-items:center;margin-top:56px;padding-top:24px;border-top:1px solid rgba(246,241,232,0.14);font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(246,241,232,0.5);}
+.ftr-bot .fam{display:flex;gap:18px;flex-wrap:wrap;}
+
+@media (max-width:1100px){
+  .vendors{grid-template-columns:1fr;}
+  .row-perf{grid-template-columns:1fr 1fr;gap:18px;}
+  .row-perf .han{display:none;}
+  .helpline .c{grid-template-columns:1fr;}
+  .helpline .call{align-items:flex-start;}
+  .how,.notices-grid,.ftr-grid{grid-template-columns:1fr;}
+  .how > div,.note{border-right:0;border-bottom:1px dashed var(--border-hairline);padding:20px 0;}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr" id="hdr">
+  <a class="brand" href="index.html">
+    <img src="assets/logo-symbol.png" alt="">
+    <div class="stk"><span class="kr">세종국악관현악단</span><span class="en">Sejong Korean Music Orchestra</span></div>
+  </a>
+  <nav class="nav">
+    <a href="about.html" data-nav="about">악단소개</a>
+    <a href="schedule.html" class="active" data-nav="perf">공연</a>
+    <a href="archive.html" data-nav="archive">아카이브</a>
+    <a href="inquiry.html" data-nav="inquiry">문의</a>
+  </nav>
+  <div class="util">
+    <span class="t">031·391·8784</span>
+    <button class="cta"><span class="dot"></span>문의하기</button>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="crumb"><span>Home</span><span class="sep">／</span><span class="now">Booking Info</span><span class="sep">／</span><span>Where to Buy Tickets</span></div>
+  <div class="page-hero-row">
+    <h1>예매안내<span class="it">Where to Buy.</span></h1>
+    <div class="lead">
+      세종국악관현악단의 공연 티켓은 공식 예매처를 통해 판매됩니다.<br><br>
+      <strong>본 홈페이지는 결제를 진행하지 않으며,</strong> 공연별로 안내된 예매처에서 직접 구매하실 수 있습니다.
+    </div>
+  </div>
+</section>
+
+<section class="how">
+  <div>
+    <div class="no">— 01</div>
+    <h4>공연을 선택하세요</h4>
+    <p>아래 공연 목록 또는 <a href="schedule.html" style="color:var(--dancheong-red);border-bottom:1px solid;">공연 일정 페이지</a>에서 관람하실 공연을 확인해 주세요. 각 공연마다 판매 예매처가 다를 수 있습니다.</p>
+  </div>
+  <div>
+    <div class="no">— 02</div>
+    <h4>예매처로 이동</h4>
+    <p>공연 옆 예매처 버튼을 누르면 해당 사이트로 바로 연결됩니다. 인터파크·예스24·멜론티켓·군포문화재단 등 공식 채널만 안내됩니다.</p>
+  </div>
+  <div>
+    <div class="no">— 03</div>
+    <h4>결제는 예매처에서</h4>
+    <p>할인·좌석 선택·결제·티켓 수령은 각 예매처 정책을 따릅니다. 취소·환불 및 좌석 관련 문의는 예매하신 사이트 고객센터로 연락해 주세요.</p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="sec-head">
+    <div class="l"><span class="no">N° 01</span><h2>공식 예매처</h2></div>
+    <div class="r">— 6 Authorized Channels</div>
+  </div>
+
+  <div class="vendors">
+
+    <div class="vendor" onclick="window.open('https://tickets.interpark.com','_blank')">
+      <div class="logo interpark">Interpark</div>
+      <div class="body">
+        <h3>인터파크 티켓<span class="en">Interpark Ticket</span></h3>
+        <div class="desc">정기연주회·협연 공연의 주 판매처. 대부분의 대극장 공연을 이곳에서 예매하실 수 있습니다.</div>
+        <div class="tags"><span class="hot">주요 예매처</span><span>모바일티켓</span><span>좌석선택</span></div>
+      </div>
+      <div class="go"><span class="arrow"><i class="ph ph-arrow-up-right"></i></span><span class="phone">1544-1555</span></div>
+    </div>
+
+    <div class="vendor" onclick="window.open('http://ticket.yes24.com','_blank')">
+      <div class="logo yes24">YES24</div>
+      <div class="body">
+        <h3>예스24 티켓<span class="en">YES24 Tickets</span></h3>
+        <div class="desc">기획공연·가족 콘서트 일부를 취급합니다. 연간 회원 할인이 적용되는 공연이 있습니다.</div>
+        <div class="tags"><span>기획공연</span><span>가족·어린이</span></div>
+      </div>
+      <div class="go"><span class="arrow"><i class="ph ph-arrow-up-right"></i></span><span class="phone">1544-6399</span></div>
+    </div>
+
+    <div class="vendor" onclick="window.open('https://ticket.melon.com','_blank')">
+      <div class="logo melon">Melon</div>
+      <div class="body">
+        <h3>멜론티켓<span class="en">Melon Ticket</span></h3>
+        <div class="desc">크로스오버·특별공연 일부를 판매합니다. 멜론 구독자 대상 사전 예매 혜택이 있을 수 있습니다.</div>
+        <div class="tags"><span>크로스오버</span><span>사전예매</span></div>
+      </div>
+      <div class="go"><span class="arrow"><i class="ph ph-arrow-up-right"></i></span><span class="phone">1899-0042</span></div>
+    </div>
+
+    <div class="vendor" onclick="window.open('https://www.gunpoarts.or.kr','_blank')">
+      <div class="logo gunpo">군포</div>
+      <div class="body">
+        <h3>군포문화재단<span class="en">Gunpo Culture Foundation</span></h3>
+        <div class="desc">상주 공연장인 군포문화예술회관 공연의 공식 예매처. 군포시민 할인과 얼리버드 할인이 적용됩니다.</div>
+        <div class="tags"><span class="hot">상주공연장</span><span>시민할인</span><span>얼리버드</span></div>
+      </div>
+      <div class="go"><span class="arrow"><i class="ph ph-arrow-up-right"></i></span><span class="phone">031-361-8550</span></div>
+    </div>
+
+    <div class="vendor" onclick="window.open('https://www.sac.or.kr','_blank')">
+      <div class="logo sac">SAC</div>
+      <div class="body">
+        <h3>예술의전당<span class="en">Seoul Arts Center</span></h3>
+        <div class="desc">예술의전당 콘서트홀·IBK챔버홀 공연의 자체 예매처. SAC 멤버십 할인이 적용됩니다.</div>
+        <div class="tags"><span>정기연주회</span><span>멤버십</span></div>
+      </div>
+      <div class="go"><span class="arrow"><i class="ph ph-arrow-up-right"></i></span><span class="phone">02-580-1300</span></div>
+    </div>
+
+    <div class="vendor" onclick="window.open('https://www.gugak.go.kr','_blank')">
+      <div class="logo gugak">국악</div>
+      <div class="body">
+        <h3>국립국악원<span class="en">National Gugak Center</span></h3>
+        <div class="desc">국립국악원 예악당 공연의 공식 예매처. 국악 관련 특별 할인과 단체 예매가 가능합니다.</div>
+        <div class="tags"><span>예악당</span><span>단체할인</span></div>
+      </div>
+      <div class="go"><span class="arrow"><i class="ph ph-arrow-up-right"></i></span><span class="phone">02-580-3300</span></div>
+    </div>
+
+  </div>
+</section>
+
+<section class="upcoming">
+  <div class="sec-head upcoming-head">
+    <div class="l"><span class="no">N° 02</span><h2>예매 진행 중인 공연</h2></div>
+    <div class="r">— 6 Performances On Sale</div>
+  </div>
+
+  <div class="row-perf">
+    <div class="date"><span class="d">18</span><span class="m">APR · 土</span><span class="t">19:30</span></div>
+    <div class="han">江</div>
+    <div class="ttl-col">
+      <span class="eyebrow">— 제30회 정기연주회 · Regular N°30</span>
+      <h4>한강, 다시 흐르다</h4>
+      <div class="sub">지휘 박상우 · 협연 강은일(해금) · 김택수 위촉초연 〈江〉</div>
+    </div>
+    <div class="venue-col"><strong>예술의전당</strong>콘서트홀 · 서울 서초<span class="price">R · S · A · B — ₩90,000~30,000</span></div>
+    <div class="vendor-chips">
+      <a class="vc primary" target="_blank">인터파크 티켓 <i class="ph ph-arrow-up-right ext"></i></a>
+      <a class="vc" target="_blank">예술의전당 <i class="ph ph-arrow-up-right ext"></i></a>
+    </div>
+  </div>
+
+  <div class="row-perf">
+    <div class="date"><span class="d">05</span><span class="m">MAY · 火</span><span class="t">14:00 · 19:30</span></div>
+    <div class="han">童</div>
+    <div class="ttl-col">
+      <span class="eyebrow">— 어린이날 특별공연 · Family Concert</span>
+      <h4>악기들의 모험 Vol.4</h4>
+      <div class="sub">인형극 결합 가족 콘서트 · 2회차 공연</div>
+    </div>
+    <div class="venue-col"><strong>군포문화예술회관</strong>수리홀 · 군포<span class="price">전석 균일 — ₩8,000</span></div>
+    <div class="vendor-chips">
+      <a class="vc primary" target="_blank">군포문화재단 <i class="ph ph-arrow-up-right ext"></i></a>
+      <a class="vc" target="_blank">예스24 <i class="ph ph-arrow-up-right ext"></i></a>
+    </div>
+  </div>
+
+  <div class="row-perf">
+    <div class="date"><span class="d">17</span><span class="m">MAY · 土</span><span class="t">14:00</span></div>
+    <div class="han">和</div>
+    <div class="ttl-col">
+      <span class="eyebrow">— 2026 SPRING · MIDDAY CONCERT II</span>
+      <h4>한낮의 음악회 〈여음〉 두 번째 시리즈</h4>
+      <div class="sub">송현민 사회 · 이영조 작곡 · 안소은 & 소리소은 소리단</div>
+    </div>
+    <div class="venue-col"><strong>군포문화예술회관</strong>수리홀 · 군포<span class="price">전석 균일 — ₩20,000</span></div>
+    <div class="vendor-chips">
+      <a class="vc primary" target="_blank">군포문화재단 <i class="ph ph-arrow-up-right ext"></i></a>
+    </div>
+  </div>
+
+  <div class="row-perf">
+    <div class="date"><span class="d">14</span><span class="m">JUN · 日</span><span class="t">15:00</span></div>
+    <div class="han">話</div>
+    <div class="ttl-col">
+      <span class="eyebrow">— 배리어프리 기획공연</span>
+      <h4>설화와 국악심포니 Vol.4 — 선녀와 나무꾼</h4>
+      <div class="sub">수어 통역 · 음성 해설 · 자막 제공 · 모두를 위한 무대</div>
+    </div>
+    <div class="venue-col"><strong>국립국악원</strong>예악당 · 서울 서초<span class="price">R · S · A — ₩60,000~25,000</span></div>
+    <div class="vendor-chips">
+      <a class="vc primary" target="_blank">국립국악원 <i class="ph ph-arrow-up-right ext"></i></a>
+      <a class="vc" target="_blank">인터파크 <i class="ph ph-arrow-up-right ext"></i></a>
+    </div>
+  </div>
+
+  <div class="row-perf">
+    <div class="date"><span class="d">11</span><span class="m">JUL · 土</span><span class="t">20:00</span></div>
+    <div class="han">月</div>
+    <div class="ttl-col">
+      <span class="eyebrow">— 여름 야외 특별공연 · Outdoor</span>
+      <h4>한강 달빛 콘서트 · 두 번째 밤</h4>
+      <div class="sub">반포 달빛광장 · 무료 공연 (사전 예약 필수)</div>
+    </div>
+    <div class="venue-col"><strong>반포한강공원</strong>달빛광장 · 서울<span class="price free">무료 · FREE · 사전예약</span></div>
+    <div class="vendor-chips">
+      <a class="vc primary" target="_blank">사전예약 <i class="ph ph-arrow-up-right ext"></i></a>
+    </div>
+  </div>
+
+  <div class="row-perf">
+    <div class="date"><span class="d">24</span><span class="m">AUG · 月</span><span class="t">19:00</span></div>
+    <div class="han">夢</div>
+    <div class="ttl-col">
+      <span class="eyebrow">— COMMISSION · PREMIERE</span>
+      <h4>세종국악심포니 초청공연 — 고래의 꿈</h4>
+      <div class="sub">국악관현악 창작 초연 · 박재현 작곡</div>
+    </div>
+    <div class="venue-col"><strong>롯데콘서트홀</strong>서울 잠실<span class="price tba">가격 · 추후 공지</span></div>
+    <div class="vendor-chips">
+      <a class="vc primary" target="_blank">인터파크 티켓 <i class="ph ph-arrow-up-right ext"></i></a>
+      <a class="vc" target="_blank">멜론티켓 <i class="ph ph-arrow-up-right ext"></i></a>
+    </div>
+  </div>
+
+</section>
+
+<section class="notices">
+  <div class="notices-grid">
+    <div class="note">
+      <div class="lb">— 01 · Notice</div>
+      <h4>취소·환불은 예매처에서</h4>
+      <p>티켓 취소·환불·변경은 예매하신 사이트의 고객센터 정책을 따릅니다. 본 홈페이지에서는 처리되지 않으며, 각 예매처별 규정이 다를 수 있으니 확인 후 진행해 주세요.</p>
+    </div>
+    <div class="note">
+      <div class="lb">— 02 · Notice</div>
+      <h4>단체·학생 할인 문의</h4>
+      <p>20인 이상 단체, 학생·어르신·장애인 할인은 공연별로 상이합니다. 군포문화예술회관 공연은 시민 할인이 추가로 적용되며, 상세 문의는 031-391-8784로 연락 바랍니다.</p>
+    </div>
+    <div class="note">
+      <div class="lb">— 03 · Notice</div>
+      <h4>배리어프리 좌석</h4>
+      <p>휠체어석·동반 보조석·수어 통역 좌석은 전화 예약만 가능합니다. 공연 10일 전까지 사무국으로 연락 주시면 공연장과 협의하여 안내해 드립니다.</p>
+    </div>
+  </div>
+</section>
+
+<section class="helpline">
+  <div class="c">
+    <div>
+      <div class="lb">— General Inquiry</div>
+      <h3>예매 안내가 필요하시면<br>언제든 연락 주세요.</h3>
+      <p>공연 내용·단체 예매·배리어프리 좌석·프로그램북·관람 매너 등 예매 이외의 모든 문의는 악단 사무국이 직접 응답합니다. 전화·이메일 모두 평일 업무시간 내 답변드립니다.</p>
+    </div>
+    <div class="call">
+      <div class="num">031 · 391 · 8784</div>
+      <div class="hours">Tue — Sat · 09:00 — 18:00 KST</div>
+      <div class="mail">sejong8784@hanmail.net</div>
+    </div>
+  </div>
+</section>
+
+<footer class="ftr">
+  <div class="c">
+    <div class="ftr-grid">
+      <div class="col"><h4>Studio · Residence</h4><div class="ftr-addr"><strong>세종국악관현악단 & 세종국악심포니오케스트라</strong><br>15820 경기도 군포시 고산로 599<br>군포문화예술회관 內<br><br>T. 031-391-8784<br>E. sejong8784@hanmail.net</div></div>
+      <div class="col"><h4>Orchestra</h4><a class="l">악단 소개</a><a class="l">대표 인사말</a><a class="l">연혁</a><a class="l">단원 소개</a><a class="l">오시는 길</a></div>
+      <div class="col"><h4>Performance</h4><a class="l">공연 일정</a><a class="l">월별 공연</a><a class="l">지난 공연</a><a class="l">예매안내</a></div>
+      <div class="col"><h4>Community</h4><a class="l">공지사항</a><a class="l">기사자료</a><a class="l">보도자료</a><a class="l">갤러리</a></div>
+    </div>
+    <div class="ftr-bot">
+      <div>© 2026 SEJONG GUGAK — ALL RIGHTS RESERVED</div>
+      <div class="fam"><span>국립국악원</span><span>세종문화회관</span><span>군포시</span><span>군포문화재단</span><span>경기문화재단</span></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const hdr = document.getElementById('hdr');
+window.addEventListener('scroll', () => { if (window.scrollY > 30) hdr.classList.add('scrolled'); else hdr.classList.remove('scrolled'); });
+</script>
+</body></html>

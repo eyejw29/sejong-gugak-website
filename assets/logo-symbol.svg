@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 130" width="140" height="130">
+  
+  <g transform="translate(62 65)" fill-rule="evenodd">
+    
+    <path d="M -60 -30 C -30 -36, 20 -44, 34 -16 C 40 0, 32 0, 22 -4&#xA;             C 26 -22, -10 -20, -54 -20 Z" fill="#C8362A"></path>
+    
+    <path d="M -58 -18 C -30 -22, 30 -30, 38 -2 C 40 14, 30 14, 20 10&#xA;             C 28 -6, -10 -8, -52 -8 Z" fill="#E8B13A"></path>
+    
+    <path d="M -56 -6 C -30 -10, 34 -14, 36 12 C 34 26, 22 26, 14 22&#xA;             C 24 12, -8 6, -50 4 Z" fill="#3A8F60"></path>
+    
+    <path d="M -54 6 C -30 2, 28 4, 22 28 C 16 38, 8 36, 4 30&#xA;             C 14 22, -6 20, -48 16 Z" fill="#2E5BA8"></path>
+    
+    <g fill="#1A1614">
+      <ellipse cx="6" cy="8" rx="5" ry="3.4" transform="rotate(-22 6 8)"></ellipse>
+      <rect x="9.5" y="-8" width="1.5" height="17"></rect>
+    </g>
+  </g>
+</svg>

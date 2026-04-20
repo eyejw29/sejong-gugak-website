@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 560" width="400" height="560">
+  <rect width="400" height="560" fill="#ECE4D1"></rect>
+  <rect x="24" y="24" width="352" height="512" fill="none" stroke="#1A1614" stroke-width="1"></rect>
+  <text x="200" y="180" text-anchor="middle" font-family="Nanum Myeongjo, serif" font-weight="800" font-size="80" fill="#1A1614">여음</text>
+  <text x="200" y="230" text-anchor="middle" font-family="Nanum Myeongjo, serif" font-size="20" fill="#1A1614">한낮의 음악회</text>
+  <circle cx="200" cy="290" r="5" fill="#B8342A"></circle>
+  <text x="200" y="360" text-anchor="middle" font-family="Cormorant Garamond, serif" font-style="italic" font-size="18" fill="#5A544B">Midday Concert Series II</text>
+  <text x="200" y="470" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="#1A1614" letter-spacing="2">2026.05.17 · 14:00</text>
+  <text x="200" y="492" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="#5A544B" letter-spacing="2">GUNPO · SURI HALL</text>
+</svg>

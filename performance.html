@@ -1,0 +1,792 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<title>세종국악관현악단 · 제30회 정기연주회 〈도전과 개척〉</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+:root{--max-w:1360px;}
+html,body{margin:0;background:var(--bg1);color:var(--fg1);}
+body{font-family:var(--font-sans-kr);overflow-x:hidden;}
+a{color:inherit;text-decoration:none;}
+button{cursor:pointer;font-family:inherit;}
+::selection{background:var(--dancheong-red);color:var(--hanji);}
+
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.35  0 0 0 0 0.28  0 0 0 0 0.18  0 0 0 0.035 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
+  mix-blend-mode:multiply;opacity:.8;}
+
+/* HEADER */
+.hdr{position:fixed;top:0;left:0;right:0;z-index:60;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:56px;padding:22px 44px;transition:all var(--dur-base) var(--ease-gentle);}
+.hdr.scrolled{background:rgba(246,241,232,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border-hairline);padding:14px 44px;}
+.brand{display:flex;align-items:center;gap:14px;}
+.brand img{height:46px;transition:height var(--dur-base) var(--ease-gentle);}
+.hdr.scrolled .brand img{height:36px;}
+.brand .stk{display:flex;flex-direction:column;line-height:1;}
+.brand .kr{font-family:var(--font-serif-kr);font-weight:800;font-size:20px;letter-spacing:-.01em;}
+.brand .en{font-family:var(--font-serif-en);font-style:italic;font-size:10px;letter-spacing:.16em;color:var(--fg2);margin-top:5px;}
+.nav{display:flex;justify-content:center;gap:44px;}
+.nav a{font-size:14px;font-weight:500;padding:6px 2px;position:relative;letter-spacing:.02em;}
+.nav a::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:1px;background:var(--dancheong-red);transform:scaleX(0);transform-origin:left;transition:transform var(--dur-base) var(--ease-gentle);}
+.nav a:hover::after,.nav a.active::after{transform:scaleX(1);}
+.nav a.active{color:var(--dancheong-red);}
+.util{display:flex;align-items:center;gap:20px;}
+.util .t{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;color:var(--fg2);}
+.cta{background:var(--ink);color:var(--hanji);padding:13px 20px;font-size:12px;font-weight:700;border:0;letter-spacing:.04em;display:inline-flex;gap:8px;align-items:center;transition:background var(--dur-fast) var(--ease-gentle);}
+.cta:hover{background:var(--dancheong-red);}
+.cta .dot{width:6px;height:6px;border-radius:50%;background:var(--dancheong-red);}
+.cta:hover .dot{background:var(--hanji);}
+
+/* HERO POSTER */
+.hero{position:relative;z-index:2;padding:120px 44px 0;max-width:var(--max-w);margin:0 auto;}
+.crumb{display:flex;gap:10px;align-items:center;font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg2);margin-bottom:32px;}
+.crumb .sep{opacity:.4;}
+.crumb .now{color:var(--dancheong-red);}
+.hero-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:64px;align-items:start;padding-top:20px;}
+
+/* Poster panel */
+.poster{position:relative;aspect-ratio:3/4;background:linear-gradient(165deg,#1a1614 0%,#2b2320 50%,#3a2a22 100%);color:var(--hanji);padding:40px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;border:1px solid rgba(246,241,232,0.12);}
+.poster::before{content:"挑戰";position:absolute;font-family:var(--font-serif-kr);font-weight:800;font-size:clamp(260px,40vw,520px);line-height:0.82;letter-spacing:-.06em;color:rgba(184,52,42,0.32);right:-40px;top:-40px;writing-mode:vertical-rl;text-orientation:upright;pointer-events:none;}
+.poster::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at top right,rgba(184,52,42,0.12) 0%,transparent 60%),radial-gradient(ellipse at bottom left,rgba(184,137,75,0.12) 0%,transparent 60%);pointer-events:none;}
+.poster-top{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:flex-start;}
+.poster-top .series{font-family:var(--font-mono);font-size:11px;letter-spacing:.2em;color:var(--geumbak-gold);text-transform:uppercase;}
+.poster-top .no{font-family:var(--font-serif-en);font-style:italic;font-size:42px;color:var(--dancheong-red);line-height:0.9;}
+.poster-main{position:relative;z-index:2;}
+.poster-main .eyebrow{font-family:var(--font-serif-en);font-style:italic;font-size:20px;color:var(--geumbak-gold);margin-bottom:18px;}
+.poster-main h1{font-family:var(--font-serif-kr);font-weight:800;font-size:clamp(64px,8vw,116px);line-height:0.92;letter-spacing:-.04em;margin:0 0 14px;color:var(--hanji);word-break:keep-all;}
+.poster-main h1 .sep{display:block;height:3px;width:72px;background:var(--dancheong-red);margin:20px 0;}
+.poster-main .sub{font-family:var(--font-serif-en);font-style:italic;font-size:26px;color:rgba(246,241,232,0.76);}
+.poster-bot{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;border-top:1px solid rgba(246,241,232,0.22);padding-top:20px;}
+.poster-bot .meta{font-family:var(--font-serif-kr);font-weight:700;font-size:14px;line-height:1.6;letter-spacing:-.005em;}
+.poster-bot .meta .k{font-family:var(--font-mono);font-size:10px;color:rgba(246,241,232,0.5);letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:2px;font-weight:400;}
+.poster-stamp{width:88px;height:88px;background:var(--dancheong-red);color:var(--hanji);display:flex;align-items:center;justify-content:center;font-family:var(--font-serif-kr);font-weight:800;font-size:18px;line-height:1.05;text-align:center;transform:rotate(-4deg);position:relative;flex-shrink:0;padding:4px;}
+.poster-stamp::before{content:"";position:absolute;inset:4px;border:1px solid rgba(246,241,232,0.5);}
+.poster-stamp div{position:relative;z-index:1;}
+
+/* Hero right panel */
+.hero-right{display:flex;flex-direction:column;gap:44px;padding-top:12px;}
+.hero-right .chap{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--dancheong-red);display:flex;align-items:center;gap:10px;}
+.hero-right .chap::before{content:"";width:24px;height:1px;background:var(--dancheong-red);}
+.hero-right h2{font-family:var(--font-serif-kr);font-weight:800;font-size:48px;line-height:1.15;letter-spacing:-.025em;margin:0 0 20px;word-break:keep-all;}
+.hero-right h2 .it{font-family:var(--font-serif-en);font-style:italic;font-weight:400;color:var(--dancheong-red);}
+.hero-right .lead{font-size:15px;line-height:1.9;color:var(--fg1);word-break:keep-all;max-width:560px;}
+.info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:1px solid var(--border-strong);border-bottom:1px solid var(--border-strong);}
+.info-cell{padding:22px 24px 22px 0;display:flex;flex-direction:column;gap:6px;border-right:1px solid var(--border-hairline);border-bottom:1px solid var(--border-hairline);}
+.info-cell:nth-child(2n){padding-left:24px;padding-right:0;border-right:0;}
+.info-cell:nth-last-child(-n+2){border-bottom:0;}
+.info-cell .k{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg2);}
+.info-cell .v{font-family:var(--font-serif-kr);font-weight:700;font-size:20px;letter-spacing:-.01em;color:var(--ink);line-height:1.3;word-break:keep-all;}
+.info-cell .v small{display:block;font-family:var(--font-serif-en);font-style:italic;font-weight:400;font-size:13px;color:var(--fg2);margin-top:4px;}
+.hero-cta{display:flex;gap:10px;margin-top:4px;flex-wrap:wrap;}
+.btn-big{background:var(--dancheong-red);color:var(--hanji);padding:20px 28px;font-size:14px;font-weight:700;border:0;letter-spacing:.03em;display:inline-flex;gap:12px;align-items:center;transition:background var(--dur-fast) var(--ease-gentle);}
+.btn-big:hover{background:var(--ink);}
+.btn-big i{font-size:20px;}
+.btn-ghost{background:transparent;color:var(--ink);padding:20px 24px;font-size:14px;font-weight:600;border:1px solid var(--border-strong);letter-spacing:.03em;display:inline-flex;gap:10px;align-items:center;transition:all var(--dur-fast) var(--ease-gentle);}
+.btn-ghost:hover{border-color:var(--ink);background:var(--ink);color:var(--hanji);}
+.avail{display:flex;align-items:center;gap:20px;padding:16px 0;font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg2);}
+.avail .dot{width:8px;height:8px;background:#2f7d3e;border-radius:50%;box-shadow:0 0 0 3px rgba(47,125,62,0.2);}
+.avail .bar{flex:1;height:2px;background:var(--border-hairline);position:relative;overflow:hidden;}
+.avail .bar::before{content:"";position:absolute;left:0;top:0;bottom:0;width:62%;background:var(--dancheong-red);}
+.avail .pct{color:var(--dancheong-red);font-weight:700;}
+
+/* SECONDARY MARQUEE */
+.marq{position:relative;z-index:2;padding:28px 0;border-top:1px solid var(--border-strong);border-bottom:1px solid var(--border-strong);overflow:hidden;margin-top:80px;}
+.marq .track{display:flex;gap:48px;white-space:nowrap;animation:scroll 50s linear infinite;font-family:var(--font-serif-kr);font-weight:800;font-size:36px;letter-spacing:-.02em;}
+.marq .track span{display:inline-flex;align-items:center;gap:48px;}
+.marq .track .star{color:var(--dancheong-red);font-size:24px;}
+.marq .track .sub{font-family:var(--font-serif-en);font-style:italic;font-weight:400;color:var(--fg2);font-size:22px;}
+@keyframes scroll{to{transform:translateX(-50%);}}
+
+/* PROGRAM */
+.prog{position:relative;z-index:2;max-width:var(--max-w);margin:0 auto;padding:120px 44px;}
+.prog-hd{display:grid;grid-template-columns:1fr auto;gap:64px;align-items:end;margin-bottom:64px;padding-bottom:28px;border-bottom:1px solid var(--border-strong);}
+.prog-hd .lbl{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--dancheong-red);margin-bottom:16px;}
+.prog-hd h2{font-family:var(--font-serif-kr);font-weight:800;font-size:72px;line-height:1;letter-spacing:-.03em;margin:0;word-break:keep-all;}
+.prog-hd h2 .it{font-family:var(--font-serif-en);font-style:italic;font-size:0.44em;color:var(--dancheong-red);font-weight:400;display:inline-block;transform:translateY(-.3em);padding-left:10px;}
+.prog-hd .dur{font-family:var(--font-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg2);}
+.prog-hd .dur strong{font-family:var(--font-serif-kr);font-weight:800;color:var(--ink);font-size:32px;display:block;margin-top:6px;letter-spacing:-.01em;}
+
+.program-list{display:flex;flex-direction:column;}
+.p-item{display:grid;grid-template-columns:80px 1.6fr 1fr 120px;gap:32px;padding:36px 0;border-bottom:1px solid var(--border-strong);align-items:baseline;position:relative;transition:all var(--dur-base) var(--ease-gentle);cursor:pointer;}
+.p-item:hover{padding-left:16px;}
+.p-item .n{font-family:var(--font-serif-en);font-style:italic;font-size:42px;color:var(--dancheong-red);line-height:1;letter-spacing:-.03em;}
+.p-item .t h3{font-family:var(--font-serif-kr);font-weight:800;font-size:28px;margin:0 0 6px;letter-spacing:-.015em;line-height:1.25;word-break:keep-all;}
+.p-item .t .han{font-family:var(--font-serif-kr);font-weight:700;font-size:15px;color:var(--fg2);margin-bottom:10px;}
+.p-item .t .dsc{font-size:13px;line-height:1.7;color:var(--fg2);word-break:keep-all;max-width:480px;}
+.p-item .c{font-family:var(--font-sans-kr);font-size:13px;line-height:1.7;color:var(--ink);}
+.p-item .c .lab{font-family:var(--font-mono);font-size:10px;color:var(--fg2);letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:4px;font-weight:400;}
+.p-item .c strong{font-family:var(--font-serif-kr);font-weight:700;letter-spacing:-.005em;}
+.p-item .d{font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;color:var(--fg1);text-align:right;font-weight:500;}
+.intermission{display:grid;grid-template-columns:80px 1fr 120px;gap:32px;padding:28px 0;border-bottom:1px solid var(--border-hairline);align-items:baseline;background:var(--hanji-deep);padding-left:16px;padding-right:16px;}
+.intermission .n{font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;color:var(--fg2);text-transform:uppercase;}
+.intermission .t{font-family:var(--font-serif-kr);font-weight:700;font-size:16px;color:var(--fg1);}
+.intermission .d{font-family:var(--font-mono);font-size:12px;color:var(--fg2);text-align:right;}
+
+/* CONDUCTOR SPOT */
+.spot{position:relative;z-index:2;background:var(--ink);color:var(--hanji);padding:140px 44px;}
+.spot .c{max-width:var(--max-w);margin:0 auto;display:grid;grid-template-columns:0.8fr 1fr;gap:88px;align-items:start;}
+.spot .lbl{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--geumbak-gold);margin-bottom:16px;}
+.spot h2{font-family:var(--font-serif-kr);font-weight:800;font-size:72px;line-height:1;letter-spacing:-.03em;margin:0 0 32px;word-break:keep-all;}
+.spot .portrait{aspect-ratio:3/4;background:linear-gradient(165deg,#2b2623 0%,#1a1614 100%);position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:28px;}
+.spot .portrait::before{content:"指";position:absolute;font-family:var(--font-serif-kr);font-weight:800;font-size:440px;line-height:0.8;color:rgba(246,241,232,0.06);right:-30px;top:-60px;}
+.spot .portrait .cap{position:relative;z-index:1;}
+.spot .portrait .cap .role{font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;color:var(--geumbak-gold);text-transform:uppercase;margin-bottom:8px;}
+.spot .portrait .cap .nm{font-family:var(--font-serif-kr);font-weight:800;font-size:36px;letter-spacing:-.01em;margin-bottom:2px;}
+.spot .portrait .cap .en{font-family:var(--font-serif-en);font-style:italic;font-size:14px;color:rgba(246,241,232,0.7);}
+.spot .bio{display:flex;flex-direction:column;gap:28px;}
+.spot .quote{font-family:var(--font-serif-kr);font-weight:800;font-size:36px;line-height:1.3;letter-spacing:-.02em;color:var(--hanji);word-break:keep-all;padding-left:24px;border-left:2px solid var(--dancheong-red);}
+.spot .quote .red{color:var(--dancheong-red);}
+.spot .bio-text{font-size:15px;line-height:1.9;color:rgba(246,241,232,0.82);max-width:560px;word-break:keep-all;}
+.spot .bio-text p{margin:0 0 18px;}
+.spot .cv{display:grid;grid-template-columns:1fr;gap:0;border-top:1px solid rgba(246,241,232,0.2);margin-top:12px;}
+.spot .cv-row{display:grid;grid-template-columns:80px 1fr;gap:24px;padding:14px 0;border-bottom:1px solid rgba(246,241,232,0.12);align-items:baseline;}
+.spot .cv-row .y{font-family:var(--font-mono);font-size:12px;letter-spacing:.06em;color:var(--geumbak-gold);}
+.spot .cv-row .t{font-size:13px;line-height:1.6;color:rgba(246,241,232,0.85);word-break:keep-all;}
+
+/* GUESTS */
+.guests{position:relative;z-index:2;max-width:var(--max-w);margin:0 auto;padding:140px 44px;}
+.guests-hd{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:end;margin-bottom:56px;padding-bottom:28px;border-bottom:1px solid var(--border-strong);}
+.guests-hd .lbl{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--dancheong-red);margin-bottom:16px;}
+.guests-hd h2{font-family:var(--font-serif-kr);font-weight:800;font-size:72px;line-height:1;letter-spacing:-.03em;margin:0;word-break:keep-all;}
+.guests-hd .desc{font-size:14px;line-height:1.8;color:var(--fg2);word-break:keep-all;max-width:440px;}
+.guest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.guest-card{background:var(--paper);border:1px solid var(--border-hairline);overflow:hidden;transition:all var(--dur-base) var(--ease-gentle);}
+.guest-card:hover{border-color:var(--ink);transform:translateY(-2px);}
+.guest-card .img{aspect-ratio:4/5;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:20px;color:var(--hanji);}
+.guest-card.v1 .img{background:linear-gradient(165deg,#3a2a1a 0%,#1a1614 100%);}
+.guest-card.v2 .img{background:linear-gradient(165deg,#2a3a3a 0%,#1a1614 100%);}
+.guest-card.v3 .img{background:linear-gradient(165deg,#4a2a2a 0%,#1a1614 100%);}
+.guest-card .img::before{content:attr(data-glyph);position:absolute;font-family:var(--font-serif-kr);font-weight:800;font-size:220px;line-height:0.8;color:rgba(246,241,232,0.09);right:-20px;top:-30px;}
+.guest-card .img .role{position:relative;z-index:1;font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--geumbak-gold);}
+.guest-card .bd{padding:22px 24px 26px;}
+.guest-card .bd .inst{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dancheong-red);margin-bottom:8px;}
+.guest-card .bd h4{font-family:var(--font-serif-kr);font-weight:800;font-size:26px;margin:0 0 4px;letter-spacing:-.015em;}
+.guest-card .bd .en{font-family:var(--font-serif-en);font-style:italic;font-size:14px;color:var(--fg2);margin-bottom:14px;}
+.guest-card .bd .bio{font-size:13px;line-height:1.7;color:var(--fg1);word-break:keep-all;padding-top:14px;border-top:1px dashed var(--border-hairline);}
+
+/* VENUE + TICKETING */
+.venue{position:relative;z-index:2;max-width:var(--max-w);margin:0 auto;padding:140px 44px;}
+.venue-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:64px;align-items:start;}
+.venue-hd .lbl{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--dancheong-red);margin-bottom:16px;}
+.venue-hd h2{font-family:var(--font-serif-kr);font-weight:800;font-size:56px;line-height:1.05;letter-spacing:-.03em;margin:0 0 32px;word-break:keep-all;}
+.venue-info{border-top:1px solid var(--border-strong);}
+.venue-row{display:grid;grid-template-columns:160px 1fr;gap:24px;padding:20px 0;border-bottom:1px solid var(--border-hairline);align-items:baseline;}
+.venue-row .k{font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg2);}
+.venue-row .v{font-family:var(--font-serif-kr);font-weight:700;font-size:17px;line-height:1.5;letter-spacing:-.005em;color:var(--ink);word-break:keep-all;}
+.venue-row .v small{display:block;font-family:var(--font-sans-kr);font-weight:400;font-size:13px;color:var(--fg2);margin-top:4px;line-height:1.6;}
+
+.seatmap{background:var(--ink);color:var(--hanji);padding:32px;position:relative;}
+.seatmap .t{font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;color:var(--geumbak-gold);text-transform:uppercase;margin-bottom:8px;}
+.seatmap .tt{font-family:var(--font-serif-kr);font-weight:700;font-size:20px;margin-bottom:24px;}
+.seatmap .stage{text-align:center;font-family:var(--font-mono);font-size:10px;letter-spacing:.2em;color:rgba(246,241,232,0.5);padding:14px 0;background:rgba(246,241,232,0.06);margin-bottom:18px;border-radius:2px;}
+.seats{display:flex;flex-direction:column;gap:5px;padding:0 8px;}
+.seat-row{display:flex;gap:4px;justify-content:center;}
+.seat{width:14px;height:14px;background:rgba(246,241,232,0.18);transition:background var(--dur-fast) var(--ease-gentle);}
+.seat.vip{background:var(--geumbak-gold);opacity:.8;}
+.seat.r{background:var(--dancheong-red);opacity:.8;}
+.seat.s{background:#5a8a5a;opacity:.7;}
+.seat.a{background:rgba(246,241,232,0.38);}
+.seat.b{background:rgba(246,241,232,0.22);}
+.seat.sold{background:rgba(246,241,232,0.06);position:relative;}
+.seat.sold::after{content:"×";position:absolute;inset:0;font-size:9px;display:flex;align-items:center;justify-content:center;color:rgba(246,241,232,0.3);line-height:1;}
+.legend{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:24px;}
+.legend .row{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:rgba(246,241,232,0.06);border:1px solid rgba(246,241,232,0.1);}
+.legend .row .lft{display:flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;}
+.legend .sw{width:10px;height:10px;}
+.legend .price{font-family:var(--font-serif-kr);font-weight:700;font-size:14px;letter-spacing:-.005em;}
+.legend .price .w{color:var(--geumbak-gold);font-family:var(--font-serif-en);font-style:italic;font-weight:400;margin-right:3px;}
+
+/* NOTES & DISCOUNTS */
+.notes{position:relative;z-index:2;max-width:var(--max-w);margin:0 auto;padding:0 44px 140px;}
+.notes-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;}
+.notes-card{background:var(--paper);padding:36px;border:1px solid var(--border-hairline);}
+.notes-card .lbl{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--dancheong-red);margin-bottom:12px;}
+.notes-card h3{font-family:var(--font-serif-kr);font-weight:800;font-size:32px;margin:0 0 24px;letter-spacing:-.02em;word-break:keep-all;}
+.notes-card ul{list-style:none;padding:0;margin:0;}
+.notes-card li{display:grid;grid-template-columns:16px 1fr auto;gap:14px;padding:14px 0;border-bottom:1px dashed var(--border-hairline);align-items:baseline;font-size:14px;line-height:1.6;word-break:keep-all;}
+.notes-card li:last-child{border-bottom:0;}
+.notes-card li .ic{font-family:var(--font-serif-en);font-style:italic;color:var(--dancheong-red);}
+.notes-card li .pct{font-family:var(--font-mono);font-weight:700;color:var(--dancheong-red);font-size:13px;letter-spacing:.04em;}
+.notes-card li strong{font-family:var(--font-serif-kr);font-weight:700;letter-spacing:-.005em;}
+.notes-card li .sub{display:block;font-size:12px;color:var(--fg2);margin-top:2px;}
+
+/* RELATED PERFORMANCES */
+.rel{position:relative;z-index:2;background:var(--hanji-deep);padding:140px 44px;}
+.rel-inner{max-width:var(--max-w);margin:0 auto;}
+.rel-hd{display:flex;justify-content:space-between;align-items:end;margin-bottom:48px;padding-bottom:24px;border-bottom:1px solid var(--border-strong);}
+.rel-hd .lbl{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--dancheong-red);margin-bottom:16px;}
+.rel-hd h2{font-family:var(--font-serif-kr);font-weight:800;font-size:56px;line-height:1;letter-spacing:-.03em;margin:0;}
+.rel-hd .all{font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dancheong-red);display:inline-flex;align-items:center;gap:8px;border-bottom:1px solid var(--dancheong-red);padding-bottom:2px;}
+.rel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.rel-card{background:var(--paper);border:1px solid var(--border-hairline);overflow:hidden;cursor:pointer;transition:all var(--dur-base) var(--ease-gentle);}
+.rel-card:hover{border-color:var(--ink);}
+.rel-card .p{aspect-ratio:16/10;position:relative;overflow:hidden;color:var(--hanji);padding:22px;display:flex;flex-direction:column;justify-content:space-between;}
+.rel-card.a .p{background:linear-gradient(165deg,#2b2623 0%,#1a1614 100%);}
+.rel-card.b .p{background:linear-gradient(165deg,#4a2520 0%,#1a1614 100%);}
+.rel-card.c .p{background:linear-gradient(165deg,#1f4b44 0%,#0f2a26 100%);}
+.rel-card .p::before{content:attr(data-g);position:absolute;font-family:var(--font-serif-kr);font-weight:800;font-size:240px;line-height:0.8;color:rgba(246,241,232,0.08);right:-20px;top:-30px;}
+.rel-card .p .top{position:relative;z-index:1;font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--geumbak-gold);}
+.rel-card .p .bot{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:flex-end;}
+.rel-card .p .num{font-family:var(--font-serif-en);font-style:italic;font-size:36px;color:rgba(246,241,232,0.7);}
+.rel-card .p .dt{font-family:var(--font-mono);font-size:12px;letter-spacing:.06em;color:var(--hanji);font-weight:500;}
+.rel-card .bd{padding:22px 24px 26px;}
+.rel-card .bd .ty{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dancheong-red);margin-bottom:6px;}
+.rel-card .bd h4{font-family:var(--font-serif-kr);font-weight:800;font-size:24px;margin:0 0 4px;letter-spacing:-.015em;line-height:1.25;word-break:keep-all;}
+.rel-card .bd .sub{font-family:var(--font-serif-en);font-style:italic;font-size:13px;color:var(--fg2);}
+
+/* STICKY BOOK BAR */
+.book{position:fixed;bottom:0;left:0;right:0;z-index:50;background:var(--ink);color:var(--hanji);padding:16px 44px;display:grid;grid-template-columns:auto 1fr auto;gap:32px;align-items:center;border-top:1px solid var(--dancheong-red);transform:translateY(110%);transition:transform var(--dur-base) var(--ease-gentle);}
+.book.on{transform:translateY(0);}
+.book .mini{display:flex;align-items:center;gap:14px;}
+.book .mini .box{width:44px;height:56px;background:linear-gradient(165deg,#2b2623,#1a1614);border:1px solid rgba(184,52,42,0.4);display:flex;align-items:center;justify-content:center;font-family:var(--font-serif-kr);font-weight:800;font-size:16px;color:var(--dancheong-red);flex-shrink:0;}
+.book .mini .tt{font-family:var(--font-serif-kr);font-weight:700;font-size:16px;line-height:1.2;letter-spacing:-.01em;}
+.book .mini .tt small{display:block;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(246,241,232,0.6);margin-top:2px;font-weight:400;}
+.book .slot{display:flex;justify-content:center;gap:28px;align-items:center;font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(246,241,232,0.75);}
+.book .slot .piece{display:flex;flex-direction:column;gap:2px;align-items:center;}
+.book .slot .piece strong{font-family:var(--font-serif-kr);font-weight:700;font-size:17px;color:var(--hanji);letter-spacing:-.01em;}
+.book .actions{display:flex;gap:10px;}
+.book .btn-p{background:var(--dancheong-red);color:var(--hanji);padding:16px 28px;font-size:13px;font-weight:700;border:0;letter-spacing:.04em;display:inline-flex;gap:10px;align-items:center;transition:background var(--dur-fast) var(--ease-gentle);}
+.book .btn-p:hover{background:var(--hanji);color:var(--ink);}
+.book .btn-g{background:transparent;color:var(--hanji);padding:16px 20px;font-size:13px;font-weight:700;border:1px solid rgba(246,241,232,0.3);letter-spacing:.04em;display:inline-flex;gap:8px;align-items:center;}
+.book .btn-g:hover{background:rgba(246,241,232,0.08);}
+
+/* FOOTER */
+.ftr{position:relative;z-index:2;background:var(--ink);color:var(--hanji);padding:72px 44px 100px;border-top:1px solid rgba(246,241,232,0.14);}
+.ftr .c{max-width:var(--max-w);margin:0 auto;}
+.ftr-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:56px;}
+.ftr-grid .col h4{font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(246,241,232,0.6);margin:0 0 16px;}
+.ftr-grid .col a.l{display:block;color:var(--hanji);font-size:13px;line-height:2.1;}
+.ftr-grid .col a.l:hover{color:var(--dancheong-red);}
+.ftr-addr{font-size:13px;line-height:1.9;color:rgba(246,241,232,0.7);}
+.ftr-addr strong{color:var(--hanji);}
+.ftr-bot{display:flex;justify-content:space-between;align-items:center;margin-top:56px;padding-top:24px;border-top:1px solid rgba(246,241,232,0.14);font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(246,241,232,0.5);}
+
+@media (max-width:1000px){
+  .hero-grid,.spot .c,.venue-grid,.notes-grid,.prog-hd,.guests-hd,.rel-hd{grid-template-columns:1fr;gap:32px;}
+  .p-item{grid-template-columns:50px 1fr;gap:16px;}
+  .p-item .c,.p-item .d{grid-column:2;}
+  .guest-grid,.rel-grid{grid-template-columns:1fr 1fr;}
+  .ftr-grid{grid-template-columns:1fr 1fr;}
+  .book{grid-template-columns:1fr;gap:16px;}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="hdr" id="hdr">
+  <a class="brand" href="index.html">
+    <img src="assets/logo-symbol.png" alt="">
+    <div class="stk"><span class="kr">세종국악관현악단</span><span class="en">Sejong Korean Music Orchestra</span></div>
+  </a>
+  <nav class="nav">
+    <a href="about.html" data-nav="about">악단소개</a>
+    <a href="schedule.html" class="active" data-nav="perf">공연</a>
+    <a href="archive.html" data-nav="archive">아카이브</a>
+    <a href="inquiry.html" data-nav="inquiry">문의</a>
+  </nav>
+  <div class="util">
+    <span class="t">031·391·8784</span>
+    <button class="cta"><span class="dot"></span>티켓 예매</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="crumb"><span>Home</span><span class="sep">／</span><span>Performance</span><span class="sep">／</span><span>Regular</span><span class="sep">／</span><span class="now">제30회 정기연주회</span></div>
+
+  <div class="hero-grid">
+    <!-- Poster -->
+    <div class="poster">
+      <div class="poster-top">
+        <div class="series">Regular Concert Series · 정기연주회</div>
+        <div class="no">N° 30</div>
+      </div>
+      <div class="poster-main">
+        <div class="eyebrow">— 창단 30주년 기념</div>
+        <h1>도전과<br>개척<span class="sep"></span></h1>
+        <div class="sub">The Challenge, and the Frontier.</div>
+      </div>
+      <div class="poster-bot">
+        <div class="meta">
+          <div><span class="k">Date</span>2026. 11. 14. SAT</div>
+          <div style="margin-top:8px;"><span class="k">Venue</span>예술의전당 콘서트홀</div>
+        </div>
+        <div class="poster-stamp"><div>挑戰<br>開拓</div></div>
+      </div>
+    </div>
+
+    <!-- Right panel -->
+    <div class="hero-right">
+      <div class="chap">Chapter 01 · About this Concert</div>
+      <div>
+        <h2>30년의 호흡,<br>다음 30년의 <span class="it">Frontier.</span></h2>
+        <p class="lead">1992년 창단부터 오늘에 이르기까지 — 여민동락(與民同樂)의 정신 아래 걸어온 한 세대의 길. 세종국악관현악단 창단 30주년을 기념하는 특별한 무대가 예술의전당 콘서트홀에서 열립니다. 전통과 동시대, 국악과 서양 관현악이 만나는 지점에서, 다음 30년의 가능성을 함께 열어갑니다.</p>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-cell">
+          <span class="k">Date · 공연일</span>
+          <span class="v">2026. 11. 14. <small>Saturday · 19:30 KST</small></span>
+        </div>
+        <div class="info-cell">
+          <span class="k">Running Time</span>
+          <span class="v">110 min <small>Intermission 15 min incl.</small></span>
+        </div>
+        <div class="info-cell">
+          <span class="k">Venue · 장소</span>
+          <span class="v">예술의전당 콘서트홀 <small>Seoul Arts Center, Concert Hall</small></span>
+        </div>
+        <div class="info-cell">
+          <span class="k">Audience · 관람등급</span>
+          <span class="v">8세 이상 <small>Ages 8+ · 초등학생 이상 입장 가능</small></span>
+        </div>
+      </div>
+
+      <div class="avail">
+        <span class="dot"></span>
+        <span>ON SALE NOW</span>
+        <div class="bar"></div>
+        <span class="pct">62% SOLD</span>
+      </div>
+
+      <div class="hero-cta">
+        <button class="btn-big">티켓 예매하기 <i class="ph ph-arrow-up-right"></i></button>
+        <button class="btn-ghost"><i class="ph ph-calendar-plus"></i>일정 추가</button>
+        <button class="btn-ghost"><i class="ph ph-share-network"></i>공유</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MARQUEE -->
+  <div class="marq">
+    <div class="track">
+      <span>與民同樂 <i class="star">✦</i> Together, with the People <i class="star">✦</i> 도전과 개척 <i class="star">✦</i> The Challenge, The Frontier <i class="star">✦</i> 창단 30주년 <i class="star">✦</i> 30 YEARS · 1992–2026 <i class="star">✦</i> </span>
+      <span>與民同樂 <i class="star">✦</i> Together, with the People <i class="star">✦</i> 도전과 개척 <i class="star">✦</i> The Challenge, The Frontier <i class="star">✦</i> 창단 30주년 <i class="star">✦</i> 30 YEARS · 1992–2026 <i class="star">✦</i> </span>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAM -->
+<section class="prog">
+  <div class="prog-hd">
+    <div>
+      <div class="lbl">Chapter 02 — Program</div>
+      <h2>프로그램<span class="it">Programme.</span></h2>
+    </div>
+    <div class="dur">Total Running Time<strong>110 분</strong></div>
+  </div>
+
+  <div class="program-list">
+    <div class="p-item">
+      <div class="n">I.</div>
+      <div class="t">
+        <h3>국악관현악을 위한 서곡 〈개벽(開闢)〉</h3>
+        <div class="han">An Overture for Korean Orchestra — "Dawn of a New Era"</div>
+        <div class="dsc">창단 30주년을 여는 서곡. 새로운 시작과 개벽을 알리는 웅장한 도입부. 국악관현악 전 편성이 합주하는 8분의 트레일러.</div>
+      </div>
+      <div class="c">
+        <span class="lab">Composer · 작곡</span>
+        <strong>이고운</strong><br>
+        <span style="color:var(--fg2);font-size:12px;">(위촉 초연 · World Premiere)</span>
+      </div>
+      <div class="d">8 min</div>
+    </div>
+
+    <div class="p-item">
+      <div class="n">II.</div>
+      <div class="t">
+        <h3>가야금 협주곡 〈바람의 결〉</h3>
+        <div class="han">Gayageum Concerto — "Grain of the Wind"</div>
+        <div class="dsc">산조 가야금과 25현 가야금이 교차하는 3악장 협주곡. 김소민 수석의 협연으로 전통 산조의 호흡과 현대 작곡 기법이 만나는 지점을 탐색.</div>
+      </div>
+      <div class="c">
+        <span class="lab">Composer / Soloist</span>
+        <strong>박경훈</strong> 작곡<br>
+        <strong>김소민</strong> 협연 (가야금)
+      </div>
+      <div class="d">22 min</div>
+    </div>
+
+    <div class="p-item">
+      <div class="n">III.</div>
+      <div class="t">
+        <h3>판소리와 관현악 〈심청가 — 눈 뜨는 날〉</h3>
+        <div class="han">Pansori &amp; Orchestra — "The Day Eyes Opened"</div>
+        <div class="dsc">심청가의 클라이맥스 "심봉사 눈 뜨는 대목"을 관현악 편성으로 재구성. 윤하정 단원의 소리와 세종국악관현악단의 전면 편성이 만나는 극적인 18분.</div>
+      </div>
+      <div class="c">
+        <span class="lab">Composer / Vocalist</span>
+        <strong>김성국</strong> 편곡<br>
+        <strong>윤하정</strong> 판소리
+      </div>
+      <div class="d">18 min</div>
+    </div>
+
+    <div class="intermission">
+      <div class="n">— Intermission</div>
+      <div class="t">휴식 · 15분</div>
+      <div class="d">INTERVAL 15 min</div>
+    </div>
+
+    <div class="p-item">
+      <div class="n">IV.</div>
+      <div class="t">
+        <h3>교향시 〈세종의 별〉</h3>
+        <div class="han">Symphonic Poem — "Star of Sejong"</div>
+        <div class="dsc">세종대왕의 천문·과학 업적에서 영감을 얻은 교향시. 국악기와 양악기의 완전 혼합 편성, 하늘과 땅 사이의 대화를 그려내는 4개 연작 악장.</div>
+      </div>
+      <div class="c">
+        <span class="lab">Composer · 작곡</span>
+        <strong>이영조</strong><br>
+        <span style="color:var(--fg2);font-size:12px;">(2020년 위촉 초연작 재연)</span>
+      </div>
+      <div class="d">26 min</div>
+    </div>
+
+    <div class="p-item">
+      <div class="n">V.</div>
+      <div class="t">
+        <h3>국악관현악과 합창을 위한 〈아리랑 환상곡〉</h3>
+        <div class="han">Fantasy on Arirang — for Korean Orchestra and Chorus</div>
+        <div class="dsc">피날레. 본조 아리랑·정선 아리랑·진도 아리랑을 엮어낸 대규모 환상곡. 서울시립합창단이 함께하는 21분의 장대한 합주. 객석과 함께 부르는 후반부.</div>
+      </div>
+      <div class="c">
+        <span class="lab">Composer / Guest</span>
+        <strong>이영조</strong> 편곡<br>
+        <strong>서울시립합창단</strong> 협연
+      </div>
+      <div class="d">21 min</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONDUCTOR SPOTLIGHT -->
+<section class="spot">
+  <div class="c">
+    <div>
+      <div class="lbl">Chapter 03 — Conductor</div>
+      <h2>지휘.</h2>
+      <div class="portrait">
+        <div class="cap">
+          <div class="role">Principal Conductor · 상임지휘자</div>
+          <div class="nm">박상우</div>
+          <div class="en">Park Sang-woo</div>
+        </div>
+      </div>
+    </div>
+    <div class="bio">
+      <div class="quote">"이번 무대는 30년의 <span class="red">회고</span>가 아닙니다.<br>다음 30년의 <span class="red">선언</span>입니다."</div>
+      <div class="bio-text">
+        <p>세종국악관현악단의 상임지휘자이자 공연기획 총괄팀장. 추계예술대학교에서 국악작곡을, 한양대학교 대학원에서 지휘를 전공했습니다.</p>
+        <p>KBS국악관현악단, 국립국악관현악단 등 국내 주요 단체와 꾸준히 협업해 왔으며, 창작 국악관현악 작품 초연 지휘 60여 편. 전통의 구조적 본질을 해치지 않으면서 동시대의 어법으로 다시 써내려가는 작업을 지속하고 있습니다.</p>
+      </div>
+      <div class="cv">
+        <div class="cv-row"><span class="y">2026</span><span class="t">제30회 정기연주회 〈도전과 개척〉 지휘</span></div>
+        <div class="cv-row"><span class="y">2023</span><span class="t">배리어프리 공연 '설화와 국악심포니, 만나다' 총괄</span></div>
+        <div class="cv-row"><span class="y">2019</span><span class="t">창작 국악관현악 〈아리랑 환상곡〉 초연 지휘</span></div>
+        <div class="cv-row"><span class="y">2015</span><span class="t">세종국악관현악단 상임지휘자 취임</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GUESTS -->
+<section class="guests">
+  <div class="guests-hd">
+    <div>
+      <div class="lbl">Chapter 04 — Featured Artists</div>
+      <h2>협연자.</h2>
+    </div>
+    <div class="desc">창단 30주년 기념 무대를 함께하는 세 명의 솔리스트와 서울시립합창단. 국악과 소리, 그리고 합창의 세 겹이 이번 무대를 완성합니다.</div>
+  </div>
+  <div class="guest-grid">
+    <div class="guest-card v1">
+      <div class="img" data-glyph="琴">
+        <div class="role">Gayageum Solo · 협연</div>
+      </div>
+      <div class="bd">
+        <div class="inst">Gayageum · 가야금</div>
+        <h4>김소민</h4>
+        <div class="en">Kim So-min</div>
+        <div class="bio">세종국악관현악단 현악 수석. 서울대 국악과 졸업. 국가무형문화재 제23호 가야금산조 및 병창 전수자. 협연곡 〈바람의 결〉.</div>
+      </div>
+    </div>
+    <div class="guest-card v3">
+      <div class="img" data-glyph="歌">
+        <div class="role">Pansori · 판소리</div>
+      </div>
+      <div class="bd">
+        <div class="inst">Pansori · 판소리</div>
+        <h4>윤하정</h4>
+        <div class="en">Yoon Ha-jeong</div>
+        <div class="bio">세종국악관현악단 단원. 한양대 국악과 석사. 명창 박록주 전국국악대전 장려상. 협연곡 〈심청가 — 눈 뜨는 날〉.</div>
+      </div>
+    </div>
+    <div class="guest-card v2">
+      <div class="img" data-glyph="合">
+        <div class="role">Chorus · 합창</div>
+      </div>
+      <div class="bd">
+        <div class="inst">Guest Ensemble · 객원단체</div>
+        <h4>서울시립합창단</h4>
+        <div class="en">Seoul Metropolitan Chorus</div>
+        <div class="bio">1978년 창단. 대한민국을 대표하는 전문 합창단. 국악관현악과의 만남은 본 무대가 네 번째이며, 〈아리랑 환상곡〉에 65인 편성으로 함께합니다.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VENUE + TICKETS -->
+<section class="venue">
+  <div class="venue-grid">
+    <div>
+      <div class="venue-hd">
+        <div class="lbl">Chapter 05 — Venue &amp; Access</div>
+        <h2>예술의전당<br>콘서트홀.</h2>
+      </div>
+      <div class="venue-info">
+        <div class="venue-row">
+          <span class="k">Address</span>
+          <span class="v">서울특별시 서초구 남부순환로 2406<small>예술의전당 콘서트홀 · Seoul Arts Center</small></span>
+        </div>
+        <div class="venue-row">
+          <span class="k">Subway</span>
+          <span class="v">3호선 남부터미널역<small>5번 출구 · 도보 15분 / 서초·예술의전당 셔틀 이용</small></span>
+        </div>
+        <div class="venue-row">
+          <span class="k">Bus</span>
+          <span class="v">예술의전당 · 서울교대 (22-130)<small>간선 405 · 지선 4429, 4429, 4318</small></span>
+        </div>
+        <div class="venue-row">
+          <span class="k">Parking</span>
+          <span class="v">예술의전당 주차장 (5,000원 / 2시간)<small>공연 관람객 할인 / 주차 혼잡 시 대중교통 권장</small></span>
+        </div>
+        <div class="venue-row">
+          <span class="k">Accessibility</span>
+          <span class="v">휠체어석 · 청각장애인 자막 제공<small>1층 A열 우측 4석 · 수어 통역 대기 (사전 신청)</small></span>
+        </div>
+        <div class="venue-row">
+          <span class="k">Doors Open</span>
+          <span class="v">공연 40분 전 (18:50)<small>공연 시작 후 5분 경과 시 입장 제한 · 지정 타이밍에 재입장</small></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Seatmap -->
+    <div class="seatmap">
+      <div class="t">Seat Map · 좌석 배치</div>
+      <div class="tt">콘서트홀 · 2,523석</div>
+      <div class="stage">— STAGE · 무대 —</div>
+      <div class="seats">
+        <!-- VIP center front -->
+        <div class="seat-row">
+          <div class="seat vip"></div><div class="seat vip"></div><div class="seat vip"></div>
+          <div class="seat vip"></div><div class="seat vip"></div><div class="seat sold"></div>
+          <div class="seat vip"></div><div class="seat vip"></div><div class="seat vip"></div>
+          <div class="seat sold"></div><div class="seat vip"></div><div class="seat vip"></div>
+          <div class="seat vip"></div><div class="seat vip"></div>
+        </div>
+        <div class="seat-row">
+          <div class="seat r"></div><div class="seat vip"></div><div class="seat vip"></div>
+          <div class="seat vip"></div><div class="seat sold"></div><div class="seat vip"></div>
+          <div class="seat vip"></div><div class="seat vip"></div><div class="seat vip"></div>
+          <div class="seat vip"></div><div class="seat vip"></div><div class="seat sold"></div>
+          <div class="seat vip"></div><div class="seat r"></div>
+        </div>
+        <div class="seat-row">
+          <div class="seat r"></div><div class="seat r"></div><div class="seat r"></div>
+          <div class="seat r"></div><div class="seat r"></div><div class="seat r"></div>
+          <div class="seat r"></div><div class="seat r"></div><div class="seat sold"></div>
+          <div class="seat r"></div><div class="seat r"></div><div class="seat r"></div>
+          <div class="seat r"></div><div class="seat r"></div>
+        </div>
+        <div class="seat-row">
+          <div class="seat r"></div><div class="seat r"></div><div class="seat r"></div>
+          <div class="seat r"></div><div class="seat r"></div><div class="seat sold"></div>
+          <div class="seat r"></div><div class="seat sold"></div><div class="seat r"></div>
+          <div class="seat r"></div><div class="seat r"></div><div class="seat r"></div>
+          <div class="seat r"></div><div class="seat r"></div>
+        </div>
+        <div class="seat-row">
+          <div class="seat s"></div><div class="seat s"></div><div class="seat s"></div>
+          <div class="seat r"></div><div class="seat r"></div><div class="seat r"></div>
+          <div class="seat r"></div><div class="seat r"></div><div class="seat r"></div>
+          <div class="seat r"></div><div class="seat r"></div><div class="seat s"></div>
+          <div class="seat s"></div><div class="seat s"></div>
+        </div>
+        <div class="seat-row">
+          <div class="seat s"></div><div class="seat s"></div><div class="seat s"></div>
+          <div class="seat s"></div><div class="seat s"></div><div class="seat s"></div>
+          <div class="seat sold"></div><div class="seat s"></div><div class="seat s"></div>
+          <div class="seat s"></div><div class="seat s"></div><div class="seat s"></div>
+          <div class="seat s"></div><div class="seat s"></div>
+        </div>
+        <div class="seat-row">
+          <div class="seat a"></div><div class="seat a"></div><div class="seat s"></div>
+          <div class="seat s"></div><div class="seat s"></div><div class="seat s"></div>
+          <div class="seat s"></div><div class="seat s"></div><div class="seat s"></div>
+          <div class="seat s"></div><div class="seat sold"></div><div class="seat s"></div>
+          <div class="seat a"></div><div class="seat a"></div>
+        </div>
+        <div class="seat-row">
+          <div class="seat a"></div><div class="seat a"></div><div class="seat a"></div>
+          <div class="seat a"></div><div class="seat a"></div><div class="seat a"></div>
+          <div class="seat a"></div><div class="seat sold"></div><div class="seat a"></div>
+          <div class="seat a"></div><div class="seat a"></div><div class="seat a"></div>
+          <div class="seat a"></div><div class="seat a"></div>
+        </div>
+        <div class="seat-row">
+          <div class="seat b"></div><div class="seat b"></div><div class="seat b"></div>
+          <div class="seat a"></div><div class="seat a"></div><div class="seat a"></div>
+          <div class="seat a"></div><div class="seat a"></div><div class="seat a"></div>
+          <div class="seat a"></div><div class="seat a"></div><div class="seat b"></div>
+          <div class="seat b"></div><div class="seat b"></div>
+        </div>
+        <div class="seat-row">
+          <div class="seat b"></div><div class="seat b"></div><div class="seat b"></div>
+          <div class="seat b"></div><div class="seat b"></div><div class="seat b"></div>
+          <div class="seat b"></div><div class="seat b"></div><div class="seat b"></div>
+          <div class="seat b"></div><div class="seat b"></div><div class="seat b"></div>
+          <div class="seat b"></div><div class="seat b"></div>
+        </div>
+      </div>
+      <div class="legend">
+        <div class="row"><div class="lft"><span class="sw" style="background:var(--geumbak-gold);"></span>VIP</div><div class="price"><span class="w">₩</span>150,000</div></div>
+        <div class="row"><div class="lft"><span class="sw" style="background:var(--dancheong-red);"></span>R</div><div class="price"><span class="w">₩</span>100,000</div></div>
+        <div class="row"><div class="lft"><span class="sw" style="background:#5a8a5a;"></span>S</div><div class="price"><span class="w">₩</span>70,000</div></div>
+        <div class="row"><div class="lft"><span class="sw" style="background:rgba(246,241,232,0.38);"></span>A</div><div class="price"><span class="w">₩</span>50,000</div></div>
+        <div class="row" style="grid-column:1 / -1;"><div class="lft"><span class="sw" style="background:rgba(246,241,232,0.22);"></span>B 석 · Balcony</div><div class="price"><span class="w">₩</span>30,000</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NOTES & DISCOUNTS -->
+<section class="notes">
+  <div class="notes-grid">
+    <div class="notes-card">
+      <div class="lbl">Ticket Discounts · 할인 안내</div>
+      <h3>할인 혜택.</h3>
+      <ul>
+        <li><span class="ic">✦</span><div><strong>조기 예매</strong><span class="sub">10월 31일까지 · R석 이상</span></div><span class="pct">15%</span></li>
+        <li><span class="ic">✦</span><div><strong>세종 멤버십</strong><span class="sub">연회비 회원 · 동반 1인 포함</span></div><span class="pct">25%</span></li>
+        <li><span class="ic">✦</span><div><strong>학생 · 청소년</strong><span class="sub">8–24세 · 신분증 지참 필수</span></div><span class="pct">40%</span></li>
+        <li><span class="ic">✦</span><div><strong>장애인 · 국가유공자</strong><span class="sub">본인 및 동반 1인</span></div><span class="pct">50%</span></li>
+        <li><span class="ic">✦</span><div><strong>단체 예매</strong><span class="sub">10인 이상 · 문의 031-391-8784</span></div><span class="pct">20%</span></li>
+      </ul>
+    </div>
+    <div class="notes-card">
+      <div class="lbl">Important Notices · 유의사항</div>
+      <h3>관람 안내.</h3>
+      <ul>
+        <li><span class="ic">·</span><div><strong>공연 중 입·퇴장 제한</strong><span class="sub">지정된 전환 타이밍에만 재입장 가능합니다.</span></div></li>
+        <li><span class="ic">·</span><div><strong>사진 · 영상 촬영 금지</strong><span class="sub">저작권 및 공연권 보호 · 플래시 사용 엄금.</span></div></li>
+        <li><span class="ic">·</span><div><strong>8세 미만 입장 불가</strong><span class="sub">본 공연은 8세(초등학생) 이상만 입장 가능합니다.</span></div></li>
+        <li><span class="ic">·</span><div><strong>취소 · 환불 정책</strong><span class="sub">공연 10일 전: 전액 환불 / 7일 전: 90% / 3일 전: 70%.</span></div></li>
+        <li><span class="ic">·</span><div><strong>프로그램 변경 가능</strong><span class="sub">불가피한 사유로 프로그램·출연진이 변경될 수 있습니다.</span></div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- RELATED -->
+<section class="rel">
+  <div class="rel-inner">
+    <div class="rel-hd">
+      <div>
+        <div class="lbl">More Concerts · 관련 공연</div>
+        <h2>이어지는 시즌.</h2>
+      </div>
+      <a class="all">전체 공연 보기 <i class="ph ph-arrow-right"></i></a>
+    </div>
+    <div class="rel-grid">
+      <div class="rel-card a">
+        <div class="p" data-g="樂">
+          <div class="top">Season Opening · 시즌 개막</div>
+          <div class="bot"><div class="num">N° 31</div><div class="dt">2026. 03. 21</div></div>
+        </div>
+        <div class="bd">
+          <div class="ty">Regular Concert</div>
+          <h4>제31회 정기연주회 〈봄의 시선〉</h4>
+          <div class="sub">— Spring Gaze.</div>
+        </div>
+      </div>
+      <div class="rel-card b">
+        <div class="p" data-g="響">
+          <div class="top">Special · 특별공연</div>
+          <div class="bot"><div class="num">S° 04</div><div class="dt">2026. 05. 02</div></div>
+        </div>
+        <div class="bd">
+          <div class="ty">Barrier-Free</div>
+          <h4>설화와 국악심포니, 만나다 — 시즌 2</h4>
+          <div class="sub">— Korean Folk Tales, Reimagined.</div>
+        </div>
+      </div>
+      <div class="rel-card c">
+        <div class="p" data-g="行">
+          <div class="top">Tour · 해외공연</div>
+          <div class="bot"><div class="num">T° 01</div><div class="dt">2026. 07. 15</div></div>
+        </div>
+        <div class="bd">
+          <div class="ty">International</div>
+          <h4>비엔나 초청공연 〈Orient Sonata〉</h4>
+          <div class="sub">— Wiener Konzerthaus.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="ftr">
+  <div class="c">
+    <div class="ftr-grid">
+      <div class="col">
+        <h4>Studio · Residence</h4>
+        <div class="ftr-addr">
+          <strong>세종국악관현악단 & 세종국악심포니오케스트라</strong><br>
+          15820 경기도 군포시 고산로 599<br>
+          군포문화예술회관 內<br><br>
+          T. 031-391-8784<br>
+          E. sejong8784@hanmail.net
+        </div>
+      </div>
+      <div class="col"><h4>Orchestra</h4><a class="l" href="about.html">악단 소개</a><a class="l">대표 인사말</a><a class="l">연혁</a><a class="l">단원 소개</a></div>
+      <div class="col"><h4>Performance</h4><a class="l" href="index.html">공연 일정</a><a class="l">월별 공연</a><a class="l">지난 공연</a><a class="l">티켓 예매</a></div>
+      <div class="col"><h4>Community</h4><a class="l">공지사항</a><a class="l">기사자료</a><a class="l">보도자료</a><a class="l">갤러리</a></div>
+    </div>
+    <div class="ftr-bot">
+      <div>© 2026 SEJONG GUGAK — ALL RIGHTS RESERVED</div>
+      <div>제30회 정기연주회 〈도전과 개척〉</div>
+    </div>
+  </div>
+</footer>
+
+<!-- STICKY BOOK BAR -->
+<div class="book" id="book">
+  <div class="mini">
+    <div class="box">挑</div>
+    <div class="tt">제30회 정기연주회 〈도전과 개척〉<small>SAC CONCERT HALL · 2026.11.14 SAT 19:30</small></div>
+  </div>
+  <div class="slot">
+    <div class="piece"><small>DATE</small><strong>11·14</strong></div>
+    <div class="piece"><small>TIME</small><strong>19:30</strong></div>
+    <div class="piece"><small>REMAINING</small><strong>38%</strong></div>
+    <div class="piece"><small>FROM</small><strong>₩30,000</strong></div>
+  </div>
+  <div class="actions">
+    <button class="btn-g"><i class="ph ph-heart"></i>관심</button>
+    <button class="btn-p">예매 <i class="ph ph-arrow-up-right"></i></button>
+  </div>
+</div>
+
+<script>
+const hdr = document.getElementById('hdr');
+const book = document.getElementById('book');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 30) hdr.classList.add('scrolled'); else hdr.classList.remove('scrolled');
+  if (window.scrollY > 800) book.classList.add('on'); else book.classList.remove('on');
+});
+</script>
+</body></html>

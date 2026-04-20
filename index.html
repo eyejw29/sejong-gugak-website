@@ -1,0 +1,786 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<title>세종국악관현악단 · 리뉴얼 v2</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+:root{
+  --max-w:1360px;
+}
+html,body{margin:0;background:var(--bg1);color:var(--fg1);}
+body{font-family:var(--font-sans-kr);overflow-x:hidden;}
+a{color:inherit;text-decoration:none;}
+button{cursor:pointer;font-family:inherit;}
+::selection{background:var(--dancheong-red);color:var(--hanji);}
+
+/* ==================== GRAIN BACKGROUND ==================== */
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(184,52,42,0.02), transparent 60%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.35  0 0 0 0 0.28  0 0 0 0 0.18  0 0 0 0.035 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
+  mix-blend-mode:multiply;opacity:.8;
+}
+
+/* ==================== HEADER ==================== */
+.hdr{
+  position:fixed;top:0;left:0;right:0;z-index:60;
+  display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:56px;
+  padding:22px 44px;
+  transition:all var(--dur-base) var(--ease-gentle);
+}
+.hdr.scrolled{background:rgba(246,241,232,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border-hairline);padding:14px 44px;}
+.brand{display:flex;align-items:center;gap:14px;}
+.brand img{height:46px;transition:height var(--dur-base) var(--ease-gentle);}
+.hdr.scrolled .brand img{height:36px;}
+.brand .stk{display:flex;flex-direction:column;line-height:1;}
+.brand .kr{font-family:var(--font-serif-kr);font-weight:800;font-size:20px;letter-spacing:-.01em;}
+.brand .en{font-family:var(--font-serif-en);font-style:italic;font-size:10px;letter-spacing:.16em;color:var(--fg2);margin-top:5px;}
+.nav{display:flex;justify-content:center;gap:44px;}
+.nav a{font-size:14px;font-weight:500;padding:6px 2px;position:relative;letter-spacing:.02em;}
+.nav a::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:1px;background:var(--dancheong-red);transform:scaleX(0);transform-origin:left;transition:transform var(--dur-base) var(--ease-gentle);}
+.nav a:hover::after{transform:scaleX(1);}
+.util{display:flex;align-items:center;gap:20px;}
+.util .t{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;color:var(--fg2);}
+.cta{background:var(--ink);color:var(--hanji);padding:13px 20px;font-size:12px;font-weight:700;border:0;letter-spacing:.04em;display:inline-flex;gap:8px;align-items:center;transition:background var(--dur-fast) var(--ease-gentle);}
+.cta:hover{background:var(--dancheong-red);}
+.cta .dot{width:6px;height:6px;border-radius:50%;background:var(--dancheong-red);}
+.cta:hover .dot{background:var(--hanji);}
+
+/* ==================== HERO ==================== */
+.hero{
+  position:relative;min-height:100vh;padding:160px 44px 80px;
+  display:grid;grid-template-columns:1fr 1fr;gap:64px;
+  max-width:var(--max-w);margin:0 auto;
+  z-index:2;
+}
+.hero-left{position:relative;display:flex;flex-direction:column;justify-content:space-between;}
+.hero-eb{
+  font-family:var(--font-serif-en);font-style:italic;font-size:16px;
+  color:var(--dancheong-red);letter-spacing:.04em;
+  display:flex;align-items:center;gap:16px;
+}
+.hero-eb::before{content:"";width:48px;height:1px;background:var(--dancheong-red);}
+.hero-h{
+  font-family:var(--font-serif-kr);font-weight:800;
+  font-size:clamp(64px,8vw,128px);line-height:0.95;letter-spacing:-.04em;
+  margin:28px 0 0;word-break:keep-all;
+  color:var(--ink);
+}
+.hero-h .accent{color:var(--dancheong-red);position:relative;}
+.hero-h .stroke{
+  -webkit-text-stroke:1.5px var(--ink);color:transparent;
+  font-style:italic;font-family:var(--font-serif-en);
+  font-size:0.62em;display:inline-block;padding:0 .08em;transform:translateY(-.15em);
+  font-weight:400;
+}
+.hero-tags{display:flex;gap:32px;margin-top:40px;}
+.hero-tags .tag{font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg2);position:relative;padding-left:14px;}
+.hero-tags .tag::before{content:"●";color:var(--dancheong-red);position:absolute;left:0;top:1px;font-size:7px;}
+.hero-foot{display:flex;justify-content:space-between;align-items:flex-end;margin-top:64px;}
+.hero-foot .lede{font-family:var(--font-sans-kr);font-weight:300;font-size:17px;line-height:1.75;max-width:440px;color:var(--fg1);word-break:keep-all;}
+.scroll-ind{display:flex;flex-direction:column;align-items:center;gap:10px;font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;color:var(--fg3);text-transform:uppercase;}
+.scroll-ind .line{width:1px;height:48px;background:var(--fg3);position:relative;overflow:hidden;}
+.scroll-ind .line::after{content:"";position:absolute;top:0;left:0;right:0;height:16px;background:var(--ink);animation:scrollLine 2.2s ease-in-out infinite;}
+@keyframes scrollLine{0%{transform:translateY(-16px);}100%{transform:translateY(48px);}}
+
+/* Right panel: featured upcoming performance as a "poster" */
+.hero-right{
+  position:relative;
+  display:flex;flex-direction:column;
+}
+.hero-poster{
+  aspect-ratio:3/4;
+  background:var(--ink);
+  position:relative;overflow:hidden;
+  color:var(--hanji);
+  display:flex;flex-direction:column;justify-content:space-between;
+  padding:36px 36px 32px;
+}
+.hero-poster::before{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(184,137,75,0.25), transparent 50%),
+    linear-gradient(180deg, transparent 0%, rgba(26,22,20,0.6) 70%, rgba(26,22,20,0.95) 100%);
+  z-index:1;
+}
+.hero-poster .hanja{
+  position:absolute;
+  font-family:var(--font-serif-kr);font-weight:800;
+  font-size:520px;line-height:0.8;
+  color:rgba(246,241,232,0.04);
+  top:-40px;right:-60px;user-select:none;z-index:0;
+}
+.hero-poster .pmeta{
+  position:relative;z-index:2;
+  display:flex;justify-content:space-between;align-items:flex-start;
+  font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(246,241,232,0.7);
+}
+.hero-poster .pmeta .num{
+  font-family:var(--font-serif-en);font-style:italic;font-size:40px;
+  letter-spacing:-.02em;color:var(--geumbak-gold);
+  line-height:1;
+}
+.hero-poster .ptxt{position:relative;z-index:2;}
+.hero-poster h3{
+  font-family:var(--font-serif-kr);font-weight:700;
+  font-size:44px;line-height:1.1;margin:0 0 16px;letter-spacing:-.02em;word-break:keep-all;
+}
+.hero-poster .psub{
+  font-family:var(--font-sans-kr);font-weight:400;font-size:14px;
+  color:rgba(246,241,232,0.75);line-height:1.6;max-width:360px;
+}
+.hero-poster .prow{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  margin-top:28px;padding-top:20px;
+  border-top:1px solid rgba(246,241,232,0.16);
+}
+.hero-poster .prow .date{font-family:var(--font-mono);font-size:13px;letter-spacing:.08em;color:var(--hanji);}
+.hero-poster .prow .date small{display:block;font-size:10px;color:rgba(246,241,232,0.6);margin-top:4px;letter-spacing:.16em;}
+.hero-poster .plink{
+  font-family:var(--font-sans-kr);font-weight:600;font-size:12px;color:var(--geumbak-gold);
+  letter-spacing:.08em;display:inline-flex;gap:6px;align-items:center;
+}
+/* seal — a traditional red stamp */
+.seal{
+  position:absolute;right:-24px;top:20%;
+  width:88px;height:88px;background:var(--dancheong-red);color:var(--hanji);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-serif-kr);font-weight:800;font-size:28px;
+  letter-spacing:-.02em;line-height:1;text-align:center;
+  box-shadow:0 4px 24px rgba(184,52,42,0.3);
+  transform:rotate(6deg);z-index:10;
+}
+.seal::before{
+  content:"";position:absolute;inset:6px;border:1.5px solid rgba(246,241,232,0.5);
+}
+.seal .inner{position:relative;z-index:1;}
+
+/* ==================== MARQUEE ==================== */
+.marquee{
+  position:relative;z-index:2;
+  border-top:1px solid var(--border-strong);border-bottom:1px solid var(--border-strong);
+  background:var(--hanji);
+  overflow:hidden;padding:22px 0;
+  display:flex;gap:64px;white-space:nowrap;
+}
+.marquee-track{display:inline-flex;gap:64px;animation:marq 36s linear infinite;padding-right:64px;}
+@keyframes marq{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+.marquee-item{
+  display:inline-flex;align-items:center;gap:16px;
+  font-family:var(--font-serif-kr);font-weight:400;font-size:28px;
+  color:var(--fg1);letter-spacing:-.01em;
+}
+.marquee-item .ch{color:var(--dancheong-red);}
+.marquee-item .en{font-family:var(--font-serif-en);font-style:italic;color:var(--fg3);font-size:20px;font-weight:400;}
+.marquee-item .sep{width:8px;height:8px;border-radius:50%;background:var(--ink);}
+
+/* ==================== PHILOSOPHY SECTION ==================== */
+.philos{
+  position:relative;z-index:2;
+  max-width:var(--max-w);margin:0 auto;padding:160px 44px 140px;
+  display:grid;grid-template-columns:0.4fr 1fr;gap:88px;align-items:start;
+}
+.philos-side{
+  position:sticky;top:120px;
+  display:flex;flex-direction:column;gap:32px;
+}
+.philos-side .eb{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--dancheong-red);
+}
+.philos-side .vlabel{
+  writing-mode:vertical-rl;text-orientation:upright;
+  font-family:var(--font-serif-kr);font-weight:400;font-size:20px;
+  letter-spacing:.4em;color:var(--fg2);
+  padding:8px 0;border-left:1px solid var(--border-strong);padding-left:16px;
+  height:240px;
+}
+.philos-main h2{
+  font-family:var(--font-serif-kr);font-weight:800;font-size:84px;line-height:1.05;
+  letter-spacing:-.03em;margin:0;word-break:keep-all;
+}
+.philos-main h2 .xl{font-size:1.4em;}
+.philos-main h2 .red{color:var(--dancheong-red);}
+.philos-main .sub{
+  font-family:var(--font-serif-en);font-style:italic;font-size:20px;color:var(--fg2);
+  margin-top:24px;
+}
+.philos-main .body{
+  font-size:17px;line-height:1.9;color:var(--fg1);max-width:720px;
+  margin-top:48px;word-break:keep-all;
+}
+.philos-main .body p{margin:0 0 20px;}
+.philos-main .body strong{color:var(--dancheong-red);font-weight:700;}
+.philos-stats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:32px;
+  margin-top:72px;padding-top:40px;border-top:1px solid var(--border-strong);
+}
+.philos-stats .stat .num{
+  font-family:var(--font-serif-kr);font-weight:800;font-size:72px;line-height:1;letter-spacing:-.03em;
+  color:var(--ink);
+}
+.philos-stats .stat .num .u{font-family:var(--font-serif-en);font-style:italic;font-size:.5em;color:var(--dancheong-red);vertical-align:super;margin-left:4px;font-weight:400;}
+.philos-stats .stat .lb{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg2);margin-top:16px;
+}
+.philos-stats .stat .dsc{font-size:13px;line-height:1.6;color:var(--fg2);margin-top:8px;word-break:keep-all;}
+
+/* ==================== SEASON GRID ==================== */
+.season{
+  position:relative;z-index:2;
+  background:var(--ink);color:var(--hanji);
+  padding:140px 0;
+}
+.season .c{max-width:var(--max-w);margin:0 auto;padding:0 44px;}
+.season-hd{
+  display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:end;
+  margin-bottom:80px;padding-bottom:32px;border-bottom:1px solid rgba(246,241,232,0.2);
+}
+.season-hd .lbl{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--geumbak-gold);margin-bottom:16px;}
+.season-hd h2{font-family:var(--font-serif-kr);font-weight:800;font-size:96px;line-height:0.95;margin:0;letter-spacing:-.04em;word-break:keep-all;}
+.season-hd .desc{font-size:17px;line-height:1.75;color:rgba(246,241,232,0.75);max-width:440px;}
+.season-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:0;}
+.perf{
+  grid-column:span 12;
+  display:grid;grid-template-columns:90px 1fr 1fr 1fr 180px;gap:32px;align-items:center;
+  padding:32px 0;border-top:1px solid rgba(246,241,232,0.14);
+  cursor:pointer;transition:all var(--dur-base) var(--ease-gentle);
+  position:relative;
+}
+.perf:last-child{border-bottom:1px solid rgba(246,241,232,0.14);}
+.perf::before{
+  content:"";position:absolute;left:0;top:0;width:0;height:100%;
+  background:var(--dancheong-red);transition:width var(--dur-base) var(--ease-gentle);
+  z-index:-1;
+}
+.perf:hover{padding-left:24px;padding-right:24px;margin:0 -24px;color:var(--hanji);}
+.perf:hover::before{width:100%;}
+.perf:hover .perf-ch{color:rgba(246,241,232,0.2);}
+.perf:hover .perf-sub{color:rgba(246,241,232,0.85);}
+.perf:hover .perf-meta{color:rgba(246,241,232,0.85);}
+.perf:hover .perf-n{color:rgba(246,241,232,0.6);}
+
+.perf-n{font-family:var(--font-serif-en);font-style:italic;font-size:32px;color:var(--geumbak-gold);letter-spacing:-.02em;line-height:1;}
+.perf-ch{
+  font-family:var(--font-serif-kr);font-weight:800;font-size:56px;color:var(--hanji);
+  line-height:1;letter-spacing:-.02em;transition:color var(--dur-base) var(--ease-gentle);
+}
+.perf-title{display:flex;flex-direction:column;gap:10px;}
+.perf-title h3{font-family:var(--font-serif-kr);font-weight:700;font-size:26px;margin:0;line-height:1.2;word-break:keep-all;letter-spacing:-.01em;}
+.perf-sub{font-size:13px;line-height:1.5;color:rgba(246,241,232,0.7);word-break:keep-all;transition:color var(--dur-base) var(--ease-gentle);}
+.perf-meta{display:flex;flex-direction:column;gap:6px;font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;color:rgba(246,241,232,0.7);line-height:1.5;transition:color var(--dur-base) var(--ease-gentle);}
+.perf-meta .big{font-family:var(--font-serif-kr);font-weight:700;font-size:22px;color:var(--hanji);letter-spacing:-.01em;}
+.perf-cta{display:flex;justify-content:flex-end;align-items:center;gap:12px;font-size:13px;font-weight:600;white-space:nowrap;}
+.perf-cta .arrow{width:32px;height:32px;border:1px solid rgba(246,241,232,0.4);display:flex;align-items:center;justify-content:center;transition:all var(--dur-base) var(--ease-gentle);}
+.perf:hover .perf-cta .arrow{background:var(--hanji);color:var(--ink);border-color:var(--hanji);transform:translateX(4px);}
+
+/* ==================== FIVE ELEMENTS — obangsaek strip ==================== */
+.fivel{
+  position:relative;z-index:2;
+  background:var(--hanji);
+  padding:140px 44px;
+}
+.fivel-inner{max-width:var(--max-w);margin:0 auto;}
+.fivel-hd{display:grid;grid-template-columns:1fr auto;gap:64px;align-items:end;margin-bottom:64px;padding-bottom:28px;border-bottom:1px solid var(--border-strong);}
+.fivel-hd .lbl{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--dancheong-red);margin-bottom:16px;}
+.fivel-hd h2{font-family:var(--font-serif-kr);font-weight:800;font-size:64px;line-height:1;margin:0;letter-spacing:-.03em;word-break:keep-all;}
+.fivel-hd .right{font-size:14px;line-height:1.7;color:var(--fg2);max-width:320px;word-break:keep-all;}
+.fivel-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;}
+.fivel-cell{
+  aspect-ratio:3/4;padding:28px;
+  display:flex;flex-direction:column;justify-content:space-between;
+  position:relative;overflow:hidden;
+  transition:transform var(--dur-base) var(--ease-gentle);
+}
+.fivel-cell:hover{transform:translateY(-6px);}
+.fivel-cell .ch{
+  font-family:var(--font-serif-kr);font-weight:800;font-size:96px;line-height:1;margin-top:auto;
+}
+.fivel-cell .lb{font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;opacity:0.6;}
+.fivel-cell .nm{font-family:var(--font-serif-en);font-style:italic;font-size:18px;margin-top:2px;opacity:0.85;}
+.fivel-cell .cnt{font-size:13px;line-height:1.55;margin-top:16px;word-break:keep-all;opacity:0.85;}
+.fc-red{background:#C8362A;color:var(--hanji);}
+.fc-yellow{background:#E8B13A;color:var(--ink);}
+.fc-green{background:#3A8F60;color:var(--hanji);}
+.fc-blue{background:#2E5BA8;color:var(--hanji);}
+.fc-black{background:var(--ink);color:var(--hanji);}
+
+/* ==================== NOTICE / PRESS split ==================== */
+.notice{
+  position:relative;z-index:2;
+  max-width:var(--max-w);margin:0 auto;padding:140px 44px 80px;
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:64px;
+}
+.notice .col h3{
+  font-family:var(--font-serif-kr);font-weight:700;font-size:32px;
+  margin:0 0 28px;padding-bottom:14px;border-bottom:1px solid var(--border-strong);
+  display:flex;justify-content:space-between;align-items:baseline;
+}
+.notice .col h3 a{font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:.12em;color:var(--fg2);text-transform:uppercase;}
+.notice .col h3 a:hover{color:var(--dancheong-red);}
+.nl{list-style:none;padding:0;margin:0;}
+.nl li{padding:16px 0;border-bottom:1px solid var(--border-hairline);display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:baseline;cursor:pointer;transition:padding var(--dur-fast) var(--ease-gentle);}
+.nl li:hover{padding-left:8px;}
+.nl li:hover .tt{color:var(--dancheong-red);}
+.nl .d{font-family:var(--font-mono);font-size:11px;color:var(--fg3);letter-spacing:.08em;}
+.nl .tt{font-size:14px;color:var(--fg1);line-height:1.5;word-break:keep-all;transition:color var(--dur-fast) var(--ease-gentle);}
+.nl .tag{display:inline-block;font-family:var(--font-mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:2px 6px;margin-right:8px;background:var(--ink);color:var(--hanji);vertical-align:1px;}
+.nl .tag.g{background:var(--dancheong-blue);}
+.nl .tag.r{background:var(--dancheong-red);}
+
+/* Feature column — primary notice */
+.feature{grid-column:span 1;background:var(--hanji-deep);padding:40px;display:flex;flex-direction:column;}
+.feature .eb{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--dancheong-red);}
+.feature h3{font-family:var(--font-serif-kr);font-weight:800;font-size:40px;line-height:1.1;margin:16px 0 24px;letter-spacing:-.02em;word-break:keep-all;}
+.feature .desc{font-size:14px;line-height:1.75;color:var(--fg1);word-break:keep-all;margin-bottom:32px;}
+.feature .dates{margin-top:auto;padding-top:24px;border-top:1px solid var(--border-strong);font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;color:var(--fg1);display:flex;justify-content:space-between;}
+
+/* ==================== FOOTER ==================== */
+.ftr{
+  position:relative;z-index:2;
+  background:var(--ink);color:var(--hanji);padding:96px 44px 40px;
+}
+.ftr .c{max-width:var(--max-w);margin:0 auto;}
+.ftr .big{
+  font-family:var(--font-serif-kr);font-weight:800;
+  font-size:clamp(72px,10vw,168px);line-height:0.9;
+  letter-spacing:-.04em;margin:0 0 72px;word-break:keep-all;
+}
+.ftr .big .red{color:var(--dancheong-red);}
+.ftr .big .italic{font-family:var(--font-serif-en);font-style:italic;font-size:0.6em;font-weight:400;color:var(--geumbak-gold);}
+.ftr-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:56px;padding-top:56px;border-top:1px solid rgba(246,241,232,0.2);}
+.ftr-grid .col h4{font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(246,241,232,0.6);margin:0 0 16px;}
+.ftr-grid .col a.l{display:block;color:var(--hanji);font-size:13px;line-height:2.1;}
+.ftr-grid .col a.l:hover{color:var(--dancheong-red);}
+.ftr-addr{font-size:13px;line-height:1.9;color:rgba(246,241,232,0.7);}
+.ftr-addr strong{color:var(--hanji);font-weight:700;}
+.social{display:flex;gap:10px;margin-top:16px;}
+.social a{width:38px;height:38px;border:1px solid rgba(246,241,232,0.25);display:flex;align-items:center;justify-content:center;font-size:16px;transition:all var(--dur-fast) var(--ease-gentle);}
+.social a:hover{background:var(--dancheong-red);border-color:var(--dancheong-red);}
+.ftr-bot{display:flex;justify-content:space-between;align-items:center;margin-top:72px;padding-top:24px;border-top:1px solid rgba(246,241,232,0.14);font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(246,241,232,0.5);}
+.ftr-bot .fam{display:flex;gap:18px;flex-wrap:wrap;}
+.ftr-bot .fam span{opacity:.7;}
+
+/* ==================== SIDE RAIL ==================== */
+.rail{position:fixed;right:24px;bottom:40px;z-index:50;display:flex;flex-direction:column;gap:8px;}
+.rail button{width:56px;height:56px;background:var(--ink);color:var(--hanji);border:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-family:var(--font-sans-kr);font-size:9px;font-weight:700;letter-spacing:.04em;transition:background var(--dur-fast) var(--ease-gentle);}
+.rail button:hover{background:var(--dancheong-red);}
+.rail button i{font-size:18px;}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width:1000px){
+  .hero{grid-template-columns:1fr;padding-top:140px;}
+  .philos{grid-template-columns:1fr;}
+  .philos-side{position:static;flex-direction:row;align-items:center;}
+  .philos-side .vlabel{writing-mode:horizontal-tb;height:auto;border-left:0;border-top:1px solid var(--border-strong);padding-left:0;padding-top:16px;letter-spacing:.1em;}
+  .philos-main h2{font-size:56px;}
+  .season-hd{grid-template-columns:1fr;}
+  .season-hd h2{font-size:56px;}
+  .perf{grid-template-columns:60px 1fr;gap:16px;padding:24px 0;}
+  .perf-title, .perf-meta, .perf-cta{grid-column:1/-1;}
+  .perf-ch, .perf-n{display:none;}
+  .fivel-grid{grid-template-columns:repeat(2,1fr);}
+  .notice{grid-template-columns:1fr;}
+  .ftr-grid{grid-template-columns:1fr 1fr;}
+  .hero-tags{flex-wrap:wrap;}
+  .philos-stats{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ==================== HEADER ==================== -->
+<header class="hdr" id="hdr">
+  <a class="brand" href="#top">
+    <img src="assets/logo-symbol.png" alt="">
+    <div class="stk">
+      <span class="kr">세종국악관현악단</span>
+      <span class="en">Sejong Korean Music Orchestra</span>
+    </div>
+  </a>
+  <nav class="nav">
+    <a href="about.html" data-nav="about">악단소개</a>
+    <a href="schedule.html" class="active" data-nav="perf">공연</a>
+    <a href="archive.html" data-nav="archive">아카이브</a>
+    <a href="inquiry.html" data-nav="inquiry">문의</a>
+  </nav>
+  <div class="util">
+    <span class="t">031·391·8784</span>
+    <button class="cta" onclick="location.href='tickets.html'"><span class="dot"></span>예매안내</button>
+  </div>
+</header>
+
+<!-- ==================== HERO ==================== -->
+<section class="hero" id="top">
+  <div class="hero-left">
+    <div>
+      <div class="hero-eb">2026 Spring Season · No. 30</div>
+      <h1 class="hero-h">
+        우리다움을<br>
+        잃지 않는<br>
+        <span class="accent">새로운</span> <span class="stroke">Korean</span><br>
+        한국음악.
+      </h1>
+    </div>
+    <div class="hero-foot">
+      <div>
+        <div class="hero-tags">
+          <span class="tag">EST. 1992</span>
+          <span class="tag">30th Anniversary</span>
+          <span class="tag">Resident · Gunpo CAC</span>
+        </div>
+        <p class="lede" style="margin-top:24px;font-family:var(--font-sans-kr);font-weight:300;font-size:16px;line-height:1.75;max-width:440px;color:var(--fg1);word-break:keep-all;">
+          대한민국 최초의 양·국악 혼합편성 관현악단.<br>
+          여민동락의 정신으로 한국음악을 현대에 재창조합니다.
+        </p>
+      </div>
+      <div class="scroll-ind">
+        <span>SCROLL</span>
+        <span class="line"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-poster">
+      <div class="hanja">樂</div>
+      <div class="pmeta">
+        <span>FEATURED · NEXT PROGRAM</span>
+        <span class="num">№30</span>
+      </div>
+      <div class="ptxt">
+        <h3>제30회 정기연주회<br>도전과 개척</h3>
+        <div class="psub">박상우 지휘, 김혜성 대표가 이끄는 창단 30주년 기념 무대. 명인 협연과 함께하는 국악심포니오케스트라 정기공연.</div>
+        <div class="prow">
+          <div class="date">2026.06.08 · MON 19:30<small>SEJONG · GRAND HALL</small></div>
+          <a class="plink" href="tickets.html">예매처 안내 <i class="ph ph-arrow-up-right"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="seal"><div class="inner">명인<br>협연</div></div>
+  </div>
+</section>
+
+<!-- ==================== MARQUEE ==================== -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span class="marquee-item"><span class="ch">與民同樂</span><span class="en">Yeomindongnak</span><span class="sep"></span></span>
+    <span class="marquee-item"><span>현대화</span><span class="en">Modernization</span><span class="sep"></span></span>
+    <span class="marquee-item"><span>생활화</span><span class="en">Everyday</span><span class="sep"></span></span>
+    <span class="marquee-item"><span>대중화</span><span class="en">Popularization</span><span class="sep"></span></span>
+    <span class="marquee-item"><span>세계화</span><span class="en">Globalization</span><span class="sep"></span></span>
+    <span class="marquee-item"><span>미래화</span><span class="en">Future-facing</span><span class="sep"></span></span>
+    <span class="marquee-item"><span class="ch">與民同樂</span><span class="en">Yeomindongnak</span><span class="sep"></span></span>
+    <span class="marquee-item"><span>현대화</span><span class="en">Modernization</span><span class="sep"></span></span>
+    <span class="marquee-item"><span>생활화</span><span class="en">Everyday</span><span class="sep"></span></span>
+    <span class="marquee-item"><span>대중화</span><span class="en">Popularization</span><span class="sep"></span></span>
+    <span class="marquee-item"><span>세계화</span><span class="en">Globalization</span><span class="sep"></span></span>
+    <span class="marquee-item"><span>미래화</span><span class="en">Future-facing</span><span class="sep"></span></span>
+  </div>
+</div>
+
+<!-- ==================== PHILOSOPHY ==================== -->
+<section class="philos">
+  <aside class="philos-side">
+    <div>
+      <div class="eb">CH. 01 — Philosophy</div>
+      <div class="vlabel">악단소개</div>
+    </div>
+  </aside>
+  <div class="philos-main">
+    <h2>백성과 <span class="red">함께</span><br>즐긴다는 것,<br><span class="xl">여민동락.</span></h2>
+    <div class="sub">— Sharing joy with the people, the foundation of Korean music.</div>
+    <div class="body">
+      <p>1992년, 지휘자 <strong>박호성</strong>이 한국음악의 현대적 발전을 도모하고 진정한 국민음악으로서 생활 속에 정착시켜 나간다는 <strong>여민동락</strong>의 정신 아래 세종국악관현악단을 창단하였습니다.</p>
+      <p>2015년부터 <strong>김혜성 대표</strong>가 이끄는 지금, 우리는 국악기와 양악기가 함께 편성된 대한민국 최초의 국악심포니오케스트라로서 그 정신을 실현하고 있습니다. 세종대왕의 애민사상을 이어받아, 한국음악의 올바른 보존과 계승, 그리고 시대가 요구하는 현대적 재창조를 동시에 추구합니다.</p>
+      <p>우리다움을 잃지 않는 새로운 한국음악 — 그것이 세종의 길입니다.</p>
+    </div>
+    <div class="philos-stats">
+      <div class="stat">
+        <div class="num">34<span class="u">Y</span></div>
+        <div class="lb">Years · 창단 이래</div>
+        <div class="dsc">1992년 창단부터 오늘까지, 국악 현대화의 최전선.</div>
+      </div>
+      <div class="stat">
+        <div class="num">1,750<span class="u">+</span></div>
+        <div class="lb">Musicians · 누적 단원</div>
+        <div class="dsc">국악·양악·재즈·K-pop 최정상급 연주자와 함께.</div>
+      </div>
+      <div class="stat">
+        <div class="num">First<span class="u">★</span></div>
+        <div class="lb">Korean Orchestra · 최초</div>
+        <div class="dsc">양·국악 혼합편성 심포니오케스트라, 대한민국 최초.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SEASON GRID ==================== -->
+<section class="season">
+  <div class="c">
+    <div class="season-hd">
+      <div>
+        <div class="lbl">CH. 02 — 2026 Spring Season</div>
+        <h2>다가오는<br>무대들.</h2>
+      </div>
+      <div class="desc">
+        2026년 봄, 세종국악관현악단과 세종국악심포니오케스트라가 선보이는 공연 프로그램. 정기연주회, 한낮의 음악회, 달달한 콘서트, 해외 초청 공연까지 — 일년의 시작을 알립니다.
+      </div>
+    </div>
+
+    <div class="season-grid">
+      <div class="perf">
+        <div class="perf-n">N° 01</div>
+        <div class="perf-ch">和</div>
+        <div class="perf-title">
+          <h3>한낮의 음악회 〈여음〉 두번째 시리즈</h3>
+          <div class="perf-sub">송현민 사회 · 이영조 작곡가 · 안소은 & 소리소은 소리단. '소리'는 어떻게 '곡'이 되고, '곡'은 다시 '소리'가 되는가.</div>
+        </div>
+        <div class="perf-meta">
+          <span class="big">2026.05.17</span>
+          <span>SAT · 14:00 · GUNPO CAC SURI HALL</span>
+        </div>
+        <div class="perf-cta">예매처 안내 <span class="arrow"><i class="ph ph-arrow-up-right"></i></span></div>
+      </div>
+
+      <div class="perf">
+        <div class="perf-n">N° 02</div>
+        <div class="perf-ch">樂</div>
+        <div class="perf-title">
+          <h3>제30회 정기연주회 — 도전과 개척</h3>
+          <div class="perf-sub">박상우 지휘 · 창단 30주년 기념 무대. 국악심포니오케스트라의 정수를 한 자리에서 만나는 대형 무대.</div>
+        </div>
+        <div class="perf-meta">
+          <span class="big">2026.06.08</span>
+          <span>MON · 19:30 · SEJONG GRAND HALL</span>
+        </div>
+        <div class="perf-cta">예매처 안내 <span class="arrow"><i class="ph ph-arrow-up-right"></i></span></div>
+      </div>
+
+      <div class="perf">
+        <div class="perf-n">N° 03</div>
+        <div class="perf-ch">音</div>
+        <div class="perf-title">
+          <h3>달달한 콘서트 — 가야금산조 협주곡 〈파사칼리아〉</h3>
+          <div class="perf-sub">강태홍류 가야금산조. 가족과 함께 즐기는 한낮의 국악 콘서트.</div>
+        </div>
+        <div class="perf-meta">
+          <span class="big">2026.07.12</span>
+          <span>SUN · 15:00 · GUNPO CAC SURI HALL</span>
+        </div>
+        <div class="perf-cta">예매처 안내 <span class="arrow"><i class="ph ph-arrow-up-right"></i></span></div>
+      </div>
+
+      <div class="perf">
+        <div class="perf-n">N° 04</div>
+        <div class="perf-ch">夢</div>
+        <div class="perf-title">
+          <h3>국악심포니 초청공연 〈고래의 꿈〉</h3>
+          <div class="perf-sub">지휘 박상우 · 국악관현악 창작 초연. 해양을 주제로 한 신작 국악관현악.</div>
+        </div>
+        <div class="perf-meta">
+          <span class="big">2026.08.24</span>
+          <span>SAT · 19:00 · SEOUL ARTS CENTER</span>
+        </div>
+        <div class="perf-cta">예매처 안내 <span class="arrow"><i class="ph ph-arrow-up-right"></i></span></div>
+      </div>
+
+      <div class="perf">
+        <div class="perf-n">N° 05</div>
+        <div class="perf-ch">流</div>
+        <div class="perf-title">
+          <h3>세종 × 클래식 — 동서의 만남</h3>
+          <div class="perf-sub">국악과 서양 클래식의 크로스오버. 브람스와 정악이 한 무대에서.</div>
+        </div>
+        <div class="perf-meta">
+          <span class="big">2026.09.14</span>
+          <span>SUN · 17:00 · LOTTE CONCERT HALL</span>
+        </div>
+        <div class="perf-cta">예매처 안내 <span class="arrow"><i class="ph ph-arrow-up-right"></i></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FIVE VALUES ==================== -->
+<section class="fivel">
+  <div class="fivel-inner">
+    <div class="fivel-hd">
+      <div>
+        <div class="lbl">CH. 03 — Five Directions</div>
+        <h2>세종이 나아가는<br>다섯 방향.</h2>
+      </div>
+      <div class="right">오방(五方)의 색으로 표현하는, 세종국악관현악단의 다섯 가지 다짐. 한국 전통의 방위관을 현대의 예술 언어로.</div>
+    </div>
+    <div class="fivel-grid">
+      <div class="fivel-cell fc-red">
+        <div>
+          <div class="lb">Red · 南 · Present</div>
+          <div class="nm">Modernization</div>
+        </div>
+        <div>
+          <div class="cnt">전통의 언어로 오늘을 말한다. 국악의 현대화.</div>
+          <div class="ch">現</div>
+        </div>
+      </div>
+      <div class="fivel-cell fc-yellow">
+        <div>
+          <div class="lb">Yellow · 中 · Center</div>
+          <div class="nm">Everyday</div>
+        </div>
+        <div>
+          <div class="cnt">생활 속에 녹아드는 음악, 누구나 즐기는 국악.</div>
+          <div class="ch">生</div>
+        </div>
+      </div>
+      <div class="fivel-cell fc-green">
+        <div>
+          <div class="lb">Green · 東 · Growth</div>
+          <div class="nm">Popularization</div>
+        </div>
+        <div>
+          <div class="cnt">청소년·가족이 함께하는 국악의 대중화.</div>
+          <div class="ch">衆</div>
+        </div>
+      </div>
+      <div class="fivel-cell fc-blue">
+        <div>
+          <div class="lb">Blue · 北 · World</div>
+          <div class="nm">Globalization</div>
+        </div>
+        <div>
+          <div class="cnt">백두산·북경·상해·동경에서 울린 우리 음악.</div>
+          <div class="ch">界</div>
+        </div>
+      </div>
+      <div class="fivel-cell fc-black">
+        <div>
+          <div class="lb">Ink · 西 · Deep</div>
+          <div class="nm">Future</div>
+        </div>
+        <div>
+          <div class="cnt">전통의 뿌리에서 새로운 지평을 여는 미래화.</div>
+          <div class="ch">來</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== NOTICES ==================== -->
+<section class="notice">
+  <div class="feature">
+    <div class="eb">ANNOUNCEMENT · PRIMARY</div>
+    <h3>2026년도 상반기 신입단원 모집(추가)</h3>
+    <div class="desc">대한민국 최초의 양·국악 혼합편성 관현악단인 세종국악관현악단 & 세종국악심포니오케스트라는 2026년도 도전과 개척정신으로 함께 할 진취적이고 열정적인 상반기 신입단원을 공개 모집합니다.</div>
+    <div class="dates">
+      <span>접수 · 2026.03.26 — 04.15</span>
+      <span>상세 보기 →</span>
+    </div>
+  </div>
+
+  <div class="col">
+    <h3>공지사항 <a>VIEW ALL →</a></h3>
+    <ul class="nl">
+      <li><span class="d">03.26</span><div class="tt"><span class="tag r">MODIF</span>2026년도 상반기 신입단원(국악, 양악) 모집(추가) 공고</div></li>
+      <li><span class="d">02.25</span><div class="tt"><span class="tag">NOTICE</span>연수단원(공연기획·창작실연) 최종 합격자 발표</div></li>
+      <li><span class="d">02.23</span><div class="tt"><span class="tag">NOTICE</span>연수단원 모집 1차 합격 발표</div></li>
+      <li><span class="d">02.23</span><div class="tt"><span class="tag">NOTICE</span>상근 연수단원 1차 전형 결과 발표 지연 안내</div></li>
+      <li><span class="d">02.10</span><div class="tt"><span class="tag">NOTICE</span>2026년 상반기 공연 일정 안내</div></li>
+    </ul>
+  </div>
+
+  <div class="col">
+    <h3>기사 · 보도자료 <a>VIEW ALL →</a></h3>
+    <ul class="nl">
+      <li><span class="d">10.24</span><div class="tt"><span class="tag g">PRESS</span>세종국악관현악단, 설화와 국악심포니 만나다 — 배리어프리 공연</div></li>
+      <li><span class="d">07.21</span><div class="tt"><span class="tag g">PRESS</span>세종국악심포니, 2023 군포한여름쿨페스티벌 성료</div></li>
+      <li><span class="d">07.21</span><div class="tt"><span class="tag g">PRESS</span>전통국악관현악부터 클래식·대중음악까지</div></li>
+      <li><span class="d">07.21</span><div class="tt"><span class="tag g">PRESS</span>록가수 김경호 청양 공연, 국악심포니의 〈아리랑〉</div></li>
+      <li><span class="d">05.17</span><div class="tt"><span class="tag g">PRESS</span>해피콘서트 국악관현악 〈고래의 꿈〉 리뷰</div></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="ftr">
+  <div class="c">
+    <h2 class="big">함께 즐기다.<br><span class="italic">Together,</span> <span class="red">與民同樂.</span></h2>
+
+    <div class="ftr-grid">
+      <div class="col">
+        <h4>Studio · Residence</h4>
+        <div class="ftr-addr">
+          <strong>세종국악관현악단 & 세종국악심포니오케스트라</strong><br>
+          15820 경기도 군포시 고산로 599<br>
+          군포문화예술회관 內<br><br>
+          T. 031-391-8784 · 010-6228-8784<br>
+          E. sejong8784@hanmail.net<br>
+          화–토 09:00 ~ 18:00
+        </div>
+        <div class="social">
+          <a><i class="ph ph-youtube-logo"></i></a>
+          <a><i class="ph ph-facebook-logo"></i></a>
+          <a><i class="ph ph-instagram-logo"></i></a>
+          <a style="font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;">CAFE</a>
+        </div>
+      </div>
+      <div class="col">
+        <h4>Orchestra</h4>
+        <a class="l">악단 소개</a>
+        <a class="l">대표 인사말</a>
+        <a class="l">연혁</a>
+        <a class="l">단원 소개</a>
+        <a class="l">운영 조직</a>
+        <a class="l">오시는 길</a>
+      </div>
+      <div class="col">
+        <h4>Performance</h4>
+        <a class="l">공연 일정</a>
+        <a class="l">월별 공연</a>
+        <a class="l">지난 공연</a>
+        <a class="l">공연 문의</a>
+        <a class="l" href="tickets.html">예매안내</a>
+      </div>
+      <div class="col">
+        <h4>Community</h4>
+        <a class="l">공지사항</a>
+        <a class="l">기사자료</a>
+        <a class="l">보도자료</a>
+        <a class="l">갤러리</a>
+        <a class="l">게시판</a>
+      </div>
+    </div>
+
+    <div class="ftr-bot">
+      <div>© 2026 SEJONG GUGAK — ALL RIGHTS RESERVED</div>
+      <div class="fam">
+        <span>국립국악원</span>
+        <span>세종문화회관</span>
+        <span>군포시</span>
+        <span>군포문화재단</span>
+        <span>경기문화재단</span>
+        <span>한국문화예술위원회</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ==================== SIDE RAIL ==================== -->
+<div class="rail">
+  <button onclick="location.href='tickets.html'"><i class="ph ph-ticket"></i><span>예매안내</span></button>
+  <button><i class="ph ph-chat-circle"></i><span>문의</span></button>
+  <button onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="ph ph-caret-up"></i><span>TOP</span></button>
+</div>
+
+<script>
+const hdr = document.getElementById('hdr');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 30) hdr.classList.add('scrolled');
+  else hdr.classList.remove('scrolled');
+});
+</script>
+</body></html>

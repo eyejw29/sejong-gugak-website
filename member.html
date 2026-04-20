@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<title>세종국악관현악단 · 박상우 · 상임지휘자</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+:root{--max-w:1360px;}
+html,body{margin:0;background:var(--bg1);color:var(--fg1);}
+body{font-family:var(--font-sans-kr);overflow-x:hidden;}
+a{color:inherit;text-decoration:none;}
+button{cursor:pointer;font-family:inherit;}
+::selection{background:var(--dancheong-red);color:var(--hanji);}
+
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.35  0 0 0 0 0.28  0 0 0 0 0.18  0 0 0 0.035 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
+  mix-blend-mode:multiply;opacity:.8;}
+
+/* HEADER */
+.hdr{position:fixed;top:0;left:0;right:0;z-index:60;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:56px;padding:22px 44px;transition:all var(--dur-base) var(--ease-gentle);}
+.hdr.scrolled{background:rgba(246,241,232,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border-hairline);padding:14px 44px;}
+.brand{display:flex;align-items:center;gap:14px;}
+.brand img{height:46px;transition:height var(--dur-base) var(--ease-gentle);}
+.hdr.scrolled .brand img{height:36px;}
+.brand .stk{display:flex;flex-direction:column;line-height:1;}
+.brand .kr{font-family:var(--font-serif-kr);font-weight:800;font-size:20px;letter-spacing:-.01em;}
+.brand .en{font-family:var(--font-serif-en);font-style:italic;font-size:10px;letter-spacing:.16em;color:var(--fg2);margin-top:5px;}
+.nav{display:flex;justify-content:center;gap:44px;}
+.nav a{font-size:14px;font-weight:500;padding:6px 2px;position:relative;letter-spacing:.02em;}
+.nav a::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:1px;background:var(--dancheong-red);transform:scaleX(0);transform-origin:left;transition:transform var(--dur-base) var(--ease-gentle);}
+.nav a:hover::after,.nav a.active::after{transform:scaleX(1);}
+.nav a.active{color:var(--dancheong-red);}
+.util{display:flex;align-items:center;gap:20px;}
+.util .t{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;color:var(--fg2);}
+.cta{background:var(--ink);color:var(--hanji);padding:13px 20px;font-size:12px;font-weight:700;border:0;letter-spacing:.04em;display:inline-flex;gap:8px;align-items:center;}
+.cta:hover{background:var(--dancheong-red);}
+.cta .dot{width:6px;height:6px;border-radius:50%;background:var(--dancheong-red);}
+.cta:hover .dot{background:var(--hanji);}
+
+/* HERO — editorial portrait */
+.hero{position:relative;z-index:2;max-width:var(--max-w);margin:0 auto;padding:120px 44px 0;}
+.crumb{display:flex;gap:10px;align-items:center;font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg2);margin-bottom:32px;}
+.crumb .sep{opacity:.4;} .crumb .now{color:var(--dancheong-red);}
+
+.h-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:stretch;padding-top:20px;}
+.portrait{position:relative;aspect-ratio:3/4;background:linear-gradient(165deg,#1a1614 0%,#2b2320 45%,#3a2820 100%);overflow:hidden;color:var(--hanji);display:flex;flex-direction:column;justify-content:flex-end;padding:40px;}
+.portrait::before{content:"指";position:absolute;font-family:var(--font-serif-kr);font-weight:800;font-size:clamp(280px,42vw,540px);line-height:0.82;color:rgba(184,52,42,0.32);right:-40px;top:-50px;writing-mode:vertical-rl;text-orientation:upright;}
+.portrait::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at bottom,rgba(0,0,0,0.45) 0%,transparent 70%),radial-gradient(ellipse at top right,rgba(184,137,75,0.1) 0%,transparent 60%);pointer-events:none;}
+.portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;mix-blend-mode:luminosity;opacity:0.88;filter:contrast(1.05) grayscale(0.4);}
+.portrait .tag-strip{position:absolute;top:40px;left:40px;right:40px;z-index:2;display:flex;justify-content:space-between;align-items:flex-start;}
+.portrait .tag-strip .series{font-family:var(--font-mono);font-size:11px;letter-spacing:.2em;color:var(--geumbak-gold);text-transform:uppercase;}
+.portrait .tag-strip .no{font-family:var(--font-serif-en);font-style:italic;font-size:30px;color:rgba(246,241,232,0.8);line-height:0.9;}
+.portrait-foot{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;}
+.portrait-foot .sign{font-family:var(--font-serif-en);font-style:italic;font-size:28px;color:var(--geumbak-gold);letter-spacing:-.01em;}
+.portrait-foot .stamp{width:80px;height:80px;background:var(--dancheong-red);color:var(--hanji);display:flex;align-items:center;justify-content:center;font-family:var(--font-serif-kr);font-weight:800;font-size:26px;transform:rotate(-4deg);}
+
+/* Right column */
+.h-right{display:flex;flex-direction:column;justify-content:space-between;gap:40px;padding:8px 0;}
+.h-right .kicker{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--dancheong-red);display:flex;gap:10px;align-items:center;}
+.h-right .kicker::before{content:"";width:24px;height:1px;background:var(--dancheong-red);}
+.h-right h1{font-family:var(--font-serif-kr);font-weight:800;font-size:clamp(88px,11vw,144px);line-height:0.88;letter-spacing:-.04em;margin:18px 0 0;}
+.h-right .en{font-family:var(--font-serif-en);font-style:italic;font-size:28px;color:var(--fg2);margin-top:14px;}
+.h-right .roleband{margin-top:auto;}
+.h-right .roleband .r1{font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg2);margin-bottom:10px;}
+.h-right .roleband .r2{font-family:var(--font-serif-kr);font-weight:700;font-size:28px;letter-spacing:-.015em;line-height:1.25;word-break:keep-all;}
+.h-right .roleband .r2 .slash{color:var(--dancheong-red);margin:0 10px;font-weight:400;}
+
+.h-meta{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--border-strong);border-bottom:1px solid var(--border-strong);margin-top:56px;}
+.h-meta .cell{padding:22px 22px 22px 0;border-right:1px solid var(--border-hairline);display:flex;flex-direction:column;gap:5px;}
+.h-meta .cell:last-child{border-right:0;}
+.h-meta .cell:not(:first-child){padding-left:22px;}
+.h-meta .k{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg2);}
+.h-meta .v{font-family:var(--font-serif-kr);font-weight:700;font-size:17px;letter-spacing:-.005em;}
+.h-meta .v small{display:block;font-family:var(--font-serif-en);font-style:italic;font-weight:400;font-size:12px;color:var(--fg2);margin-top:3px;}
+
+/* PULL QUOTE */
+.pull{position:relative;z-index:2;max-width:var(--max-w);margin:120px auto;padding:0 44px;}
+.pull blockquote{font-family:var(--font-serif-kr);font-weight:800;font-size:clamp(32px,4.4vw,60px);line-height:1.28;letter-spacing:-.025em;margin:0;max-width:1080px;word-break:keep-all;position:relative;padding-left:48px;}
+.pull blockquote::before{content:"“";position:absolute;left:-10px;top:-30px;font-family:var(--font-serif-en);font-size:180px;color:var(--dancheong-red);line-height:1;opacity:0.7;}
+.pull blockquote .red{color:var(--dancheong-red);}
+.pull .src{margin-top:32px;padding-left:48px;font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg2);}
+.pull .src strong{color:var(--ink);font-family:var(--font-serif-kr);font-weight:700;letter-spacing:-.005em;text-transform:none;font-size:14px;}
+
+/* BIO + SIDEBAR */
+.bio-sec{position:relative;z-index:2;max-width:var(--max-w);margin:0 auto;padding:0 44px 120px;}
+.bio-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:88px;align-items:start;padding-top:56px;border-top:1px solid var(--border-strong);}
+.bio-hd{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--dancheong-red);margin-bottom:28px;}
+.bio h2{font-family:var(--font-serif-kr);font-weight:800;font-size:56px;line-height:1.02;letter-spacing:-.028em;margin:0 0 32px;word-break:keep-all;}
+.bio h2 .it{font-family:var(--font-serif-en);font-style:italic;font-weight:400;font-size:0.46em;color:var(--dancheong-red);display:block;margin-top:6px;}
+.bio .drop{font-size:17px;line-height:1.85;color:var(--fg1);word-break:keep-all;}
+.bio .drop::first-letter{font-family:var(--font-serif-en);font-style:italic;font-weight:400;font-size:5.4em;line-height:0.85;float:left;color:var(--dancheong-red);padding:8px 16px 0 0;margin-top:4px;}
+.bio .drop p{margin:0 0 18px;}
+.bio .philo{margin-top:48px;padding:32px 36px;background:var(--paper);border:1px solid var(--border-hairline);position:relative;}
+.bio .philo::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--dancheong-red);}
+.bio .philo .l{font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--dancheong-red);margin-bottom:10px;}
+.bio .philo h3{font-family:var(--font-serif-kr);font-weight:800;font-size:22px;margin:0 0 12px;letter-spacing:-.01em;line-height:1.3;}
+.bio .philo p{margin:0;font-size:14px;line-height:1.85;color:var(--fg1);word-break:keep-all;}
+
+/* Sidebar: quick facts */
+.qf{position:sticky;top:100px;display:flex;flex-direction:column;gap:16px;}
+.qf-card{background:var(--paper);border:1px solid var(--border-hairline);padding:28px 26px;}
+.qf-card.dark{background:var(--ink);color:var(--hanji);border-color:var(--ink);}
+.qf-card .t{font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--dancheong-red);margin-bottom:14px;}
+.qf-card.dark .t{color:var(--geumbak-gold);}
+.qf-card h4{font-family:var(--font-serif-kr);font-weight:800;font-size:22px;margin:0 0 18px;letter-spacing:-.015em;word-break:keep-all;line-height:1.3;}
+.qf-list{display:flex;flex-direction:column;gap:0;}
+.qf-row{display:grid;grid-template-columns:80px 1fr;gap:14px;padding:11px 0;border-bottom:1px dashed var(--border-hairline);align-items:baseline;}
+.qf-card.dark .qf-row{border-bottom-color:rgba(246,241,232,0.14);}
+.qf-row:last-child{border-bottom:0;}
+.qf-row .k{font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:var(--fg2);text-transform:uppercase;}
+.qf-card.dark .qf-row .k{color:rgba(246,241,232,0.55);}
+.qf-row .v{font-family:var(--font-serif-kr);font-weight:600;font-size:13px;line-height:1.55;letter-spacing:-.005em;color:var(--ink);word-break:keep-all;}
+.qf-card.dark .qf-row .v{color:var(--hanji);}
+.qf-row .v small{display:block;font-family:var(--font-sans-kr);font-weight:400;font-size:11px;color:var(--fg2);margin-top:2px;}
+.qf-card.dark .qf-row .v small{color:rgba(246,241,232,0.55);}
+
+.inst-block{display:flex;gap:16px;align-items:center;padding-bottom:16px;border-bottom:1px solid rgba(246,241,232,0.14);margin-bottom:16px;}
+.inst-block .glyph{width:64px;height:64px;border:1px solid var(--geumbak-gold);display:flex;align-items:center;justify-content:center;font-family:var(--font-serif-kr);font-weight:800;font-size:32px;color:var(--geumbak-gold);}
+.inst-block .t1{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(246,241,232,0.6);}
+.inst-block .t2{font-family:var(--font-serif-kr);font-weight:800;font-size:22px;letter-spacing:-.01em;margin-top:4px;}
+.inst-block .t2 small{font-family:var(--font-serif-en);font-style:italic;font-weight:400;font-size:13px;color:rgba(246,241,232,0.6);margin-left:8px;}
+
+/* CAREER TIMELINE */
+.career{position:relative;z-index:2;background:var(--ink);color:var(--hanji);padding:130px 44px;}
+.career-inner{max-width:var(--max-w);margin:0 auto;}
+.career-hd{display:grid;grid-template-columns:1fr auto;gap:48px;align-items:end;padding-bottom:24px;border-bottom:1px solid rgba(246,241,232,0.2);margin-bottom:56px;}
+.career-hd .l{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--geumbak-gold);margin-bottom:14px;}
+.career-hd h2{font-family:var(--font-serif-kr);font-weight:800;font-size:72px;line-height:1;letter-spacing:-.03em;margin:0;}
+.career-hd h2 .it{font-family:var(--font-serif-en);font-style:italic;font-weight:400;color:var(--dancheong-red);}
+.career-hd .meta{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(246,241,232,0.62);text-align:right;line-height:1.8;}
+.career-hd .meta strong{color:var(--geumbak-gold);font-family:var(--font-serif-kr);font-size:15px;letter-spacing:-.005em;text-transform:none;display:block;margin-bottom:3px;}
+
+.tl{display:grid;grid-template-columns:140px 1fr;gap:0;}
+.tl-era{display:contents;}
+.tl-yrs{padding:36px 32px 36px 0;border-right:1px solid rgba(246,241,232,0.18);border-bottom:1px solid rgba(246,241,232,0.12);display:flex;flex-direction:column;gap:4px;}
+.tl-yrs .y{font-family:var(--font-serif-en);font-style:italic;font-size:36px;line-height:0.9;color:var(--geumbak-gold);letter-spacing:-.02em;}
+.tl-yrs .s{font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(246,241,232,0.6);}
+.tl-events{padding:0 0 24px 32px;border-bottom:1px solid rgba(246,241,232,0.12);display:flex;flex-direction:column;}
+.tl-item{display:grid;grid-template-columns:70px 1fr;gap:20px;padding:14px 0;align-items:baseline;}
+.tl-item .yr{font-family:var(--font-mono);font-size:11px;color:var(--dancheong-red);font-weight:700;letter-spacing:.04em;}
+.tl-item .txt h4{font-family:var(--font-serif-kr);font-weight:700;font-size:16px;margin:0 0 3px;letter-spacing:-.005em;line-height:1.4;word-break:keep-all;}
+.tl-item .txt .d{font-size:12px;line-height:1.7;color:rgba(246,241,232,0.66);word-break:keep-all;max-width:640px;}
+
+/* PROGRAM HIGHLIGHTS */
+.prog{position:relative;z-index:2;max-width:var(--max-w);margin:0 auto;padding:130px 44px;}
+.prog-hd{display:flex;justify-content:space-between;align-items:end;margin-bottom:48px;padding-bottom:24px;border-bottom:1px solid var(--border-strong);}
+.prog-hd .l{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--dancheong-red);margin-bottom:14px;}
+.prog-hd h2{font-family:var(--font-serif-kr);font-weight:800;font-size:56px;line-height:1;letter-spacing:-.03em;margin:0;}
+.prog-hd .all{font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dancheong-red);border-bottom:1px solid var(--dancheong-red);padding-bottom:2px;display:inline-flex;gap:8px;align-items:center;}
+
+.prog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.pr-card{border:1px solid var(--border-hairline);background:var(--paper);overflow:hidden;cursor:pointer;transition:all var(--dur-base) var(--ease-gentle);}
+.pr-card:hover{border-color:var(--ink);}
+.pr-card .img{aspect-ratio:16/11;position:relative;color:var(--hanji);padding:22px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;}
+.pr-card.a .img{background:linear-gradient(165deg,#4a2520,#1a1614);}
+.pr-card.b .img{background:linear-gradient(165deg,#2b2623,#1a1614);}
+.pr-card.c .img{background:linear-gradient(165deg,#1f4b44,#0f2a26);}
+.pr-card .img::before{content:attr(data-g);position:absolute;font-family:var(--font-serif-kr);font-weight:800;font-size:220px;line-height:0.8;color:rgba(246,241,232,0.08);right:-20px;top:-30px;}
+.pr-card .img .top{position:relative;z-index:1;font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--geumbak-gold);}
+.pr-card .img .bot{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:flex-end;}
+.pr-card .img .bot .num{font-family:var(--font-serif-en);font-style:italic;font-size:32px;color:rgba(246,241,232,0.7);}
+.pr-card .img .bot .dt{font-family:var(--font-mono);font-size:12px;color:var(--hanji);font-weight:500;letter-spacing:.04em;}
+.pr-card .bd{padding:22px 24px 26px;}
+.pr-card .bd .ty{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dancheong-red);margin-bottom:6px;}
+.pr-card .bd h4{font-family:var(--font-serif-kr);font-weight:800;font-size:22px;margin:0 0 4px;letter-spacing:-.015em;line-height:1.3;word-break:keep-all;}
+.pr-card .bd .sub{font-family:var(--font-serif-en);font-style:italic;font-size:13px;color:var(--fg2);}
+
+/* INLINE INQUIRY CTA */
+.cta-strip{position:relative;z-index:2;max-width:var(--max-w);margin:0 auto 100px;padding:0 44px;}
+.cta-strip .box{background:var(--hanji-deep);border:1px solid var(--border-strong);padding:44px 48px;display:grid;grid-template-columns:auto 1fr auto;gap:40px;align-items:center;}
+.cta-strip .box .glyph{width:72px;height:72px;border:1px solid var(--ink);display:flex;align-items:center;justify-content:center;font-family:var(--font-serif-kr);font-weight:800;font-size:32px;color:var(--dancheong-red);}
+.cta-strip .t1{font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--dancheong-red);margin-bottom:6px;}
+.cta-strip .t2{font-family:var(--font-serif-kr);font-weight:800;font-size:28px;letter-spacing:-.015em;word-break:keep-all;line-height:1.25;}
+.cta-strip .t2 small{display:block;font-family:var(--font-serif-en);font-style:italic;font-weight:400;font-size:14px;color:var(--fg2);margin-top:4px;}
+.cta-strip .actions{display:flex;gap:10px;}
+.cta-strip .btn-p{background:var(--ink);color:var(--hanji);padding:16px 22px;font-size:12px;font-weight:700;letter-spacing:.04em;border:0;display:inline-flex;gap:10px;align-items:center;}
+.cta-strip .btn-p:hover{background:var(--dancheong-red);}
+.cta-strip .btn-g{background:transparent;color:var(--ink);padding:16px 20px;font-size:12px;font-weight:700;letter-spacing:.04em;border:1px solid var(--ink);display:inline-flex;gap:8px;align-items:center;}
+
+/* NEXT/PREV MEMBER */
+.np{position:relative;z-index:2;max-width:var(--max-w);margin:0 auto;padding:0 44px 100px;display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.np-card{display:grid;grid-template-columns:auto 1fr auto;gap:20px;align-items:center;padding:32px 36px;background:var(--paper);border:1px solid var(--border-hairline);cursor:pointer;transition:all var(--dur-base) var(--ease-gentle);}
+.np-card:hover{border-color:var(--ink);}
+.np-card.prev .arr::before{content:"←";}
+.np-card.next{text-align:right;}
+.np-card.next .arr::before{content:"→";}
+.np-card .arr{font-family:var(--font-serif-en);font-style:italic;font-size:24px;color:var(--dancheong-red);}
+.np-card .dir{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg2);margin-bottom:4px;}
+.np-card h5{font-family:var(--font-serif-kr);font-weight:800;font-size:22px;margin:0;letter-spacing:-.01em;}
+.np-card h5 small{display:block;font-family:var(--font-serif-en);font-style:italic;font-weight:400;font-size:12px;color:var(--fg2);margin-top:2px;}
+.np-card .role{font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dancheong-red);}
+
+/* FOOTER */
+.ftr{position:relative;z-index:2;background:var(--ink);color:var(--hanji);padding:72px 44px 80px;border-top:1px solid rgba(246,241,232,0.14);}
+.ftr .c{max-width:var(--max-w);margin:0 auto;}
+.ftr-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:56px;}
+.ftr-grid .col h4{font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(246,241,232,0.6);margin:0 0 16px;}
+.ftr-grid .col a.l{display:block;color:var(--hanji);font-size:13px;line-height:2.1;}
+.ftr-grid .col a.l:hover{color:var(--dancheong-red);}
+.ftr-addr{font-size:13px;line-height:1.9;color:rgba(246,241,232,0.7);}
+.ftr-addr strong{color:var(--hanji);}
+.ftr-bot{display:flex;justify-content:space-between;align-items:center;margin-top:56px;padding-top:24px;border-top:1px solid rgba(246,241,232,0.14);font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(246,241,232,0.5);}
+
+@media (max-width:1000px){
+  .h-grid,.bio-grid,.career-hd,.prog-grid,.np,.cta-strip .box{grid-template-columns:1fr;}
+  .h-meta{grid-template-columns:1fr 1fr;}
+  .tl{grid-template-columns:90px 1fr;}
+  .qf{position:static;}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr" id="hdr">
+  <a class="brand" href="index.html">
+    <img src="assets/logo-symbol.png" alt="">
+    <div class="stk"><span class="kr">세종국악관현악단</span><span class="en">Sejong Korean Music Orchestra</span></div>
+  </a>
+  <nav class="nav">
+    <a class="active" href="about.html" data-nav="about">악단소개</a>
+    <a href="schedule.html" data-nav="perf">공연</a>
+    <a href="archive.html" data-nav="archive">아카이브</a>
+    <a href="inquiry.html" data-nav="inquiry">문의</a>
+  </nav>
+  <div class="util">
+    <span class="t">031·391·8784</span>
+    <button class="cta"><span class="dot"></span>티켓 예매</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="crumb"><span>Home</span><span class="sep">／</span><span><a href="about.html">About</a></span><span class="sep">／</span><span>Musicians</span><span class="sep">／</span><span class="now">박상우 · Principal Conductor</span></div>
+
+  <div class="h-grid">
+    <div class="portrait">
+      <img src="http://www.sejonggugak.com/data/file/member/thumb-3552798045_lZFNd6Bz_94bd20cb08500f59829ea010ac068649b7d0500f_400x512.jpg" alt="박상우" referrerpolicy="no-referrer" onerror="this.remove()">
+      <div class="tag-strip">
+        <div class="series">Musician Series · N° 01 of 54</div>
+        <div class="no">M·01</div>
+      </div>
+      <div class="portrait-foot">
+        <div class="sign">— Park Sang-woo, Conductor.</div>
+        <div class="stamp">朴</div>
+      </div>
+    </div>
+
+    <div class="h-right">
+      <div>
+        <div class="kicker">Musician Profile · 단원 소개</div>
+        <h1>박상우.</h1>
+        <div class="en">Park Sang-woo</div>
+      </div>
+      <div class="roleband">
+        <div class="r1">Position · 직책</div>
+        <div class="r2">상임지휘자 <span class="slash">／</span> 공연기획 총괄팀장</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Meta strip -->
+  <div class="h-meta">
+    <div class="cell"><span class="k">Discipline</span><span class="v">지휘 · 작곡<small>Conducting · Composition</small></span></div>
+    <div class="cell"><span class="k">Tenure</span><span class="v">상임 11년차<small>Since 2015 · Principal</small></span></div>
+    <div class="cell"><span class="k">Repertoire</span><span class="v">창작 국악관현악<small>60+ premieres as conductor</small></span></div>
+    <div class="cell"><span class="k">Based</span><span class="v">경기 군포<small>Gunpo, Republic of Korea</small></span></div>
+  </div>
+</section>
+
+<!-- PULL QUOTE -->
+<section class="pull">
+  <blockquote>
+    전통의 구조적 본질을 해치지 않으면서도,<br>
+    <span class="red">동시대의 어법으로</span> 다시 써내려가는 작업.<br>
+    그것이 제가 선택한 지휘자의 자리입니다.
+  </blockquote>
+  <div class="src">From Interview · 월간객석 2024·03 — <strong>"세종국악관현악단 박상우 상임지휘자 인터뷰"</strong></div>
+</section>
+
+<!-- BIO + SIDEBAR -->
+<section class="bio-sec">
+  <div class="bio-grid">
+    <article class="bio">
+      <div class="bio-hd">Chapter 01 — Biography</div>
+      <h2>전통을 번역하는<br>지휘봉.<span class="it">Translating tradition — into the present tense.</span></h2>
+      <div class="drop">
+        <p>세종국악관현악단의 상임지휘자이자 공연기획 총괄팀장. 추계예술대학교에서 국악작곡을 전공하고, 한양대학교 대학원에서 지휘를 전공했다. 작곡가이자 지휘자라는 이중의 정체성은 박상우의 음악적 선택을 관통하는 축이다. 그는 악보 앞에 설 때 작품의 구조와 호흡을 먼저 읽어내고, 단원 앞에 설 때 소리의 질감과 균형을 조율한다.</p>
+        <p>KBS국악관현악단, 국립국악관현악단, 서울시국악관현악단 등 국내 주요 단체와의 협업을 이어왔으며, 창작 국악관현악 작품의 초연 지휘만 60여 편에 이른다. 2023년 배리어프리 공연 '설화와 국악심포니, 만나다'를 총괄하며 공연의 접근성에 대한 담론을 조직 내부로 끌어들였고, 동시에 같은 해 라디오 KBS1 '우리 음악에 오신 것을 환영합니다'의 객원 지휘자로 참여했다.</p>
+        <p>그의 작업 궤적에서 반복해서 등장하는 단어는 '번역'이다. 전통 선율을 원형 그대로 복원하는 일도, 서양 관현악의 틀에 억지로 끼워 맞추는 일도 아닌, 두 언어 사이에서 새로운 동사와 형용사를 찾는 작업. 창단 30주년을 맞이하는 2026년, 박상우는 제30회 정기연주회 〈도전과 개척〉의 지휘봉을 잡았다.</p>
+      </div>
+      <div class="philo">
+        <div class="l">Artistic Philosophy · 음악 철학</div>
+        <h3>"지휘는 결정이 아니라 귀 기울이는 일이다."</h3>
+        <p>박상우는 지휘자의 역할을 '해석의 최종 권위자'로 두지 않는다. 그는 단원 각자가 가진 악기의 방언을 하나의 문장으로 엮는 편집자이자, 작곡가의 의도와 청중의 귀 사이를 오가는 번역가의 위치를 택한다. 정확한 박자보다 호흡의 결을, 완벽한 음정보다 악구의 형태를 우선한다.</p>
+      </div>
+    </article>
+
+    <aside class="qf">
+      <div class="qf-card">
+        <div class="t">Quick Facts · 주요 이력</div>
+        <h4>학력 · 경력 요약.</h4>
+        <div class="qf-list">
+          <div class="qf-row"><span class="k">학사</span><span class="v">추계예술대학교<small>국악작곡 전공 · 2008</small></span></div>
+          <div class="qf-row"><span class="k">석사</span><span class="v">한양대학교 대학원<small>지휘 전공 · 2012</small></span></div>
+          <div class="qf-row"><span class="k">2015 →</span><span class="v">세종국악관현악단<small>상임지휘자 · 총괄팀장</small></span></div>
+          <div class="qf-row"><span class="k">2023</span><span class="v">KBS1 라디오 객원 지휘<small>'우리 음악에 오신 것을 환영합니다'</small></span></div>
+          <div class="qf-row"><span class="k">협업</span><span class="v">KBS국악관현악단 · 국립국악관현악단<small>서울시국악관현악단 외</small></span></div>
+        </div>
+      </div>
+
+      <div class="qf-card dark">
+        <div class="t">On Stage · 무대 위에서</div>
+        <div class="inst-block">
+          <div class="glyph">指</div>
+          <div>
+            <div class="t1">Instrument · 악기</div>
+            <div class="t2">지휘봉 <small>Baton</small></div>
+          </div>
+        </div>
+        <div class="qf-list">
+          <div class="qf-row"><span class="k">초연 지휘</span><span class="v">60+ 작품<small>Commissioned Premieres</small></span></div>
+          <div class="qf-row"><span class="k">정기연주회</span><span class="v">15회 지휘<small>Since 2015</small></span></div>
+          <div class="qf-row"><span class="k">해외 공연</span><span class="v">4개국 순회<small>Japan · China · Germany · US</small></span></div>
+          <div class="qf-row"><span class="k">배리어프리</span><span class="v">2023 — 설화와 국악<small>Accessibility Program Lead</small></span></div>
+        </div>
+      </div>
+
+      <div class="qf-card">
+        <div class="t">Contact · 연락</div>
+        <h4>공연 섭외 · 인터뷰 문의.</h4>
+        <div class="qf-list">
+          <div class="qf-row"><span class="k">Press</span><span class="v">press@sejong...<small>인터뷰·취재 문의</small></span></div>
+          <div class="qf-row"><span class="k">Booking</span><span class="v">031-391-8785<small>최민석 프로듀서</small></span></div>
+          <div class="qf-row"><span class="k">Direct</span><span class="v">보안상 비공개<small>에이전트 경유 요청</small></span></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- CAREER TIMELINE -->
+<section class="career">
+  <div class="career-inner">
+    <div class="career-hd">
+      <div>
+        <div class="l">Chapter 02 — Career</div>
+        <h2>연혁.<span class="it">Career</span></h2>
+      </div>
+      <div class="meta"><strong>2008 — Present</strong>17년간의 무대 기록<br>60+ commissioned premieres</div>
+    </div>
+
+    <div class="tl">
+      <div class="tl-era">
+        <div class="tl-yrs"><span class="y">2008—14</span><span class="s">Emerging</span></div>
+        <div class="tl-events">
+          <div class="tl-item"><span class="yr">2008</span><div class="txt"><h4>추계예술대학교 국악작곡과 졸업</h4><div class="d">첫 위촉작 〈동트는 소리〉로 졸업 연주회 — 이후 5회 재연.</div></div></div>
+          <div class="tl-item"><span class="yr">2010</span><div class="txt"><h4>한양대학교 지휘 전공 입학</h4><div class="d">작곡가에서 지휘자로의 전환. 김덕수 지휘자 사사.</div></div></div>
+          <div class="tl-item"><span class="yr">2012</span><div class="txt"><h4>한양대 지휘 전공 석사 졸업</h4><div class="d">졸업작품 〈산조환상곡 — 오중주를 위한〉 초연 지휘.</div></div></div>
+          <div class="tl-item"><span class="yr">2013</span><div class="txt"><h4>국립국악관현악단 객원지휘자 데뷔</h4><div class="d">세종문화회관 M씨어터 신진 지휘자 시리즈.</div></div></div>
+        </div>
+      </div>
+
+      <div class="tl-era">
+        <div class="tl-yrs"><span class="y">2015—19</span><span class="s">Building</span></div>
+        <div class="tl-events">
+          <div class="tl-item"><span class="yr">2015</span><div class="txt"><h4>세종국악관현악단 상임지휘자 취임</h4><div class="d">2대 대표 김혜성 취임과 함께. 위촉작곡·편성확장 담당.</div></div></div>
+          <div class="tl-item"><span class="yr">2016</span><div class="txt"><h4>제19회 정기연주회 〈풍류, 다시 쓰다〉 지휘</h4><div class="d">첫 정기연주회 전체 지휘. 창작 국악관현악 6곡 초연.</div></div></div>
+          <div class="tl-item"><span class="yr">2017</span><div class="txt"><h4>군포문화예술회관 상주단체 지정 기획</h4><div class="d">상주단체 지정 프로젝트 총괄. 지역 커뮤니티와의 연계 프로그램 설계.</div></div></div>
+          <div class="tl-item"><span class="yr">2019</span><div class="txt"><h4>창작 국악관현악 〈아리랑 환상곡〉 초연 지휘</h4><div class="d">편곡 이영조. 세종 창단 이후 최대 편성의 협업작.</div></div></div>
+        </div>
+      </div>
+
+      <div class="tl-era">
+        <div class="tl-yrs"><span class="y">2020—23</span><span class="s">Expanding</span></div>
+        <div class="tl-events">
+          <div class="tl-item"><span class="yr">2020</span><div class="txt"><h4>교향시 〈세종의 별〉 세계 초연 지휘</h4><div class="d">작곡 이영조. 국악기·양악기 혼합 편성.</div></div></div>
+          <div class="tl-item"><span class="yr">2021</span><div class="txt"><h4>온라인 콘서트 시리즈 '여음' 기획 · 지휘</h4><div class="d">팬데믹 시기 비대면 공연 8회 총괄.</div></div></div>
+          <div class="tl-item"><span class="yr">2023</span><div class="txt"><h4>배리어프리 공연 '설화와 국악심포니' 총괄</h4><div class="d">수어통역·자막·터치리딩. 국악관현악계 최초 배리어프리 실험.</div></div></div>
+          <div class="tl-item"><span class="yr">2023</span><div class="txt"><h4>KBS1 라디오 객원 지휘</h4><div class="d">'우리 음악에 오신 것을 환영합니다' 정기 출연.</div></div></div>
+        </div>
+      </div>
+
+      <div class="tl-era">
+        <div class="tl-yrs"><span class="y">2024—Now</span><span class="s">Next Chapter</span></div>
+        <div class="tl-events">
+          <div class="tl-item"><span class="yr">2024</span><div class="txt"><h4>베를린 한국문화원 초청공연 지휘</h4><div class="d">유럽 무대 데뷔. 한·독 수교 140주년 기념.</div></div></div>
+          <div class="tl-item"><span class="yr">2025</span><div class="txt"><h4>월간객석 '2025 주목할 지휘자 10인' 선정</h4><div class="d">국악관현악 분야 유일 선정.</div></div></div>
+          <div class="tl-item"><span class="yr">2026</span><div class="txt"><h4>제30회 정기연주회 〈도전과 개척〉 지휘</h4><div class="d">창단 30주년 기념 무대. 11월 14일 예술의전당 콘서트홀.</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAM HIGHLIGHTS -->
+<section class="prog">
+  <div class="prog-hd">
+    <div>
+      <div class="l">Chapter 03 — Selected Works</div>
+      <h2>대표 무대.</h2>
+    </div>
+    <a class="all" href="schedule.html">전체 공연 보기 <i class="ph ph-arrow-right"></i></a>
+  </div>
+  <div class="prog-grid">
+    <div class="pr-card a">
+      <div class="img" data-g="挑">
+        <div class="top">Regular N° 30 · Upcoming</div>
+        <div class="bot"><div class="num">N° 30</div><div class="dt">2026. 11. 14</div></div>
+      </div>
+      <div class="bd">
+        <div class="ty">Regular Concert</div>
+        <h4>제30회 정기연주회 〈도전과 개척〉</h4>
+        <div class="sub">— The Challenge, the Frontier.</div>
+      </div>
+    </div>
+    <div class="pr-card c">
+      <div class="img" data-g="話">
+        <div class="top">Barrier-Free · 2023</div>
+        <div class="bot"><div class="num">S° 02</div><div class="dt">2023. 10. 21</div></div>
+      </div>
+      <div class="bd">
+        <div class="ty">Accessibility Program</div>
+        <h4>설화와 국악심포니, 만나다</h4>
+        <div class="sub">— Korean Folk Tales, Reimagined.</div>
+      </div>
+    </div>
+    <div class="pr-card b">
+      <div class="img" data-g="星">
+        <div class="top">Symphonic Poem · 2020</div>
+        <div class="bot"><div class="num">N° 24</div><div class="dt">2020. 10. 03</div></div>
+      </div>
+      <div class="bd">
+        <div class="ty">World Premiere</div>
+        <h4>교향시 〈세종의 별〉</h4>
+        <div class="sub">— Star of Sejong.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INLINE INQUIRY CTA -->
+<section class="cta-strip">
+  <div class="box">
+    <div class="glyph">問</div>
+    <div>
+      <div class="t1">Press · Booking · Commissioning</div>
+      <div class="t2">박상우 지휘자에게 문의하기. <small>For interviews, booking, and commissioning inquiries.</small></div>
+    </div>
+    <div class="actions">
+      <a class="btn-p" href="inquiry.html">문의 남기기 <i class="ph ph-arrow-up-right"></i></a>
+      <a class="btn-g" href="inquiry.html">섭외 제안</a>
+    </div>
+  </div>
+</section>
+
+<!-- PREV / NEXT -->
+<section class="np">
+  <a class="np-card prev">
+    <div class="arr"></div>
+    <div>
+      <div class="dir">— Previous Member</div>
+      <h5>박호성<small>Park Ho-seong</small></h5>
+      <div class="role">Founding Conductor · 창단·초대지휘자</div>
+    </div>
+  </a>
+  <a class="np-card next">
+    <div>
+      <div class="dir">Next Member —</div>
+      <h5>곽재혁<small>Kwak Jae-hyeok</small></h5>
+      <div class="role">Concertmaster · 악장 (피리·태평소)</div>
+    </div>
+    <div class="arr"></div>
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer class="ftr">
+  <div class="c">
+    <div class="ftr-grid">
+      <div class="col">
+        <h4>Studio · Residence</h4>
+        <div class="ftr-addr">
+          <strong>세종국악관현악단 &amp; 세종국악심포니오케스트라</strong><br>
+          15820 경기도 군포시 고산로 599<br>군포문화예술회관 內<br><br>
+          T. 031-391-8784<br>E. sejong8784@hanmail.net
+        </div>
+      </div>
+      <div class="col"><h4>Orchestra</h4><a class="l" href="about.html">악단 소개</a><a class="l">연혁</a><a class="l">단원 소개</a></div>
+      <div class="col"><h4>Performance</h4><a class="l" href="schedule.html">공연 일정</a><a class="l">지난 공연</a><a class="l">티켓 예매</a></div>
+      <div class="col"><h4>Inquiry</h4><a class="l" href="inquiry.html">관객 문의</a><a class="l" href="inquiry.html">공연 섭외</a><a class="l">오시는 길</a></div>
+    </div>
+    <div class="ftr-bot">
+      <div>© 2026 SEJONG GUGAK — ALL RIGHTS RESERVED</div>
+      <div>Musician Profile · 박상우</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const hdr = document.getElementById('hdr');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 30) hdr.classList.add('scrolled'); else hdr.classList.remove('scrolled');
+});
+</script>
+</body></html>
