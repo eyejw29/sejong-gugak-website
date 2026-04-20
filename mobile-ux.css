@@ -1,0 +1,211 @@
+/* ==================================================================
+   세종국악 — 모바일 UX 보강 시트 (연령대 고려한 가독성 우선)
+   - 본문 16→18px 기본, h1/h2 clamp로 모바일에서도 충분히 큼직
+   - hit target 최소 48×48px 보장
+   - focus ring 2px 단청레드
+   - SNS rail + 기존 rail 겹침 방지
+   ================================================================== */
+
+/* ----- 기본 리듬 ----- */
+html{font-size:17px;} /* 기존 17px 유지 — body는 16→18 */
+body{font-size:16px;line-height:1.75;}
+
+/* ----- Focus ring (접근성) ----- */
+a:focus-visible,button:focus-visible,input:focus-visible,
+textarea:focus-visible,select:focus-visible,.chip:focus-visible,
+.cta:focus-visible{
+  outline:2px solid var(--dancheong-red);
+  outline-offset:3px;
+  border-radius:2px;
+}
+
+/* ----- Tap-target 최소 사이즈 ----- */
+@media (hover:none) and (pointer:coarse){
+  .chip,.view-toggle button,.pagi button,.nav a,.util .cta,
+  .filters-row .chip{
+    min-height:44px;
+    padding-left:18px;padding-right:18px;
+  }
+}
+
+/* ----- 모바일 가독성 부스트 ----- */
+@media (max-width:768px){
+  /* 기본 폰트 크기 확대 (연령대 고려) */
+  body{font-size:17px;line-height:1.8;}
+
+  /* 헤더 — 브랜드명 살리고 nav는 충분히 큼직 */
+  .hdr{padding:14px 18px !important;gap:12px !important;}
+  .brand .kr{font-size:16px !important;}
+  .brand .en{font-size:8.5px !important;}
+  .brand img{height:36px !important;}
+  .nav{gap:16px !important;flex-wrap:wrap;}
+  .nav a{font-size:13px !important;padding:8px 4px !important;}
+  .util .t{display:none;}  /* 전화번호는 하단 CTA로 옮김 */
+  .util .cta{padding:12px 16px !important;font-size:12px !important;}
+
+  /* 히어로 — 글자 작아지지 않게 clamp로 보호 */
+  h1{word-break:keep-all;}
+  .hero-h{font-size:clamp(48px,11vw,72px) !important;line-height:1.02 !important;}
+  .hero-h .stroke{font-size:0.55em !important;}
+  .page-hero h1{font-size:clamp(56px,13vw,96px) !important;line-height:.95 !important;}
+
+  /* 섹션 제목들 */
+  .section-hd h2,.philos-main h2,.season-hd h2,.fivel-hd h2,
+  .musi-hd h2,.notice .col h3,.ident .hd h2,.career-hd h2{
+    font-size:clamp(40px,9vw,56px) !important;line-height:1.05 !important;
+  }
+
+  /* 본문 카피 */
+  .p,.p-lead,.lede,.hero-sub,.bio .drop p,.greet-main .body,
+  .philos-main .body,.desc,.bio-grid .drop p{
+    font-size:16px !important;line-height:1.85 !important;
+  }
+  .p-sm,.caption,.meta,.crumb{font-size:13px !important;}
+
+  /* 시즌/공연 카드 — 썸네일·글자 분리 */
+  .perf{grid-template-columns:1fr !important;gap:16px !important;padding:20px 0 !important;}
+  .perf-thumb{width:100% !important;height:180px !important;}
+  .perf-title h3{font-size:22px !important;}
+  .perf-meta .big{font-size:20px !important;}
+  .perf-cta{justify-content:flex-start !important;}
+
+  /* 헤로 포스터 (index.html) */
+  .hero{grid-template-columns:1fr !important;padding:100px 24px 40px !important;}
+  .hero-poster{aspect-ratio:4/5 !important;padding:24px !important;}
+  .hero-poster h3{font-size:30px !important;}
+  .hero-poster .pmeta{font-size:10px !important;}
+  .hero-poster .pmeta .num{font-size:28px !important;}
+
+  /* 시즌 카드 - 이미지 사진 유지 */
+  .season{padding:80px 0 !important;}
+  .season .c{padding:0 20px !important;}
+
+  /* 필로소피·five directions 그리드 */
+  .philos{grid-template-columns:1fr !important;gap:40px !important;padding:80px 24px !important;}
+  .philos-side{position:static !important;flex-direction:row !important;}
+  .philos-main h2{font-size:44px !important;}
+  .philos-stats{grid-template-columns:1fr !important;gap:20px !important;}
+  .fivel-grid{grid-template-columns:1fr !important;}
+  .fivel-cell{aspect-ratio:5/3 !important;padding:24px !important;}
+  .fivel-cell .ch{font-size:64px !important;}
+
+  /* 공지 섹션 */
+  .notice{grid-template-columns:1fr !important;gap:40px !important;padding:60px 24px !important;}
+  .notice .col h3{font-size:26px !important;}
+  .nl .tt{font-size:15px !important;line-height:1.6 !important;}
+  .feature{padding:28px !important;}
+  .feature h3{font-size:28px !important;}
+  .feature .desc{font-size:15px !important;line-height:1.8 !important;}
+
+  /* 푸터 */
+  .ftr{padding:60px 24px 32px !important;}
+  .ftr .big{font-size:48px !important;margin-bottom:40px !important;}
+  .ftr-grid{grid-template-columns:1fr 1fr !important;gap:32px !important;}
+  .ftr-grid .col h4{font-size:10px !important;}
+  .ftr-grid .col a.l{font-size:14px !important;line-height:2 !important;min-height:32px;display:inline-block;}
+  .ftr-bot{flex-direction:column !important;align-items:flex-start !important;gap:16px;font-size:10px !important;}
+
+  /* 공연일정 */
+  .toolbar{padding:20px 24px !important;grid-template-columns:1fr !important;gap:16px !important;}
+  .view-toggle{width:100%;}
+  .view-toggle button{flex:1;padding:12px !important;font-size:12px !important;}
+  .filters-row{overflow-x:auto;white-space:nowrap;gap:6px !important;}
+  .chip{font-size:12px !important;padding:10px 14px !important;flex:0 0 auto;}
+  .search{width:100% !important;}
+  .search input{font-size:15px !important;}
+  .cal-nav .ym .y{font-size:40px !important;}
+  .cal-nav .ym .m{font-size:32px !important;}
+  .cal-nav .ym .han{font-size:14px !important;}
+  .cal-nav .arrows button{width:44px !important;height:44px !important;}
+  .cal-cell{min-height:84px !important;padding:6px 6px !important;}
+  .cal-evt{font-size:9px !important;padding:3px 4px !important;}
+  .cal-evt small{font-size:8px !important;}
+  .evt-row{grid-template-columns:1fr !important;gap:10px !important;padding:18px 0 !important;}
+  .evt-row h3{font-size:18px !important;}
+  .evt-row .meta{flex-wrap:wrap;gap:10px !important;font-size:13px !important;}
+  .evt-row .venue strong{font-size:15px !important;}
+  .evt-row .price{font-size:16px !important;}
+
+  /* 공지사항 */
+  .list .row{grid-template-columns:60px 1fr !important;gap:12px !important;padding:18px 16px !important;}
+  .list .row .cat,.list .row .views,.list .row .arr{display:none !important;}
+  .list .row .ti h4{font-size:15px !important;line-height:1.5 !important;}
+  .list .row .date{grid-column:2;font-size:12px !important;color:var(--fg3);margin-top:4px;}
+  .list-head{display:none !important;}
+  .pagi{flex-direction:column;gap:16px;}
+  .pagi button{min-width:44px;min-height:44px;}
+
+  /* 문의 */
+  .persona{grid-template-columns:1fr !important;}
+  .p-tile{min-height:240px !important;padding:28px !important;}
+  .p-tile h2{font-size:32px !important;}
+  .form-grid{grid-template-columns:1fr !important;gap:40px !important;}
+  .form-hd{flex-direction:column;gap:20px;}
+  .form-body .row{grid-template-columns:1fr !important;gap:12px !important;}
+  .fld input,.fld textarea,.fld select{font-size:16px !important;padding:14px !important;min-height:44px;}
+  .fld label{font-size:13px !important;}
+  .chip-group{grid-template-columns:1fr 1fr !important;}
+  .submit-bar{flex-direction:column;gap:16px;align-items:flex-start !important;}
+  .btn-submit{width:100%;justify-content:center;padding:16px !important;font-size:14px !important;}
+  .side-card{padding:24px !important;}
+  .info-list .ir{grid-template-columns:1fr !important;}
+
+  /* 단원 소개 */
+  .musi-lead{grid-template-columns:1fr !important;gap:20px !important;}
+  .musi-card .img{aspect-ratio:4/3 !important;}
+  .roster{grid-template-columns:1fr !important;}
+  .roster-row{grid-template-columns:48px 1fr auto !important;gap:12px !important;padding:12px 14px !important;}
+  .roster-row .ph{width:48px !important;height:48px !important;}
+  .roster-row .nm{font-size:15px !important;}
+  .roster-row .inst{font-size:12px !important;}
+
+  /* about 인사말 */
+  .greet{grid-template-columns:1fr !important;gap:32px !important;padding:60px 24px !important;}
+  .greet-side{position:static !important;}
+  .greet-main .quote{font-size:32px !important;}
+
+  /* 박호성/박상우 상세 */
+  .h-grid{grid-template-columns:1fr !important;gap:32px !important;}
+  .portrait{aspect-ratio:4/5 !important;}
+  .h-right h1{font-size:72px !important;}
+  .h-right .en{font-size:20px !important;}
+  .pull blockquote{font-size:28px !important;padding-left:28px !important;}
+  .bio-grid{grid-template-columns:1fr !important;}
+  .h-meta{grid-template-columns:1fr 1fr !important;}
+
+  /* 아카이브 */
+  .year-tabs,.cat-chips{overflow-x:auto;white-space:nowrap;}
+  .gallery{column-count:1 !important;}
+
+  /* 티켓 */
+  .ticket-grid,.tk-grid{grid-template-columns:1fr !important;}
+}
+
+/* ----- 초소형 (<=480px) 추가 보정 ----- */
+@media (max-width:480px){
+  .hdr{padding:12px 14px !important;}
+  .brand .en{display:none;}
+  .nav{order:3;width:100%;justify-content:space-between;margin-top:6px;}
+  .util{order:2;}
+  .hero-h{font-size:clamp(40px,12vw,60px) !important;}
+  .page-hero h1{font-size:clamp(48px,13vw,72px) !important;}
+  .greet-main .quote{font-size:26px !important;}
+  .pull blockquote{font-size:22px !important;}
+  .chip-group{grid-template-columns:1fr !important;}
+}
+
+/* ----- SNS rail + existing rail 겹침 방지 (모바일) ----- */
+@media (max-width:900px){
+  .rail{bottom:14px !important;right:12px !important;}
+  .rail button{width:48px !important;height:48px !important;font-size:9px !important;}
+  .rail button i{font-size:16px !important;}
+  .sns-rail{bottom:auto !important;top:50% !important;right:8px !important;transform:translateY(-50%) !important;}
+  .sns-rail a{width:44px !important;height:44px !important;font-size:18px !important;box-shadow:0 2px 8px rgba(26,22,20,0.15);}
+  .sns-rail a .cafe{font-size:12px !important;}
+}
+
+/* ----- 초소형 기기 — SNS rail만 남기고 text label 숨김 ----- */
+@media (max-width:480px){
+  .rail button span:not([class]){display:none;}
+  .rail button{gap:0 !important;}
+}
