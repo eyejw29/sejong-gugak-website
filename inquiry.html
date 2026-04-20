@@ -592,224 +592,72 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
     <div class="form-hd">
       <div>
         <div class="l">Submit Inquiry · 문의 접수</div>
-        <h3 id="form-title">직접 문의하기.<span class="it">Send us a message.</span></h3>
+        <h3 id="form-title">간단히 남겨주세요.<span class="it">Leave a brief message.</span></h3>
       </div>
-      <div class="note" id="form-note">
-        <strong>Response SLA — 24시간 이내 회신.</strong> 일반 문의는 평일 24시간, 공연 섭외는 48시간 이내에 담당자가 직접 회신드립니다. 긴급한 경우 031-391-8784로 전화 주세요.
+      <div class="note" id="form-note" style="background:var(--hanji-deep);padding:20px 24px;border-left:3px solid var(--dancheong-red);">
+        <strong>전화가 가장 빠릅니다 — <a href="tel:031-391-8784" style="color:var(--dancheong-red);font-weight:700;">031-391-8784</a></strong><br>
+        아래에 <strong>이름·연락처·간단한 내용</strong>만 남겨주시면, 담당자가 직접 전화드려 상세한 내용을 여쭤봅니다. 평일 10시–18시 운영.
       </div>
-    </div>
-
-    <!-- Mode toggle (auto-synced with persona) -->
-    <div class="mode" id="mode">
-      <button class="on" data-mode="audience"><span class="dot"></span>관객 문의</button>
-      <button data-mode="organizer"><span class="dot"></span>공연 의뢰 · 섭외</button>
     </div>
 
     <div class="form-grid">
-      <!-- MAIN FORM -->
       <div class="form-body">
 
-        <!-- Audience Form -->
-        <div class="form-mode" data-mode-panel="audience">
-          <div class="sct">Inquiry Type · 문의 유형</div>
-          <div class="chip-group">
-            <input type="radio" name="a-type" id="a1" checked><label for="a1"><span class="k">티켓 예매·환불</span></label>
-            <input type="radio" name="a-type" id="a2"><label for="a2"><span class="k">좌석·시야</span></label>
-            <input type="radio" name="a-type" id="a3"><label for="a3"><span class="k">할인·멤버십</span></label>
-            <input type="radio" name="a-type" id="a4"><label for="a4"><span class="k">접근성</span></label>
-            <input type="radio" name="a-type" id="a5"><label for="a5"><span class="k">단체 관람 (10인 이상)</span></label>
-            <input type="radio" name="a-type" id="a6"><label for="a6"><span class="k">기타</span></label>
-          </div>
+        <div class="sct">문의 유형</div>
+        <div class="chip-group">
+          <input type="radio" name="i-type" id="t1" checked><label for="t1"><span class="k">관객 · 예매 문의</span></label>
+          <input type="radio" name="i-type" id="t2"><label for="t2"><span class="k">공연 섭외 · 초청</span></label>
+          <input type="radio" name="i-type" id="t3"><label for="t3"><span class="k">교육 · 단체 관람</span></label>
+          <input type="radio" name="i-type" id="t4"><label for="t4"><span class="k">기타</span></label>
+        </div>
 
-          <div class="sct">Performance · 관련 공연</div>
-          <div class="row f">
-            <div class="fld">
-              <label>공연 선택 (선택)</label>
-              <select>
-                <option>선택 안 함 — 일반 문의</option>
-                <option>제30회 정기연주회 〈도전과 개척〉 · 2026.11.14</option>
-                <option>제29회 정기연주회 〈결 — 시간의 무늬〉 · 2026.05.18</option>
-                <option>찾아가는 국악 콘서트 · 시즌 8 · 2026.07.—</option>
-                <option>어린이 국악교실 · 2026년 하반기</option>
-              </select>
-            </div>
-          </div>
+        <div class="sct">연락처</div>
+        <div class="row">
+          <div class="fld"><label>이름 <span class="req">*</span></label><input type="text" placeholder="홍길동"></div>
+          <div class="fld"><label>연락처 <span class="req">*</span></label><input type="tel" placeholder="010-0000-0000" required></div>
+        </div>
+        <div class="row f">
+          <div class="fld"><label>이메일 <small style="color:var(--fg2);font-weight:400;margin-left:6px;">(선택)</small></label><input type="email" placeholder="example@email.com"></div>
+        </div>
 
-          <div class="sct">Your Information · 연락처</div>
-          <div class="row">
-            <div class="fld"><label>이름 <span class="req">*</span></label><input type="text" placeholder="홍길동"></div>
-            <div class="fld"><label>연락처 <span class="req">*</span></label><input type="tel" placeholder="010-0000-0000"></div>
-          </div>
-          <div class="row f">
-            <div class="fld"><label>이메일 <span class="req">*</span></label><input type="email" placeholder="example@email.com"></div>
-          </div>
-
-          <div class="sct">Message · 문의 내용</div>
-          <div class="row f">
-            <div class="fld"><label>상세 내용 <span class="req">*</span></label><textarea placeholder="문의 내용을 자세히 적어주세요. 예매 관련이라면 예매번호, 좌석 정보를 함께 적어주시면 빠른 처리가 가능합니다."></textarea></div>
+        <div class="sct">어떤 내용이신가요?</div>
+        <div class="row f">
+          <div class="fld">
+            <label>간단한 메모 <span class="req">*</span></label>
+            <textarea placeholder="한두 줄로 남겨주세요. 예: '제30회 정기연주회 예매 문의드립니다 — 단체 10명'" style="min-height:100px;" required></textarea>
           </div>
         </div>
 
-        <!-- Organizer Form -->
-        <div class="form-mode" data-mode-panel="organizer" style="display:none;">
-          <div class="sct">Inquiry Type · 의뢰 유형</div>
-          <div class="chip-group">
-            <input type="radio" name="o-type" id="o1" checked><label for="o1"><span class="k">공연 섭외 · 초청</span></label>
-            <input type="radio" name="o-type" id="o2"><label for="o2"><span class="k">공동 제작 · 협업</span></label>
-            <input type="radio" name="o-type" id="o3"><label for="o3"><span class="k">위촉 작곡</span></label>
-            <input type="radio" name="o-type" id="o4"><label for="o4"><span class="k">교육 · 워크숍</span></label>
-            <input type="radio" name="o-type" id="o5"><label for="o5"><span class="k">해외 투어</span></label>
-            <input type="radio" name="o-type" id="o6"><label for="o6"><span class="k">대관 · 기타</span></label>
-          </div>
-
-          <div class="sct">Performance Format · 공연 포맷</div>
-          <div class="size-row">
-            <input type="radio" name="o-size" id="s1" checked><label for="s1"><span class="sz-t">A · 풀오케스트라</span><span class="sz-s">54 players</span></label>
-            <input type="radio" name="o-size" id="s2"><label for="s2"><span class="sz-t">B · 챔버 앙상블</span><span class="sz-s">8–20 players</span></label>
-            <input type="radio" name="o-size" id="s3"><label for="s3"><span class="sz-t">C · 배리어프리</span><span class="sz-s">18–30 players</span></label>
-            <input type="radio" name="o-size" id="s4"><label for="s4"><span class="sz-t">D · 기타 · 커스텀</span><span class="sz-s">On-request</span></label>
-          </div>
-
-          <div class="sct">Event Details · 행사 정보</div>
-          <div class="row">
-            <div class="fld"><label>희망 일자 <span class="req">*</span></label><input type="date"></div>
-            <div class="fld"><label>공연장 · 도시 <span class="req">*</span></label><input type="text" placeholder="예: 예술의전당 콘서트홀 / 서울"></div>
-          </div>
-          <div class="row f3">
-            <div class="fld"><label>예상 관객수</label><input type="number" placeholder="500"></div>
-            <div class="fld"><label>공연 시간(분)</label><input type="number" placeholder="60"></div>
-            <div class="fld">
-              <label>예산 범위 (KRW)</label>
-              <select>
-                <option>— 선택 —</option>
-                <option>2천만원 미만</option>
-                <option>2천–5천만원</option>
-                <option>5천–1억원</option>
-                <option>1억–3억원</option>
-                <option>3억원 이상</option>
-                <option>협의 필요</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="sct">Requester · 담당자 정보</div>
-          <div class="row">
-            <div class="fld"><label>기관 · 회사명 <span class="req">*</span></label><input type="text" placeholder="예: 한국문화예술위원회"></div>
-            <div class="fld"><label>담당자 이름 <span class="req">*</span></label><input type="text" placeholder="홍길동"></div>
-          </div>
-          <div class="row">
-            <div class="fld"><label>직책 · 부서</label><input type="text" placeholder="예: 공연기획팀 · 팀장"></div>
-            <div class="fld"><label>연락처 <span class="req">*</span></label><input type="tel" placeholder="010-0000-0000"></div>
-          </div>
-          <div class="row f">
-            <div class="fld"><label>이메일 <span class="req">*</span></label><input type="email" placeholder="example@company.com"></div>
-          </div>
-
-          <div class="sct">Brief · 행사 개요</div>
-          <div class="row f">
-            <div class="fld"><label>행사 개요 &amp; 요청 사항 <span class="req">*</span></label><textarea placeholder="행사의 성격, 목적, 관객층, 특별한 요청사항(예: 특정 레퍼토리, 협연자 요청, 해외 단원 포함 등)을 자유롭게 적어주세요."></textarea></div>
-          </div>
-          <div class="row f">
-            <label style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg2);margin-bottom:8px;display:block;font-weight:500;">기획서 · RFP 첨부 (선택)</label>
-            <div class="attach">
-              <div class="ic"><i class="ph ph-paperclip"></i></div>
-              <div class="t">파일 업로드<small>PDF, DOCX, PPT · 최대 20MB · 여러 파일 가능</small></div>
-              <div class="browse">파일 선택 →</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Consent + submit -->
         <div class="consent">
           <input type="checkbox" checked id="consent">
-          <label for="consent">문의 처리 및 회신을 위해 <a href="#">개인정보 수집·이용</a>에 동의합니다. (필수 · 3년간 보관 후 파기)</label>
+          <label for="consent">연락드리기 위해 <a href="#">개인정보 수집·이용</a>에 동의합니다. (필수 · 회신 후 파기)</label>
         </div>
         <div class="submit-bar">
-          <div class="hint">예상 회신 시간 — <strong id="hint-sla">24h</strong></div>
-          <button class="btn-submit">문의 보내기 <i class="ph ph-arrow-up-right"></i></button>
+          <div class="hint">전화 회신 — <strong id="hint-sla">평일 1영업일 이내</strong></div>
+          <button class="btn-submit" type="submit">문의 보내기 <i class="ph ph-arrow-up-right"></i></button>
         </div>
       </div>
 
-      <!-- SIDEBAR -->
       <div class="side">
-        <!-- Audience sidebar -->
-        <div class="side-stack" data-side-panel="audience">
+        <div class="side-stack">
           <div class="side-card">
-            <div class="sl">Direct Lines · 직통 연락처</div>
-            <h5>전화가 더 빠를 수 있어요.</h5>
+            <div class="sl">Direct Lines · 직통 연락</div>
+            <h5>전화·이메일이 가장 빠릅니다.</h5>
             <div class="info-list">
-              <div class="ir"><span class="k">Box Office</span><span class="v">031-391-8784<small>예매·환불 전화 상담</small></span></div>
-              <div class="ir"><span class="k">Email</span><span class="v">ticket@sejonggugak.com<small>24시간 이내 회신</small></span></div>
-              <div class="ir"><span class="k">KakaoTalk</span><span class="v">@세종국악관현악단<small>실시간 채팅 상담</small></span></div>
-              <div class="ir"><span class="k">Hours</span><span class="v">평일 10:00–18:00<small>점심 12:30–13:30 제외</small></span></div>
-            </div>
-          </div>
-          <div class="side-card">
-            <div class="sl">Before You Ask · 자가진단</div>
-            <h5>혹시 이 경우이신가요?</h5>
-            <div class="info-list">
-              <div class="ir"><span class="k">인터파크</span><span class="v">1544-1555<small>인터파크 구매자 환불</small></span></div>
-              <div class="ir"><span class="k">티켓링크</span><span class="v">1588-7890<small>티켓링크 구매자 환불</small></span></div>
-              <div class="ir"><span class="k">문화포털</span><span class="v">1588-5353<small>문화포털 예매자</small></span></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Organizer sidebar -->
-        <div class="side-stack" data-side-panel="organizer" style="display:none;">
-          <div class="side-card dark">
-            <div class="sl">Dedicated Producers · 전담 프로듀서</div>
-            <h5>업무별 담당자에게<br>직접 연락 가능합니다.</h5>
-            <div class="quick-contacts">
-              <div class="qc">
-                <div class="lft">
-                  <span class="r">Booking &amp; Tour</span>
-                  <span class="n">최민석 <small>Principal Producer</small></span>
-                </div>
-                <span class="go">031-391-8785 →</span>
-              </div>
-              <div class="qc">
-                <div class="lft">
-                  <span class="r">Co-production</span>
-                  <span class="n">윤서연 <small>Associate Producer</small></span>
-                </div>
-                <span class="go">031-391-8786 →</span>
-              </div>
-              <div class="qc">
-                <div class="lft">
-                  <span class="r">Commission &amp; Edu</span>
-                  <span class="n">박도현 <small>Program Director</small></span>
-                </div>
-                <span class="go">031-391-8787 →</span>
-              </div>
-              <div class="qc">
-                <div class="lft">
-                  <span class="r">International</span>
-                  <span class="n">Ji-eun Lee <small>Tour Manager</small></span>
-                </div>
-                <span class="go">intl@sejong... →</span>
-              </div>
+              <div class="ir"><span class="k">대표전화</span><span class="v">031-391-8784<small>평일 10:00–18:00</small></span></div>
+              <div class="ir"><span class="k">휴대폰</span><span class="v">010-6228-8784<small>화–토 09:00–18:00</small></span></div>
+              <div class="ir"><span class="k">이메일</span><span class="v">sejong8784@hanmail.net<small>1영업일 이내 회신</small></span></div>
             </div>
           </div>
 
           <div class="side-card">
-            <div class="sl">Download · 자료실</div>
-            <h5>제안서 작성에 필요한<br>리소스.</h5>
+            <div class="sl">Studio · Address</div>
+            <h5>세종국악관현악단 사무국.</h5>
             <div class="info-list">
-              <div class="ir"><span class="k">Tech Rider</span><span class="v">스테이지 플롯 &amp; 장비<small>PDF · 2.3 MB · v2026.01 →</small></span></div>
-              <div class="ir"><span class="k">Press Kit</span><span class="v">보도자료 · 프로필<small>ZIP · 48 MB · 고해상도 포함 →</small></span></div>
-              <div class="ir"><span class="k">Repertoire</span><span class="v">전체 레퍼토리 리스트<small>XLSX · 220+ 작품 →</small></span></div>
-              <div class="ir"><span class="k">Rate Card</span><span class="v">2026 표준 견적서<small>PDF · 요청 후 전달 →</small></span></div>
+              <div class="ir"><span class="k">주소</span><span class="v">경기도 군포시 고산로 599<small>군포문화예술회관 內</small></span></div>
+              <div class="ir"><span class="k">대중교통</span><span class="v">4호선 수리산역<small>도보 12분</small></span></div>
             </div>
           </div>
-
-          <a class="map" href="#">
-            <div class="top">Studio · Residence</div>
-            <div class="bot">
-              <div class="a">경기도 군포시 고산로 599<br>군포문화예술회관 내</div>
-              <div class="b">4호선 수리산역 · 도보 12분 · 오픈맵 보기 →</div>
-            </div>
-          </a>
         </div>
       </div>
     </div>
@@ -848,34 +696,18 @@ window.addEventListener('scroll', () => {
   if (window.scrollY > 30) hdr.classList.add('scrolled'); else hdr.classList.remove('scrolled');
 });
 
-// Persona + form mode sync
+// Persona picker — switches the intro panel only (form is now unified)
 const tiles = document.querySelectorAll('#persona .p-tile');
 const panels = document.querySelectorAll('.panel[data-panel]');
-const modeButtons = document.querySelectorAll('#mode button');
-const formModes = document.querySelectorAll('.form-mode');
-const sidePanels = document.querySelectorAll('.side-stack');
-const formTitle = document.getElementById('form-title');
-const formNote = document.getElementById('form-note');
-const hintSla = document.getElementById('hint-sla');
 
 function setPersona(p){
   tiles.forEach(t => t.classList.toggle('active', t.dataset.persona === p));
   panels.forEach(panel => panel.classList.toggle('active', panel.dataset.panel === p));
-  modeButtons.forEach(b => b.classList.toggle('on', b.dataset.mode === p));
-  formModes.forEach(m => m.style.display = (m.dataset.modePanel === p ? '' : 'none'));
-  sidePanels.forEach(s => s.style.display = (s.dataset.sidePanel === p ? '' : 'none'));
-  if (p === 'audience'){
-    formTitle.innerHTML = '관객 문의 보내기.<span class="it">For audience &amp; ticket holders.</span>';
-    formNote.innerHTML = '<strong>Response SLA — 24시간 이내 회신.</strong> 티켓·좌석·할인 등 일반 문의는 평일 24시간 이내, 카카오톡 채널은 즉시 응답됩니다. 급한 경우 031-391-8784로 전화 주세요.';
-    hintSla.textContent = '24h';
-  } else {
-    formTitle.innerHTML = '공연 의뢰 문의.<span class="it">For presenters &amp; partners.</span>';
-    formNote.innerHTML = '<strong>Response SLA — 48시간 내 담당자 배정 · 2주 내 제안서.</strong> 문의 접수 후 담당 프로듀서가 배정되고, 킥오프 미팅 후 맞춤 제안서를 회신드립니다.';
-    hintSla.textContent = '48h';
-  }
+  // Pre-select matching inquiry type in the simplified form
+  if (p === 'audience') { const r = document.getElementById('t1'); if (r) r.checked = true; }
+  if (p === 'organizer') { const r = document.getElementById('t2'); if (r) r.checked = true; }
 }
 tiles.forEach(t => t.addEventListener('click', () => setPersona(t.dataset.persona)));
-modeButtons.forEach(b => b.addEventListener('click', () => setPersona(b.dataset.mode)));
 
 // Accordion — only one open at a time
 document.querySelectorAll('.acc-row').forEach(row => {
@@ -896,10 +728,10 @@ document.querySelectorAll('.filt span').forEach(s => {
 </script>
 <style>
 .sns-rail{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:55;display:flex;flex-direction:column;gap:8px;}
-.sns-rail a{width:44px;height:44px;background:var(--hanji);color:var(--ink);border:1px solid var(--border-hairline);display:flex;align-items:center;justify-content:center;font-size:20px;transition:all var(--dur-fast) var(--ease-gentle);text-decoration:none;}
+.sns-rail a{width:56px;height:56px;background:var(--hanji);color:var(--ink);border:1px solid var(--border-hairline);display:flex;align-items:center;justify-content:center;font-size:24px;transition:all var(--dur-fast) var(--ease-gentle);text-decoration:none;}
 .sns-rail a:hover{background:var(--dancheong-red);color:var(--hanji);border-color:var(--dancheong-red);}
-.sns-rail a .cafe{font-family:var(--font-serif-kr);font-weight:700;font-size:12px;letter-spacing:-.02em;line-height:1;}
-@media (max-width:900px){.sns-rail{right:12px;top:auto;bottom:96px;transform:none;}.sns-rail a{width:38px;height:38px;font-size:16px;}.sns-rail a .cafe{font-size:10px;}}
+.sns-rail a .cafe{font-family:var(--font-serif-kr);font-weight:700;font-size:15px;letter-spacing:-.02em;line-height:1;}
+@media (max-width:900px){.sns-rail{right:12px;top:auto;bottom:96px;transform:none;}.sns-rail a{width:48px;height:48px;font-size:20px;}.sns-rail a .cafe{font-size:13px;}}
 </style>
 <aside class="sns-rail" aria-label="SNS links">
   <a href="https://www.youtube.com/channel/UC1bDwqbsVZEEW-0pBsp9ktQ" target="_blank" rel="noopener" title="YouTube" aria-label="YouTube"><i class="ph ph-youtube-logo"></i></a>

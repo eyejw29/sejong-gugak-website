@@ -205,7 +205,7 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
     <button class="chip">해외·초청</button>
     <button class="chip">무료공연</button>
   </div>
-  <div class="search"><i class="ph ph-magnifying-glass"></i><input placeholder="공연·곡명·연주자 검색"></div>
+  <div class="search"><i class="ph ph-magnifying-glass"></i><input id="schSearch" type="search" placeholder="공연·곡명·연주자 검색"></div>
 </section>
 
 <!-- CALENDAR VIEW -->
@@ -217,9 +217,9 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
       <span class="han">사월 · 仲春</span>
     </div>
     <div class="arrows">
-      <button><i class="ph ph-caret-left"></i></button>
-      <button><i class="ph ph-list"></i></button>
-      <button><i class="ph ph-caret-right"></i></button>
+      <button id="calPrev" aria-label="이전 달"><i class="ph ph-caret-left"></i></button>
+      <button id="calToday" aria-label="오늘"><i class="ph ph-calendar-check"></i></button>
+      <button id="calNext" aria-label="다음 달"><i class="ph ph-caret-right"></i></button>
     </div>
   </div>
   <div class="cal-grid" id="calGrid"></div>
@@ -453,65 +453,140 @@ document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () =
   c.classList.add('active');
 }));
 
-// Build calendar — April 2026 starts Wednesday
+/* ==================== CALENDAR — dynamic with prev/next ==================== */
 const dows = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
-const events = {
-  12: {t:'정기연주회 〈도전과 개척〉', cls:'', sub:'17:00 · 예술의전당'},
-  18: {t:'국악, 봄에 깨다', cls:'', sub:'15:00 · 군포'},
-  22: {t:'국악으로 듣는 詩', cls:'gold', sub:'19:30 · JCC'},
-  29: {t:'찾아가는 국악교실', cls:'blue', sub:'11:00 · 산본중'},
+const hanMonth = ['정월','이월','삼월','사월','오월','유월','칠월','팔월','구월','시월','동짓달','섣달'];
+
+// Events by "YYYY-M-D" key. cls ∈ '', 'gold', 'blue'
+const EVENTS = {
+  '2026-3-26': {t:'한낮의 음악회 〈여음〉 두번째 시리즈', cls:'gold', sub:'14:00 · 군포 수리홀'},
+  '2026-4-12': {t:'제30회 정기연주회 〈도전과 개척〉', cls:'', sub:'17:00 · 예술의전당'},
+  '2026-4-18': {t:'토요상설 〈국악, 봄에 깨다〉', cls:'', sub:'15:00 · 군포'},
+  '2026-4-22': {t:'국악으로 듣는 詩', cls:'gold', sub:'19:30 · JCC'},
+  '2026-4-29': {t:'찾아가는 국악교실 · 산본중', cls:'blue', sub:'11:00 · 산본중'},
+  '2026-5-17': {t:'한낮의 음악회 〈여음〉', cls:'gold', sub:'14:00 · 군포 수리홀'},
+  '2026-6-8':  {t:'제30회 정기연주회 — 도전과 개척', cls:'', sub:'19:30 · 세종 그랜드홀'},
+  '2026-7-12': {t:'달달한 콘서트 〈파사칼리아〉', cls:'blue', sub:'15:00 · 군포 수리홀'},
+  '2026-8-24': {t:'국악심포니 〈고래의 꿈〉', cls:'', sub:'19:00 · 예술의전당'},
+  '2026-9-14': {t:'세종 × 클래식 — 동서의 만남', cls:'gold', sub:'17:00 · 롯데콘서트홀'},
+  '2026-10-11':{t:'제31회 정기연주회 준비 쇼케이스', cls:'blue', sub:'비공개 · 내부'},
+  '2026-11-14':{t:'제31회 정기연주회', cls:'', sub:'19:30 · 예술의전당'},
 };
-const grid = document.getElementById('calGrid');
-dows.forEach((d, i) => {
-  const el = document.createElement('div');
-  el.className = 'cal-dow' + (i===0?' sun':i===6?' sat':'');
-  el.textContent = d;
-  grid.appendChild(el);
+
+let calY = 2026, calM = 4;   // 현재 표시 년·월
+const today = new Date();    // 오늘 (실시간)
+
+function renderCalendar() {
+  const grid = document.getElementById('calGrid');
+  grid.innerHTML = '';
+
+  // YM header
+  const ymWrap = document.querySelector('.cal-nav .ym');
+  ymWrap.innerHTML =
+    '<span class="y">'+calY+'</span>' +
+    '<span class="m">'+String(calM).padStart(2,'0')+'</span>' +
+    '<span class="han">'+hanMonth[calM-1]+'</span>';
+
+  // Day-of-week headers
+  dows.forEach((d, i) => {
+    const el = document.createElement('div');
+    el.className = 'cal-dow' + (i===0?' sun':i===6?' sat':'');
+    el.textContent = d;
+    grid.appendChild(el);
+  });
+
+  const firstDay = new Date(calY, calM-1, 1).getDay();      // 0=Sun
+  const daysInMonth = new Date(calY, calM, 0).getDate();
+  const prevDaysInMonth = new Date(calY, calM-1, 0).getDate();
+
+  // Prev month tail
+  for (let i = firstDay - 1; i >= 0; i--) {
+    const el = document.createElement('div');
+    const dow = (firstDay - 1 - i);
+    let cls = 'cal-cell dim';
+    if (dow === 0) cls += ' sun';
+    if (dow === 6) cls += ' sat';
+    el.className = cls;
+    el.innerHTML = '<span class="num">'+(prevDaysInMonth - i)+'</span>';
+    grid.appendChild(el);
+  }
+
+  // Current month
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dayOfWeek = (firstDay + d - 1) % 7;
+    const key = calY+'-'+calM+'-'+d;
+    const ev = EVENTS[key];
+    const el = document.createElement('div');
+    let cls = 'cal-cell';
+    if (dayOfWeek === 0) cls += ' sun';
+    if (dayOfWeek === 6) cls += ' sat';
+    if (today.getFullYear()===calY && today.getMonth()+1===calM && today.getDate()===d) cls += ' today';
+    if (ev) cls += ' has-event';
+    el.className = cls;
+    let html = '<span class="num">'+d+'</span>';
+    if (ev) html += '<div class="cal-evt '+ev.cls+'"><small>'+ev.sub+'</small>'+ev.t+'</div>';
+    el.innerHTML = html;
+    grid.appendChild(el);
+  }
+
+  // Next month
+  const totalCells = firstDay + daysInMonth;
+  const nextCells = (7 - (totalCells % 7)) % 7;
+  for (let d = 1; d <= nextCells; d++) {
+    const dayOfWeek = (totalCells + d - 1) % 7;
+    const el = document.createElement('div');
+    let cls = 'cal-cell dim';
+    if (dayOfWeek === 0) cls += ' sun';
+    if (dayOfWeek === 6) cls += ' sat';
+    el.className = cls;
+    el.innerHTML = '<span class="num">'+d+'</span>';
+    grid.appendChild(el);
+  }
+}
+
+document.getElementById('calPrev').addEventListener('click', () => {
+  calM--; if (calM < 1) { calM = 12; calY--; }
+  renderCalendar();
 });
-// April 2026: April 1 = Wednesday (index 3); 30 days
-const startDay = 3, daysInMonth = 30;
-// Prev month tail (March has 31)
-for (let i = startDay - 1; i >= 0; i--) {
-  const el = document.createElement('div');
-  el.className = 'cal-cell dim' + (i===0?' sun':'');
-  el.innerHTML = '<span class="num">'+(31-i)+'</span>';
-  grid.appendChild(el);
-}
-// Current month
-for (let d = 1; d <= daysInMonth; d++) {
-  const dayOfWeek = (startDay + d - 1) % 7;
-  const el = document.createElement('div');
-  let cls = 'cal-cell';
-  if (dayOfWeek === 0) cls += ' sun';
-  if (dayOfWeek === 6) cls += ' sat';
-  if (d === 20) cls += ' today'; // pretend today is April 20
-  if (events[d]) cls += ' has-event';
-  el.className = cls;
-  let html = '<span class="num">'+d+'</span>';
-  if (events[d]) html += '<div class="cal-evt '+events[d].cls+'"><small>'+events[d].sub+'</small>'+events[d].t+'</div>';
-  el.innerHTML = html;
-  grid.appendChild(el);
-}
-// Next month
-const totalCells = startDay + daysInMonth;
-const nextCells = (7 - (totalCells % 7)) % 7;
-for (let d = 1; d <= nextCells; d++) {
-  const el = document.createElement('div');
-  const dayOfWeek = (totalCells + d - 1) % 7;
-  let cls = 'cal-cell dim';
-  if (dayOfWeek === 0) cls += ' sun';
-  if (dayOfWeek === 6) cls += ' sat';
-  el.className = cls;
-  el.innerHTML = '<span class="num">'+d+'</span>';
-  grid.appendChild(el);
+document.getElementById('calNext').addEventListener('click', () => {
+  calM++; if (calM > 12) { calM = 1; calY++; }
+  renderCalendar();
+});
+document.getElementById('calToday').addEventListener('click', () => {
+  calY = today.getFullYear(); calM = today.getMonth()+1;
+  renderCalendar();
+});
+renderCalendar();
+
+/* ==================== SEARCH — filter evt-rows + month-headers ==================== */
+const searchBox = document.getElementById('schSearch');
+if (searchBox) {
+  searchBox.addEventListener('input', (e) => {
+    const q = e.target.value.trim().toLowerCase();
+    const rows = document.querySelectorAll('.evt-row');
+    rows.forEach(r => {
+      const text = r.textContent.toLowerCase();
+      r.style.display = (!q || text.includes(q)) ? '' : 'none';
+    });
+    // Hide month headers whose following evt-rows are all hidden
+    document.querySelectorAll('.month-header').forEach(h => {
+      let next = h.nextElementSibling;
+      let anyVisible = false;
+      while (next && !next.classList.contains('month-header')) {
+        if (next.classList.contains('evt-row') && next.style.display !== 'none') { anyVisible = true; break; }
+        next = next.nextElementSibling;
+      }
+      h.style.display = (!q || anyVisible) ? '' : 'none';
+    });
+  });
 }
 </script>
 <style>
 .sns-rail{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:55;display:flex;flex-direction:column;gap:8px;}
-.sns-rail a{width:44px;height:44px;background:var(--hanji);color:var(--ink);border:1px solid var(--border-hairline);display:flex;align-items:center;justify-content:center;font-size:20px;transition:all var(--dur-fast) var(--ease-gentle);text-decoration:none;}
+.sns-rail a{width:56px;height:56px;background:var(--hanji);color:var(--ink);border:1px solid var(--border-hairline);display:flex;align-items:center;justify-content:center;font-size:24px;transition:all var(--dur-fast) var(--ease-gentle);text-decoration:none;}
 .sns-rail a:hover{background:var(--dancheong-red);color:var(--hanji);border-color:var(--dancheong-red);}
-.sns-rail a .cafe{font-family:var(--font-serif-kr);font-weight:700;font-size:12px;letter-spacing:-.02em;line-height:1;}
-@media (max-width:900px){.sns-rail{right:12px;top:auto;bottom:96px;transform:none;}.sns-rail a{width:38px;height:38px;font-size:16px;}.sns-rail a .cafe{font-size:10px;}}
+.sns-rail a .cafe{font-family:var(--font-serif-kr);font-weight:700;font-size:15px;letter-spacing:-.02em;line-height:1;}
+@media (max-width:900px){.sns-rail{right:12px;top:auto;bottom:96px;transform:none;}.sns-rail a{width:48px;height:48px;font-size:20px;}.sns-rail a .cafe{font-size:13px;}}
 </style>
 <aside class="sns-rail" aria-label="SNS links">
   <a href="https://www.youtube.com/channel/UC1bDwqbsVZEEW-0pBsp9ktQ" target="_blank" rel="noopener" title="YouTube" aria-label="YouTube"><i class="ph ph-youtube-logo"></i></a>
