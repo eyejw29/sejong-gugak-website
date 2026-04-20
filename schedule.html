@@ -90,6 +90,7 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
 .cal-cell.has-event:hover{background:var(--paper);}
 .cal-evt{margin-top:auto;padding:6px 8px;font-size:11px;line-height:1.3;border-left:2px solid var(--dancheong-red);background:rgba(184,52,42,0.08);color:var(--ink);font-weight:500;word-break:keep-all;}
 .cal-evt.gold{border-left-color:var(--geumbak-gold);background:rgba(184,137,75,0.1);}
+.cal-evt.ended{border-left-color:var(--stone-300);background:rgba(142,135,120,0.1);color:var(--fg3);text-decoration:line-through;text-decoration-thickness:1px;}
 .cal-evt.blue{border-left-color:var(--dancheong-blue);background:rgba(31,75,68,0.08);}
 .cal-evt small{display:block;font-family:var(--font-mono);font-size:9px;letter-spacing:.06em;color:var(--fg2);margin-bottom:2px;font-weight:400;}
 
@@ -126,6 +127,11 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
 .evt-row .b.soon{background:var(--ink);color:var(--hanji);}
 .evt-row .b.fest{background:var(--geumbak-gold);color:var(--ink);}
 .evt-row .b.sold{background:transparent;color:var(--fg2);border:1px solid var(--border-strong);}
+.evt-row .b.ended{background:var(--stone-300);color:var(--hanji);}
+.evt-row.ended{opacity:0.55;}
+.evt-row.ended .info h3{text-decoration:line-through;text-decoration-color:var(--fg3);text-decoration-thickness:1px;}
+.evt-row.ended:hover{opacity:0.75;}
+.evt-row.ended .arr{color:var(--fg3);}
 .evt-row .arr{font-size:32px;color:var(--ink);transition:transform var(--dur-fast) var(--ease-gentle);}
 .evt-row:hover .arr{transform:translateX(8px);color:var(--dancheong-red);}
 
@@ -238,18 +244,18 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
     <div class="ct">04 EVENTS</div>
   </div>
 
-  <div class="evt-row">
+  <div class="evt-row ended">
     <div class="date-block"><span class="d">12</span><span class="day">SUN · 일요일</span></div>
     <div class="info">
-      <h3>제30회 정기연주회 〈도전과 개척〉<span class="han">挑戰</span></h3>
+      <h3>2026 봄 기획공연 〈국악의 봄〉<span class="han">春</span></h3>
       <div class="meta"><span><i class="ph ph-clock"></i>오후 5시 · 120분</span><span><i class="ph ph-microphone"></i>지휘 박상우</span><span><i class="ph ph-translate"></i>해설 有</span></div>
     </div>
     <div class="venue"><strong>예술의전당 콘서트홀</strong>서울 서초 · CH</div>
     <div class="price"><small>R · S · A · B · C</small>₩90,000~30,000</div>
-    <div class="badge-stack"><span class="b live">예매중</span><span class="arr">→</span></div>
+    <div class="badge-stack"><span class="b ended">공연종료</span><span class="arr">→</span></div>
   </div>
 
-  <div class="evt-row">
+  <div class="evt-row ended">
     <div class="date-block"><span class="d">18</span><span class="day">SAT · 토요일</span></div>
     <div class="info">
       <h3>토요상설 가족음악회 〈국악, 봄에 깨다〉<span class="han">春</span></h3>
@@ -257,7 +263,7 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
     </div>
     <div class="venue"><strong>군포문화예술회관 수리홀</strong>군포 · 상주공연</div>
     <div class="price"><small>전석 균일</small>₩20,000</div>
-    <div class="badge-stack"><span class="b live">예매중</span><span class="arr">→</span></div>
+    <div class="badge-stack"><span class="b ended">공연종료</span><span class="arr">→</span></div>
   </div>
 
   <div class="evt-row">
@@ -268,7 +274,7 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
     </div>
     <div class="venue"><strong>JCC 콘서트홀</strong>서울 종로</div>
     <div class="price"><small>전석 지정</small>₩50,000</div>
-    <div class="badge-stack"><span class="b soon">곧오픈</span><span class="arr">→</span></div>
+    <div class="badge-stack"><span class="b live">예매중</span><span class="arr">→</span></div>
   </div>
 
   <div class="evt-row">
@@ -423,7 +429,7 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
           E. sejong8784@hanmail.net
         </div>
       </div>
-      <div class="col"><h4>Orchestra</h4><a class="l" href="about.html">악단 소개</a><a class="l" href="about.html#greet">대표 인사말</a><a class="l" href="about.html#history">연혁</a><a class="l" href="about.html#musicians">단원 소개</a><a class="l" href="inquiry.html#location">오시는 길</a></div>
+      <div class="col"><h4>Orchestra</h4><a class="l" href="about.html">악단 소개</a><a class="l" href="about.html#greet">대표 인사말</a><a class="l" href="about.html#history">연혁</a><a class="l" href="members.html">단원 소개</a><a class="l" href="inquiry.html#location">오시는 길</a></div>
       <div class="col"><h4>Performance</h4><a class="l" href="schedule.html">공연 일정</a><a class="l" href="schedule.html">월별 공연</a><a class="l" href="archive.html">지난 공연</a><a class="l" href="tickets.html">예매안내</a></div>
       <div class="col"><h4>Community</h4><a class="l" href="notices.html">공지사항</a><a class="l" href="notices.html">기사자료</a><a class="l" href="notices.html">보도자료</a><a class="l" href="archive.html">갤러리</a></div>
     </div>
@@ -461,9 +467,9 @@ const hanMonth = ['정월','이월','삼월','사월','오월','유월','칠월'
 
 // Events by "YYYY-M-D" key. cls ∈ '', 'gold', 'blue'
 const EVENTS = {
-  '2026-3-26': {t:'한낮의 음악회 〈여음〉 두번째 시리즈', cls:'gold', sub:'14:00 · 군포 수리홀'},
-  '2026-4-12': {t:'제30회 정기연주회 〈도전과 개척〉', cls:'', sub:'17:00 · 예술의전당'},
-  '2026-4-18': {t:'토요상설 〈국악, 봄에 깨다〉', cls:'', sub:'15:00 · 군포'},
+  '2026-3-26': {t:'한낮의 음악회 〈여음〉 두번째 시리즈', cls:'ended', sub:'14:00 · 군포 수리홀 [종료]'},
+  '2026-4-12': {t:'2026 봄 기획공연 〈국악의 봄〉', cls:'ended', sub:'17:00 · 예술의전당 [종료]'},
+  '2026-4-18': {t:'토요상설 〈국악, 봄에 깨다〉', cls:'ended', sub:'15:00 · 군포 [종료]'},
   '2026-4-22': {t:'국악으로 듣는 詩', cls:'gold', sub:'19:30 · JCC'},
   '2026-4-29': {t:'찾아가는 국악교실 · 산본중', cls:'blue', sub:'11:00 · 산본중'},
   '2026-5-17': {t:'한낮의 음악회 〈여음〉', cls:'gold', sub:'14:00 · 군포 수리홀'},

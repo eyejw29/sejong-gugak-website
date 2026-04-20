@@ -1,0 +1,731 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<title>세종국악관현악단 · 단원 소개</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<link rel="stylesheet" href="mobile-ux.css">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+:root{--max-w:1360px;}
+html,body{margin:0;background:var(--bg1);color:var(--fg1);}
+body{font-family:var(--font-sans-kr);overflow-x:hidden;}
+a{color:inherit;text-decoration:none;}
+button{cursor:pointer;font-family:inherit;}
+::selection{background:var(--dancheong-red);color:var(--hanji);}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.35  0 0 0 0 0.28  0 0 0 0 0.18  0 0 0 0.035 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
+  mix-blend-mode:multiply;opacity:.8;}
+
+/* HEADER (shared) */
+.hdr{position:fixed;top:0;left:0;right:0;z-index:60;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:56px;padding:22px 44px;transition:all var(--dur-base) var(--ease-gentle);}
+.hdr.scrolled{background:rgba(246,241,232,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border-hairline);padding:14px 44px;}
+.brand{display:flex;align-items:center;gap:14px;}
+.brand img{height:46px;transition:height var(--dur-base) var(--ease-gentle);}
+.hdr.scrolled .brand img{height:36px;}
+.brand .stk{display:flex;flex-direction:column;line-height:1;}
+.brand .kr{font-family:var(--font-serif-kr);font-weight:800;font-size:20px;letter-spacing:-.01em;}
+.brand .en{font-family:var(--font-serif-en);font-style:italic;font-size:10px;letter-spacing:.16em;color:var(--fg2);margin-top:5px;}
+.nav{display:flex;justify-content:center;gap:44px;}
+.nav a{font-size:14px;font-weight:500;padding:6px 2px;position:relative;letter-spacing:.02em;}
+.nav a::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:1px;background:var(--dancheong-red);transform:scaleX(0);transform-origin:left;transition:transform var(--dur-base) var(--ease-gentle);}
+.nav a:hover::after,.nav a.active::after{transform:scaleX(1);}
+.nav a.active{color:var(--dancheong-red);}
+.util{display:flex;align-items:center;gap:20px;}
+.util .t{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;color:var(--fg2);}
+.cta{background:var(--ink);color:var(--hanji);padding:13px 20px;font-size:12px;font-weight:700;border:0;letter-spacing:.04em;display:inline-flex;gap:8px;align-items:center;transition:background var(--dur-fast) var(--ease-gentle);}
+.cta:hover{background:var(--dancheong-red);}
+.cta .dot{width:6px;height:6px;border-radius:50%;background:var(--dancheong-red);}
+.cta:hover .dot{background:var(--hanji);}
+
+/* PAGE HERO */
+.page-hero{position:relative;z-index:2;padding:160px 44px 60px;max-width:var(--max-w);margin:0 auto;}
+.crumb{display:flex;gap:10px;align-items:center;font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg2);margin-bottom:40px;}
+.crumb .sep{opacity:.4;}
+.crumb .now{color:var(--dancheong-red);}
+.page-hero-row{display:grid;grid-template-columns:1fr auto;gap:64px;align-items:end;padding-bottom:40px;border-bottom:1px solid var(--border-strong);}
+.page-hero h1{font-family:var(--font-serif-kr);font-weight:800;font-size:clamp(72px,10vw,148px);line-height:0.9;letter-spacing:-.035em;margin:0;word-break:keep-all;}
+.page-hero h1 .it{font-family:var(--font-serif-en);font-style:italic;font-size:0.4em;color:var(--dancheong-red);font-weight:400;display:block;margin-top:10px;}
+.page-hero .idx{display:flex;flex-direction:column;align-items:flex-end;gap:6px;font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;color:var(--fg2);}
+.page-hero .idx .big{font-family:var(--font-serif-en);font-style:italic;font-size:80px;line-height:0.8;color:var(--ink);letter-spacing:-.04em;margin-bottom:8px;}
+
+/* INTRO banner */
+.intro{position:relative;z-index:2;max-width:var(--max-w);margin:0 auto;padding:40px 44px 80px;}
+.intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;}
+.intro-lede{font-family:var(--font-serif-kr);font-weight:400;font-size:28px;line-height:1.55;letter-spacing:-.01em;word-break:keep-all;color:var(--fg1);}
+.intro-lede strong{color:var(--dancheong-red);font-weight:700;}
+.intro-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-self:end;padding-top:24px;border-top:1px solid var(--border-strong);}
+.intro-stats .cell{display:flex;flex-direction:column;gap:4px;}
+.intro-stats .num{font-family:var(--font-serif-kr);font-weight:800;font-size:56px;line-height:1;color:var(--ink);letter-spacing:-.02em;}
+.intro-stats .num .u{font-family:var(--font-serif-en);font-style:italic;font-size:0.45em;color:var(--dancheong-red);margin-left:4px;vertical-align:super;}
+.intro-stats .lb{font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg2);margin-top:4px;}
+
+/* SECTION JUMP NAV */
+.jump{position:sticky;top:74px;z-index:40;background:rgba(246,241,232,0.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--border-hairline);padding:12px 44px;}
+.jump-inner{max-width:var(--max-w);margin:0 auto;display:flex;gap:6px;overflow-x:auto;white-space:nowrap;}
+.jump a{font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:8px 14px;border:1px solid var(--border-hairline);color:var(--fg2);transition:all var(--dur-fast) var(--ease-gentle);}
+.jump a:hover{background:var(--ink);color:var(--hanji);border-color:var(--ink);}
+
+/* SECTIONS */
+.sec{position:relative;z-index:2;max-width:var(--max-w);margin:0 auto;padding:64px 44px;}
+.sec-hd{display:grid;grid-template-columns:auto auto 1fr;gap:24px;align-items:center;margin-bottom:36px;}
+.sec-glyph{font-family:var(--font-serif-kr);font-weight:800;font-size:64px;line-height:1;color:var(--dancheong-red);letter-spacing:-.02em;}
+.sec-titles .sec-eb{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg2);margin-bottom:4px;}
+.sec-titles h2{font-family:var(--font-serif-kr);font-weight:800;font-size:44px;line-height:1;letter-spacing:-.02em;margin:0;}
+.sec-line{height:1px;background:var(--ink);align-self:end;margin-bottom:6px;}
+
+/* Member cards grid */
+.members-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:20px;}
+.mcard{background:var(--paper);border:1px solid var(--border-hairline);padding:0 0 18px;cursor:pointer;transition:all var(--dur-base) var(--ease-gentle);position:relative;overflow:hidden;}
+.mcard::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--dancheong-red);transform:scaleX(0);transform-origin:left;transition:transform var(--dur-base) var(--ease-gentle);z-index:2;}
+.mcard:hover{border-color:var(--ink);transform:translateY(-2px);}
+.mcard:hover::before{transform:scaleX(1);}
+.mphoto{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:center top;filter:saturate(0.9) contrast(1.04);display:block;background:var(--stone-100);transition:filter var(--dur-base) var(--ease-gentle);}
+.mcard:hover .mphoto{filter:saturate(1.1) contrast(1.08);}
+.mphoto.noph{display:flex;align-items:center;justify-content:center;font-family:var(--font-serif-kr);font-weight:800;font-size:80px;color:var(--fg3);background:var(--hanji-deep);}
+.mname{font-family:var(--font-serif-kr);font-weight:700;font-size:18px;margin:14px 14px 4px;letter-spacing:-.01em;}
+.mrole{font-family:var(--font-sans-kr);font-weight:400;font-size:12px;line-height:1.4;color:var(--fg2);margin:0 14px;word-break:keep-all;}
+.mcard[data-detail]::after{content:"프로필 →";position:absolute;bottom:14px;right:14px;font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--dancheong-red);font-weight:600;}
+.mcard[data-detail] .mrole{padding-bottom:18px;}
+
+/* MODAL */
+.modal-bg{position:fixed;inset:0;background:rgba(26,22,20,0.72);backdrop-filter:blur(6px);z-index:200;display:none;align-items:center;justify-content:center;padding:24px;animation:fade 0.25s ease-out;}
+.modal-bg.on{display:flex;}
+@keyframes fade{from{opacity:0;}to{opacity:1;}}
+.modal{max-width:720px;width:100%;background:var(--paper);padding:0;position:relative;max-height:90vh;overflow-y:auto;animation:up 0.28s cubic-bezier(.2,.6,.2,1);}
+@keyframes up{from{transform:translateY(24px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.modal .mhead{display:grid;grid-template-columns:160px 1fr;gap:0;align-items:stretch;}
+.modal .mphoto-lg{width:160px;height:200px;object-fit:cover;object-position:center top;display:block;}
+.modal .mphoto-lg.noph{display:flex;align-items:center;justify-content:center;font-family:var(--font-serif-kr);font-weight:800;font-size:72px;color:var(--hanji);background:var(--ink);}
+.modal .mtxt{padding:24px 28px;background:var(--ink);color:var(--hanji);display:flex;flex-direction:column;justify-content:center;gap:8px;}
+.modal .mtxt .role{font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--geumbak-gold);}
+.modal .mtxt .nm{font-family:var(--font-serif-kr);font-weight:800;font-size:36px;line-height:1;letter-spacing:-.02em;}
+.modal .mbody{padding:28px;}
+.modal .mbody ul{list-style:none;padding:0;margin:0;}
+.modal .mbody li{font-size:14px;line-height:1.85;color:var(--fg1);padding:8px 0;border-bottom:1px solid var(--border-hairline);word-break:keep-all;}
+.modal .mbody li:last-child{border-bottom:0;}
+.modal .mbody li::before{content:"—";color:var(--dancheong-red);margin-right:10px;font-weight:700;}
+.modal .mfoot{padding:20px 28px;border-top:1px solid var(--border-strong);display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--hanji-deep);}
+.modal .mfoot .link{font-family:var(--font-sans-kr);font-weight:700;font-size:13px;color:var(--dancheong-red);display:inline-flex;gap:6px;align-items:center;}
+.modal .close{background:transparent;border:1px solid var(--ink);color:var(--ink);padding:10px 16px;font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;cursor:pointer;}
+.modal .close:hover{background:var(--ink);color:var(--hanji);}
+
+/* RECRUIT BANNER */
+.recruit{position:relative;z-index:2;max-width:var(--max-w);margin:40px auto 0;padding:64px 44px;background:var(--ink);color:var(--hanji);}
+.recruit-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:64px;align-items:center;}
+.recruit .eb{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--geumbak-gold);margin-bottom:18px;}
+.recruit h2{font-family:var(--font-serif-kr);font-weight:800;font-size:64px;line-height:1.05;letter-spacing:-.03em;margin:0 0 24px;word-break:keep-all;}
+.recruit h2 .red{color:var(--dancheong-red);}
+.recruit p{font-size:16px;line-height:1.85;color:rgba(246,241,232,0.85);margin:0 0 20px;word-break:keep-all;max-width:520px;}
+.recruit .ctas{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap;}
+.recruit .btn-p{background:var(--dancheong-red);color:var(--hanji);padding:16px 24px;font-size:13px;font-weight:700;letter-spacing:.04em;display:inline-flex;gap:8px;align-items:center;transition:background var(--dur-fast) var(--ease-gentle);border:0;}
+.recruit .btn-p:hover{background:var(--dancheong-red-dark);}
+.recruit .btn-g{background:transparent;color:var(--hanji);padding:16px 24px;font-size:13px;font-weight:700;letter-spacing:.04em;border:1px solid rgba(246,241,232,0.4);display:inline-flex;gap:8px;align-items:center;}
+.recruit .btn-g:hover{background:var(--hanji);color:var(--ink);border-color:var(--hanji);}
+.recruit-side{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:rgba(246,241,232,0.12);}
+.recruit-card{background:var(--ink);padding:28px 24px;display:flex;flex-direction:column;gap:10px;border-left:3px solid var(--geumbak-gold);}
+.recruit-card .ch{font-family:var(--font-serif-kr);font-weight:800;font-size:40px;color:var(--geumbak-gold);line-height:1;}
+.recruit-card h4{font-family:var(--font-serif-kr);font-weight:700;font-size:18px;margin:0;}
+.recruit-card .d{font-size:13px;line-height:1.6;color:rgba(246,241,232,0.7);}
+.recruit-card.red{border-left-color:var(--dancheong-red);}
+.recruit-card.red .ch{color:var(--dancheong-red);}
+
+/* FOOTER */
+.ftr{position:relative;z-index:2;background:var(--ink);color:var(--hanji);padding:96px 44px 40px;margin-top:80px;}
+.ftr .c{max-width:var(--max-w);margin:0 auto;}
+.ftr-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:56px;padding-top:56px;border-top:1px solid rgba(246,241,232,0.2);}
+.ftr-grid .col h4{font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(246,241,232,0.6);margin:0 0 16px;}
+.ftr-grid .col a.l{display:block;color:var(--hanji);font-size:13px;line-height:2.1;}
+.ftr-grid .col a.l:hover{color:var(--dancheong-red);}
+.ftr-addr{font-size:13px;line-height:1.9;color:rgba(246,241,232,0.7);}
+.ftr-addr strong{color:var(--hanji);font-weight:700;}
+.ftr-bot{display:flex;justify-content:space-between;align-items:center;margin-top:72px;padding-top:24px;border-top:1px solid rgba(246,241,232,0.14);font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(246,241,232,0.5);}
+
+/* SIDE RAIL */
+.rail{position:fixed;right:24px;bottom:40px;z-index:50;display:flex;flex-direction:column;gap:8px;}
+.rail button{width:56px;height:56px;background:var(--ink);color:var(--hanji);border:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-family:var(--font-sans-kr);font-size:9px;font-weight:700;letter-spacing:.04em;transition:background var(--dur-fast) var(--ease-gentle);}
+.rail button:hover{background:var(--dancheong-red);}
+.rail button i{font-size:18px;}
+
+/* Responsive */
+@media (max-width:1200px){
+  .members-grid{grid-template-columns:repeat(5,1fr);}
+}
+@media (max-width:900px){
+  .members-grid{grid-template-columns:repeat(3,1fr);}
+  .intro-grid,.recruit-grid{grid-template-columns:1fr;gap:32px;}
+  .sec-hd{grid-template-columns:auto 1fr;}
+  .sec-glyph{font-size:44px;}
+  .sec-titles h2{font-size:32px;}
+  .recruit h2{font-size:44px;}
+  .jump-inner{gap:4px;}
+  .jump a{padding:8px 10px;font-size:9px;}
+  .modal .mhead{grid-template-columns:120px 1fr;}
+  .modal .mphoto-lg{width:120px;height:150px;}
+  .modal .mtxt .nm{font-size:28px;}
+}
+@media (max-width:600px){
+  .members-grid{grid-template-columns:repeat(2,1fr);gap:12px;}
+  .mname{font-size:16px;margin:12px 12px 3px;}
+  .mrole{font-size:11px;margin:0 12px;}
+  .recruit-side{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="hdr" id="hdr">
+  <a class="brand" href="index.html">
+    <img src="assets/logo-symbol.png" alt="세종국악관현악단 로고">
+    <div class="stk"><span class="kr">세종국악관현악단</span><span class="en">Sejong Korean Music Orchestra</span></div>
+  </a>
+  <nav class="nav">
+    <a class="active" href="about.html">악단소개</a>
+    <a href="schedule.html">공연</a>
+    <a href="archive.html">아카이브</a>
+    <a href="notices.html">공지사항</a>
+    <a href="inquiry.html">문의</a>
+  </nav>
+  <div class="util">
+    <span class="t">031·391·8784</span>
+    <a href="tickets.html" class="cta" style="text-decoration:none;"><span class="dot"></span>티켓 예매</a>
+  </div>
+</header>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="crumb"><span><a href="index.html">Home</a></span><span class="sep">／</span><span><a href="about.html">About</a></span><span class="sep">／</span><span class="now">Musicians</span></div>
+  <div class="page-hero-row">
+    <h1>단원 소개<span class="it">Musicians &amp; Conductors</span></h1>
+    <div class="idx">
+      <span class="big">33</span>
+      <span>MUSICIANS FEATURED</span>
+      <span>— 13 Sections</span>
+    </div>
+  </div>
+</section>
+
+<!-- INTRO -->
+<section class="intro">
+  <div class="intro-grid">
+    <div class="intro-lede">
+      1992년 창단 이래 <strong>1,750여 명의 연주자</strong>가 세종을 거쳐갔습니다. 국악기와 양악기가 한 편성 안에서 대화하는 <strong>대한민국 최초의 양·국악 혼합편성 관현악단</strong> — 지금 무대 위에 서는 얼굴을 만나보세요.
+    </div>
+    <div class="intro-stats">
+      <div class="cell"><span class="num">33<span class="u">명</span></span><span class="lb">2026 Active Members</span></div>
+      <div class="cell"><span class="num">13<span class="u">부</span></span><span class="lb">Sections · 악기부</span></div>
+      <div class="cell"><span class="num">34<span class="u">Y</span></span><span class="lb">Heritage · 창단 이래</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- JUMP NAV -->
+<nav class="jump" aria-label="악기부 바로가기">
+  <div class="jump-inner">
+    <a href="#sec-leadership">지휘진</a>
+    <a href="#sec-concertmaster">악장</a>
+    <a href="#sec-gayageum">가야금</a>
+    <a href="#sec-haegeum">해금</a>
+    <a href="#sec-geomungo">거문고</a>
+    <a href="#sec-ajaeng">아쟁</a>
+    <a href="#sec-daegeum">대금</a>
+    <a href="#sec-piri">피리·태평소</a>
+    <a href="#sec-percussion">타악</a>
+    <a href="#sec-vocal">소리</a>
+    <a href="#sec-western_winds">양악</a>
+    <a href="#sec-training">기획·연수</a>
+    <a href="#sec-others">객원·명예</a>
+    <a href="#recruit" style="color:var(--dancheong-red);border-color:var(--dancheong-red);font-weight:700;">단원 모집 →</a>
+  </div>
+</nav>
+
+<!-- MEMBERS SECTIONS (injected below) -->
+
+<section class="sec" id="sec-leadership">
+  <div class="sec-hd">
+    <div class="sec-glyph">指</div>
+    <div class="sec-titles">
+      <div class="sec-eb">Leadership & Conductors · 4명</div>
+      <h2>대표 · 지휘진</h2>
+    </div>
+    <div class="sec-line"></div>
+  </div>
+  <div class="members-grid">
+    <div class="mcard" data-name="박호성" data-role="창단 및 초대지휘자" data-bio='- 세종국악관현악단 창단(1992) 및 초대지휘자(~2014)\n- 제15대 서울시국악관현악단 단장 및 상임지휘자\n- 제6대 국립민속국악원 원장\n- 제5, 6대 부산시립국악관현악단 예술감독 겸 수석지휘자\n- 성균관대학교 공연예술학 박사\n- 대한민국 신지식인문화예술대상' data-detail="member-parkhosung.html">
+      <img class="mphoto" src="assets/photos/members/all/m61-박호성.jpg" alt="박호성 창단 및 초대지휘자" loading="lazy">
+      <div class="mname">박호성</div>
+      <div class="mrole">창단 및 초대지휘자</div>
+    </div>
+    <div class="mcard" data-name="박상우" data-role="지휘자 및  총괄 팀장" data-bio='- 추계예술대학교 국악작곡 전공 졸업 및 한양대학교 지휘 전공 석사\n- Italia Firenze Scuola di Musica IL TRILLO Conducting Diploma\n- 2017 경기문화재단 상주단체 육성지원사업 신작개발 위촉작곡가\n- 2016 - 2020경기도교육청 주최 국악오케스트라 지휘자\n- 한국문화예술위원회, 예술경영지원센터, 한국문화예술회관연합회 등 사업공연 다수 지휘\n- 해피콘서트, 달달한음악회, 송년음악회, 신년음악회 등 기획공연 다수 지휘' data-detail="member.html">
+      <img class="mphoto" src="assets/photos/members/all/m32-박상우.jpg" alt="박상우 지휘자 및  총괄 팀장" loading="lazy">
+      <div class="mname">박상우</div>
+      <div class="mrole">지휘자 및  총괄 팀장</div>
+    </div>
+    <div class="mcard" data-name="김혜성" data-role="대표 겸 예술감독" data-bio='세종국악관현악단 &amp; 세종국악심포니오케스트라 대표 겸 예술감독 (2015—현재)\n여민동락(與民同樂)의 음악정신을 계승한 2대 대표\n국악기·양악기 혼합편성 심포니오케스트라 체제로 악단 운영 확장\n한국문화예술위원회·예술경영지원센터·한국문화예술회관연합회 연계 사업 총괄\nK-Music 전문오케스트라로서의 국제 무대 확장 주도' >
+      <img class="mphoto" src="assets/photos/members/kim-hyesung.jpg" alt="김혜성 대표 겸 예술감독" loading="lazy">
+      <div class="mname">김혜성</div>
+      <div class="mrole">대표 겸 예술감독</div>
+    </div>
+    <div class="mcard" data-name="김수민" data-role="총괄 과장(명예 직원)" data-bio='- 국립국악중, 고등학교 졸업(2012)\n- 한양대학교 음악대학 국악과(가야금전공) 졸업(2018)\n- 2020구로아트밸리 신년음악회 기획 진행,  군포시 주최 한여름쿨페스티벌 4회 기획,\n경기문화재단 상주단체 육성지원사업 약 10여회 기획, 한국문화예술위원회 공연예술 사업 약 20여회,\n2021창작국악오페라코미크 인당수의 우렁총각&amp;lt;용궁출신입니다만&amp;gt;기획 진행,\n경기도교육청 주최 꿈의 학교  등 약 40여회의 무대 공연 기획 및 진행' >
+      <img class="mphoto" src="assets/photos/members/all/m3-김수민.jpg" alt="김수민 총괄 과장(명예 직원)" loading="lazy">
+      <div class="mname">김수민</div>
+      <div class="mrole">총괄 과장(명예 직원)</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="sec-concertmaster">
+  <div class="sec-hd">
+    <div class="sec-glyph">首</div>
+    <div class="sec-titles">
+      <div class="sec-eb">Concertmaster · 1명</div>
+      <h2>악장</h2>
+    </div>
+    <div class="sec-line"></div>
+  </div>
+  <div class="members-grid">
+    <div class="mcard" data-name="곽재혁" data-role="악장 (피리, 태평소)" data-bio='- 한국예술종합학교 전통예술원 졸업\n- 국가무형유산 피리정악 및 대취타 이수자\n- 제21회 전국국악경연대회 관악부 금상\n- 제20회 KBS국악대경연 종합 대상\n- 제10회 ARKO한국창작음악제 협연\n- 세종국악관현악단&amp;세종국악심포니오케스트라 악장' >
+      <img class="mphoto" src="assets/photos/members/all/m37-곽재혁.jpg" alt="곽재혁 악장 (피리, 태평소)" loading="lazy">
+      <div class="mname">곽재혁</div>
+      <div class="mrole">악장 (피리, 태평소)</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="sec-gayageum">
+  <div class="sec-hd">
+    <div class="sec-glyph">絃</div>
+    <div class="sec-titles">
+      <div class="sec-eb">Gayageum · 伽倻琴 · 6명</div>
+      <h2>가야금부</h2>
+    </div>
+    <div class="sec-line"></div>
+  </div>
+  <div class="members-grid">
+    <div class="mcard" data-name="김소민" data-role="가야금(현악 수석)" data-bio='- 국립국악고등학교 졸업\n- 서울대학교 국악과 졸업\n- 국가무형문화재 제23호 가야금산조 및 병창 전수자\n- 제9회 의정부죽파가야금경연대회 대학부 수상\n- 제2회 창작국악경연대회 &amp;lt;국악내일&amp;gt; 수상\n- 세종국악관현악현악단 가야금 단원' >
+      <img class="mphoto" src="assets/photos/members/all/m4-김소민.jpg" alt="김소민 가야금(현악 수석)" loading="lazy">
+      <div class="mname">김소민</div>
+      <div class="mrole">가야금(현악 수석)</div>
+    </div>
+    <div class="mcard" data-name="박서영" data-role="가야금(현악 차석)" data-bio='- 이화여자대학교 한국음악과 석사 재학\n- 국가무형유산 가야금산조 및 병창 전수자\n- 제25회 대전전국국악경연대회 고등부 우수상\n- 제16회 증평전국국악경연대회 기악부문 대상\n- 제16회 직지전국국악대제전 기악부문 차상\n- 세종국악관현악단 가야금 단원' >
+      <img class="mphoto" src="assets/photos/members/all/m5-박서영.jpg" alt="박서영 가야금(현악 차석)" loading="lazy">
+      <div class="mname">박서영</div>
+      <div class="mrole">가야금(현악 차석)</div>
+    </div>
+    <div class="mcard" data-name="이가진" data-role="가야금" data-bio='- 수원대학교 음악대학 국악과 졸업\n- 숙명여자대학교 전통문화예술대학원 문화예술학 석사\n- 제9회 파주시 전국국악경연대회 장려상\n- 제1회 이가진 가야금 독주회 &#39;跳躍&#39;\n- 세종국악관현악단 가야금 단원' >
+      <img class="mphoto" src="assets/photos/members/all/m58-이가진.jpg" alt="이가진 가야금" loading="lazy">
+      <div class="mname">이가진</div>
+      <div class="mrole">가야금</div>
+    </div>
+    <div class="mcard" data-name="정혜윤" data-role="가야금" data-bio='- 이화여자대학교 일반대학원 한국음악과 석사 재학\n- 국가무형문화재 제23호 가야금산조 및 병창 전수자\n- 전남도립국악단 청춘락 협연\n- 제32회 전국국악경연대회 종합대상\n- 세종국악관현악단 가야금 단원' >
+      <img class="mphoto" src="assets/photos/members/all/m12-정혜윤.jpg" alt="정혜윤 가야금" loading="lazy">
+      <div class="mname">정혜윤</div>
+      <div class="mrole">가야금</div>
+    </div>
+    <div class="mcard" data-name="김민호" data-role="가야금" data-bio='-' >
+      <img class="mphoto" src="assets/photos/members/all/m65-김민호.jpg" alt="김민호 가야금" loading="lazy">
+      <div class="mname">김민호</div>
+      <div class="mrole">가야금</div>
+    </div>
+    <div class="mcard" data-name="이지원" data-role="가야금" data-bio='-' >
+      <img class="mphoto" src="assets/photos/members/all/m7-이지원.jpg" alt="이지원 가야금" loading="lazy">
+      <div class="mname">이지원</div>
+      <div class="mrole">가야금</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="sec-haegeum">
+  <div class="sec-hd">
+    <div class="sec-glyph">胡</div>
+    <div class="sec-titles">
+      <div class="sec-eb">Haegeum · 奚琴 · 3명</div>
+      <h2>해금부</h2>
+    </div>
+    <div class="sec-line"></div>
+  </div>
+  <div class="members-grid">
+    <div class="mcard" data-name="유하은" data-role="해금" data-bio='- 국립전통예술 중, 고등학교 졸업\n- 이화여자대학교 한국음악과 졸업 및 동대학원 석사 입학 예정\n- 추담전국국악대회 일반부 최우수상\n- 제29회 대통령상 한밭국악전국대회 우수상\n- 영산 국악 콩쿠르 수상자 연주회\n- 세종국악관현악단 해금 단원' >
+      <img class="mphoto" src="assets/photos/members/all/m30-유하은.jpg" alt="유하은 해금" loading="lazy">
+      <div class="mname">유하은</div>
+      <div class="mrole">해금</div>
+    </div>
+    <div class="mcard" data-name="김남희" data-role="해금" data-bio='-' >
+      <img class="mphoto" src="assets/photos/members/all/m48-김남희.jpg" alt="김남희 해금" loading="lazy">
+      <div class="mname">김남희</div>
+      <div class="mrole">해금</div>
+    </div>
+    <div class="mcard" data-name="김지윤" data-role="해금" data-bio='-' >
+      <img class="mphoto" src="assets/photos/members/all/m52-김지윤.jpg" alt="김지윤 해금" loading="lazy">
+      <div class="mname">김지윤</div>
+      <div class="mrole">해금</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="sec-geomungo">
+  <div class="sec-hd">
+    <div class="sec-glyph">玄</div>
+    <div class="sec-titles">
+      <div class="sec-eb">Geomungo · 玄琴 · 1명</div>
+      <h2>거문고부</h2>
+    </div>
+    <div class="sec-line"></div>
+  </div>
+  <div class="members-grid">
+    <div class="mcard" data-name="김나영" data-role="거문고" data-bio='- 추계예술대학교 일반대학원 박사과정\n- 제17회 악성 옥보고 거문고 경연대회 일반부 대상\n- 제13회 가야국악대전 일반부 대상\n- 제6회 난계국악단 차세대 명인 발굴 프로젝트 청어람 협연\n- 세종국악관현악단 거문고 단원' >
+      <img class="mphoto" src="assets/photos/members/all/m1-김나영.jpg" alt="김나영 거문고" loading="lazy">
+      <div class="mname">김나영</div>
+      <div class="mrole">거문고</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="sec-ajaeng">
+  <div class="sec-hd">
+    <div class="sec-glyph">鉦</div>
+    <div class="sec-titles">
+      <div class="sec-eb">Ajaeng · 牙箏 · 1명</div>
+      <h2>아쟁부</h2>
+    </div>
+    <div class="sec-line"></div>
+  </div>
+  <div class="members-grid">
+    <div class="mcard" data-name="김정희" data-role="아쟁" data-bio='- 국가무형문화제 제1호 종묘제례악 이수자\n- 포천시립민속예술단 단원 역임\n- 나주시립삼현육각 비상임 단원 역임\n- 사회적기업 “아트앤트” 단원 역임\n- 세종국악관현악단 지도단원 및 수석단원 역임\n- 세종국악관현악단 아쟁 단원' >
+      <img class="mphoto" src="assets/photos/members/all/m20-김정희.jpg" alt="김정희 아쟁" loading="lazy">
+      <div class="mname">김정희</div>
+      <div class="mrole">아쟁</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="sec-daegeum">
+  <div class="sec-hd">
+    <div class="sec-glyph">笛</div>
+    <div class="sec-titles">
+      <div class="sec-eb">Daegeum · 大笒 · 2명</div>
+      <h2>대금부</h2>
+    </div>
+    <div class="sec-line"></div>
+  </div>
+  <div class="members-grid">
+    <div class="mcard" data-name="박예은" data-role="대금" data-bio='- 용인대학교 국악과 졸업\n- 제20호 중요무형문화재 대금정악 이수자\n- 한양대학교 대학원 국악학과 석사 졸업\n- 컨템포러리 국악 그룹 &#39;울림&#39; 대표\n- 세종국악관현악단 대금 단원' >
+      <img class="mphoto" src="assets/photos/members/all/m38-박예은.png" alt="박예은 대금" loading="lazy">
+      <div class="mname">박예은</div>
+      <div class="mrole">대금</div>
+    </div>
+    <div class="mcard" data-name="강인숙" data-role="대금(명예 단원)" data-bio='- 수원대학교 음악대학 국악과 졸업\n- 서울시 교육청 소속 예체능 진로 고문\n- 서울시 동부교육청 소속 예체능 진로 고문\n- 미국 샌프란시스코 문화원 초청 공연\n- 캐나다 토론토 문화원 초청 공연\n- 세종국악관현악단 대금 단원' >
+      <img class="mphoto" src="assets/photos/members/all/m9-강인숙.jpg" alt="강인숙 대금(명예 단원)" loading="lazy">
+      <div class="mname">강인숙</div>
+      <div class="mrole">대금(명예 단원)</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="sec-piri">
+  <div class="sec-hd">
+    <div class="sec-glyph">篳</div>
+    <div class="sec-titles">
+      <div class="sec-eb">Piri · 篳篥 · 1명</div>
+      <h2>피리·태평소부</h2>
+    </div>
+    <div class="sec-line"></div>
+  </div>
+  <div class="members-grid">
+    <div class="mcard" data-name="이예진" data-role="피리" data-bio='- 국립국악 중, 고등학교 졸업\n- 한양대학교 음악대학 국악과 졸업\n- 서울시청소년국악단 단원\n- 세종국악관현악단 피리 단원' >
+      <img class="mphoto" src="assets/photos/members/all/m63-이예진.jpg" alt="이예진 피리" loading="lazy">
+      <div class="mname">이예진</div>
+      <div class="mrole">피리</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="sec-percussion">
+  <div class="sec-hd">
+    <div class="sec-glyph">鼓</div>
+    <div class="sec-titles">
+      <div class="sec-eb">Percussion · 打樂 · 2명</div>
+      <h2>타악부</h2>
+    </div>
+    <div class="sec-line"></div>
+  </div>
+  <div class="members-grid">
+    <div class="mcard" data-name="손유진" data-role="타악" data-bio='- 부산예술고등학교 국악과 졸업\n- 단국대학교 국악과 졸업\n- 제45회 꿈과 감성이 있는 젊은 음악회(부산시립국악관현악단) 신모듬 3악장 ’놀이‘ 협연\n- 제5회 난계국악단 기획공연 ‘청어람’ 신모듬 3악장 ‘놀이’ 협연\n- 제24회 부산국악대전 고등부 부산예술문화단체 총연합회 이사장상 수상\n- 국악실내악그룹 헤아림 창단 멤버' >
+      <img class="mphoto" src="assets/photos/members/all/m62-손유진.jpg" alt="손유진 타악" loading="lazy">
+      <div class="mname">손유진</div>
+      <div class="mrole">타악</div>
+    </div>
+    <div class="mcard" data-name="최진석" data-role="타악(명예 단원)" data-bio='- 추계예술대학교 졸업 및 동대 교육대학원 수료\n- 한밭 전국 국악 경연대회 우수상 수상\n- 해남 전국 고수 대회 우수상 수상\n- 우리춤대경연 타악 부분 대상 수상\n- 21C한국음악프로젝트 장려상\n- 부산영화의전당 융복합예술콘텐츠 &#39;똥&#39; 타악주자' >
+      <img class="mphoto" src="assets/photos/members/all/m24-최진석.jpg" alt="최진석 타악(명예 단원)" loading="lazy">
+      <div class="mname">최진석</div>
+      <div class="mrole">타악(명예 단원)</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="sec-vocal">
+  <div class="sec-hd">
+    <div class="sec-glyph">聲</div>
+    <div class="sec-titles">
+      <div class="sec-eb">Vocal · 聲樂 · 4명</div>
+      <h2>소리부</h2>
+    </div>
+    <div class="sec-line"></div>
+  </div>
+  <div class="members-grid">
+    <div class="mcard" data-name="윤하정" data-role="판소리" data-bio='- 용인대학교 국악과 졸업\n- 한양대학교 음악대학 국악과 석사 재학\n- 명창 박록주 전국국악대전 장려상 수상\n- 학생음협콩쿠르 판소리부문(대학, 대학원부) 대상 수상\n- (사)남도민요 보존회 회원, (사)만정 김소희 판소리 선양회 회원\n- 세종국악관현악단 소리 단원' >
+      <img class="mphoto" src="assets/photos/members/all/m21-윤하정.jpg" alt="윤하정 판소리" loading="lazy">
+      <div class="mname">윤하정</div>
+      <div class="mrole">판소리</div>
+    </div>
+    <div class="mcard" data-name="김다희" data-role="판소리" data-bio='-' >
+      <img class="mphoto" src="assets/photos/members/all/m64-김다희.jpg" alt="김다희 판소리" loading="lazy">
+      <div class="mname">김다희</div>
+      <div class="mrole">판소리</div>
+    </div>
+    <div class="mcard" data-name="김연서" data-role="경기민요" data-bio='-' >
+      <img class="mphoto" src="assets/photos/members/all/m35-김연서.jpg" alt="김연서 경기민요" loading="lazy">
+      <div class="mname">김연서</div>
+      <div class="mrole">경기민요</div>
+    </div>
+    <div class="mcard" data-name="어보원" data-role="경기소리" data-bio='-' >
+      <img class="mphoto" src="assets/photos/members/all/m17-어보원.jpg" alt="어보원 경기소리" loading="lazy">
+      <div class="mname">어보원</div>
+      <div class="mrole">경기소리</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="sec-western_winds">
+  <div class="sec-hd">
+    <div class="sec-glyph">管</div>
+    <div class="sec-titles">
+      <div class="sec-eb">Western Winds · 3명</div>
+      <h2>관악부 (양악)</h2>
+    </div>
+    <div class="sec-line"></div>
+  </div>
+  <div class="members-grid">
+    <div class="mcard" data-name="최성현" data-role="바순(객원 단원)" data-bio='- 국민대학교 관현악과 바순전공 졸업\n- 경희대학교 대학원 음악교육전공 졸업\n- 화성시교향악단 수석 단원, 기전오케스트라 수석 단원\n- 시티필하모닉오케스트라 단원' >
+      <img class="mphoto" src="assets/photos/members/all/m14-최성현.jpg" alt="최성현 바순(객원 단원)" loading="lazy">
+      <div class="mname">최성현</div>
+      <div class="mrole">바순(객원 단원)</div>
+    </div>
+    <div class="mcard" data-name="최윤희" data-role="바순(객원 단원)" data-bio='- 국민대학교 졸업\n- 오페라 &#39;토스카&#39; 연주\n- 뮤페라 &#39;시바의 여왕&#39; 초연\n- 콘체르트 아트 하우스 바순,클라리넷,피아노 트리오 연주\n- 인천문화재단 유아예술 프로그램 엘림아트홀 솔로연주\n- 클바넷 앙상블 Member' >
+      <img class="mphoto" src="assets/photos/members/all/m27-최윤희.jpg" alt="최윤희 바순(객원 단원)" loading="lazy">
+      <div class="mname">최윤희</div>
+      <div class="mrole">바순(객원 단원)</div>
+    </div>
+    <div class="mcard" data-name="배기쁨" data-role="플룻/피콜로(객원 단원)" data-bio='- 숭실대학교 Conservatory졸업\n- Italy Istituto Musicale “Gaspare   Spontini” Diploma' >
+      <img class="mphoto" src="assets/photos/members/all/m28-배기쁨.jpg" alt="배기쁨 플룻/피콜로(객원 단원)" loading="lazy">
+      <div class="mname">배기쁨</div>
+      <div class="mrole">플룻/피콜로(객원 단원)</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="sec-training">
+  <div class="sec-hd">
+    <div class="sec-glyph">企</div>
+    <div class="sec-titles">
+      <div class="sec-eb">Planning & Interns · 2명</div>
+      <h2>기획 · 연수단원</h2>
+    </div>
+    <div class="sec-line"></div>
+  </div>
+  <div class="members-grid">
+    <div class="mcard" data-name="채다운" data-role="공연기획팀 팀원(연수단원)" data-bio='- 세종국악관현악단&amp;세종국악오케스트라 공연기획팀 팀원' >
+      <img class="mphoto" src="assets/photos/members/all/m36-채다운.jpg" alt="채다운 공연기획팀 팀원(연수단원)" loading="lazy">
+      <div class="mname">채다운</div>
+      <div class="mrole">공연기획팀 팀원(연수단원)</div>
+    </div>
+    <div class="mcard" data-name="김다원" data-role="공연정보팀 팀원(작곡, 연수단원)" data-bio='-한국예술종합학교 전통예술원 한국음악작곡전공 전문사 졸업\n-김다원 작곡발표회 다수 개최 및 개최예정\n(인천문화재단, 서울문화재단, 한국문화예술위원회 등 사업 선정)\n-2025 제1회 동아창작국악제 참여 작곡가 및 홍보팀장 및 제 2회 동아창작국악제 준비팀장\n-2024 제 40회 동아국악콩쿠르 일반부 작곡부문 동상\n-2024 제5회 우파 국립예술대학 국제 작곡 콩쿠르' >
+      <img class="mphoto" src="assets/photos/members/all/m67-김다원.jpg" alt="김다원 공연정보팀 팀원(작곡, 연수단원)" loading="lazy">
+      <div class="mname">김다원</div>
+      <div class="mrole">공연정보팀 팀원(작곡, 연수단원)</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="sec-others">
+  <div class="sec-hd">
+    <div class="sec-glyph">賓</div>
+    <div class="sec-titles">
+      <div class="sec-eb">Guest & Honorary · 3명</div>
+      <h2>객원·명예 단원</h2>
+    </div>
+    <div class="sec-line"></div>
+  </div>
+  <div class="members-grid">
+    <div class="mcard" data-name="이광혁" data-role="드럼(수석 객원 단원)" data-bio='- 現 명지대학교 사회교육원 실용음악과 출강\n- 前 관동대학교 실용음악과 겸임 교수\n- 前삼익  실용음악 아카데미 전임 강사\n- Dandy music studio 대표.\n- Lostrio.Heum. 1,2집 유발이의 소풍 최지훈 Trio.\n- Lonely hearts club 등 앨범 프로듀싱 및  발표' >
+      <img class="mphoto" src="assets/photos/members/all/m34-이광혁.jpg" alt="이광혁 드럼(수석 객원 단원)" loading="lazy">
+      <div class="mname">이광혁</div>
+      <div class="mrole">드럼(수석 객원 단원)</div>
+    </div>
+    <div class="mcard" data-name="박정현" data-role="베이스(객원 단원)" data-bio='- 원광대 음악과 졸업\n- 고양필하모닉오케스트라 단원\n- 예술의전당 콘서트홀 여름실내악 연주\n- 서울문화재단 서울거리아티스트 금상수상\n- Gon Trio Vol.1 발매\n- 기전대 겸임교수 역임' >
+      <img class="mphoto" src="assets/photos/members/all/m25-박정현.jpg" alt="박정현 베이스(객원 단원)" loading="lazy">
+      <div class="mname">박정현</div>
+      <div class="mrole">베이스(객원 단원)</div>
+    </div>
+    <div class="mcard" data-name="최광석" data-role="드럼(명예 단원)" data-bio='- 박완규,정단,이성욱,정동하(부활보컬)밴드 세션\n- 인순이 밴드(2005, 2008, 2011)전국 투어\n- 박완규 밴드(2011 ~ 2016)전국 투어\n- 구본승, 소향, &quot;사랑할수록&quot;김재희 ,심수봉 ,문주란, 최성수, 신효범,\n장사익, 송해, 포맨, J2M, 송정미, 김도향, 조항조, 오승근, 이상우, 박상민, 김경호 등 세션\n- KBS, MBC 관현악단 객원' >
+      <img class="mphoto" src="assets/photos/members/all/m23-최광석.jpg" alt="최광석 드럼(명예 단원)" loading="lazy">
+      <div class="mname">최광석</div>
+      <div class="mrole">드럼(명예 단원)</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- RECRUITMENT BANNER -->
+<section class="recruit" id="recruit">
+  <div class="recruit-grid">
+    <div>
+      <div class="eb">Audition · 2026</div>
+      <h2>함께 무대에 설<br><span class="red">다음 얼굴을</span> 찾습니다.</h2>
+      <p>세종국악관현악단은 상·하반기 정기 오디션, 상시 객원·연수단원 모집을 통해 새로운 단원을 받아들입니다. 국악·양악 모든 악기부에 <strong>지원 가능</strong>하며, 도전과 개척의 정신으로 함께 나아갈 진취적이고 열정적인 연주자를 기다립니다.</p>
+      <p>공고와 양식은 <a href="notices.html" style="color:var(--geumbak-gold);font-weight:700;border-bottom:1px solid var(--geumbak-gold);">공지사항 게시판</a>에서 확인하시고, 문의는 전화·이메일로 편하게 남겨주세요.</p>
+      <div class="ctas">
+        <a href="notices.html" class="btn-p">모집 공고 보기 <i class="ph ph-arrow-up-right"></i></a>
+        <a href="inquiry.html" class="btn-g">오디션 문의하기</a>
+      </div>
+    </div>
+    <div class="recruit-side">
+      <div class="recruit-card red">
+        <div class="ch">招</div>
+        <h4>정기 모집</h4>
+        <div class="d">상·하반기 정단원 공개 오디션. 국악·양악 혼합편성 전 악기부.</div>
+      </div>
+      <div class="recruit-card">
+        <div class="ch">研</div>
+        <h4>연수단원</h4>
+        <div class="d">2년 과정 · 공연기획·창작실연 트랙. 현장 실무 중심 교육.</div>
+      </div>
+      <div class="recruit-card">
+        <div class="ch">客</div>
+        <h4>객원 단원</h4>
+        <div class="d">프로그램별 상시 모집. 양악 관·현악, 타악, 드럼·베이스 등.</div>
+      </div>
+      <div class="recruit-card red">
+        <div class="ch">企</div>
+        <h4>공연기획팀</h4>
+        <div class="d">공연기획 기획자(신입·경력). 무대 운영·프로젝트 총괄.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="ftr">
+  <div class="c">
+    <div class="ftr-grid">
+      <div class="col">
+        <h4>Studio · Residence</h4>
+        <div class="ftr-addr">
+          <strong>세종국악관현악단 &amp; 세종국악심포니오케스트라</strong><br>
+          15820 경기도 군포시 고산로 599<br>
+          군포문화예술회관 內<br><br>
+          T. 031-391-8784<br>
+          E. sejong8784@hanmail.net
+        </div>
+      </div>
+      <div class="col"><h4>Orchestra</h4><a class="l" href="about.html">악단 소개</a><a class="l" href="about.html#greet">대표 인사말</a><a class="l" href="about.html#history">연혁</a><a class="l" href="members.html">단원 소개</a></div>
+      <div class="col"><h4>Performance</h4><a class="l" href="schedule.html">공연 일정</a><a class="l" href="archive.html">지난 공연</a><a class="l" href="tickets.html">티켓 예매</a></div>
+      <div class="col"><h4>Inquiry</h4><a class="l" href="inquiry.html">관객 문의</a><a class="l" href="inquiry.html">공연 섭외</a><a class="l" href="inquiry.html#location">오시는 길</a></div>
+    </div>
+    <div class="ftr-bot">
+      <div>© 2026 SEJONG GUGAK — ALL RIGHTS RESERVED</div>
+      <div>Musicians Page</div>
+    </div>
+  </div>
+</footer>
+
+<!-- SIDE RAIL -->
+<div class="rail">
+  <a href="tickets.html" style="display:block;"><button type="button"><i class="ph ph-ticket"></i><span>예매안내</span></button></a>
+  <a href="inquiry.html" style="display:block;"><button type="button"><i class="ph ph-chat-circle"></i><span>문의</span></button></a>
+  <button onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="ph ph-caret-up"></i><span>TOP</span></button>
+</div>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modalBg" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mtxt-nm">
+    <div class="mhead">
+      <img class="mphoto-lg" id="mphoto-lg" src="" alt="">
+      <div class="mtxt">
+        <div class="role" id="mtxt-role"></div>
+        <div class="nm" id="mtxt-nm"></div>
+      </div>
+    </div>
+    <div class="mbody"><ul id="mbody-ul"></ul></div>
+    <div class="mfoot">
+      <a class="link" id="mfoot-detail" href="#" style="display:none;">전체 프로필 보기 <i class="ph ph-arrow-up-right"></i></a>
+      <div></div>
+      <button class="close" id="modalClose" type="button">닫기</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const hdr = document.getElementById('hdr');
+window.addEventListener('scroll', () => { if (window.scrollY > 30) hdr.classList.add('scrolled'); else hdr.classList.remove('scrolled'); });
+
+// Modal
+const modalBg = document.getElementById('modalBg');
+const mphotoLg = document.getElementById('mphoto-lg');
+const mtxtRole = document.getElementById('mtxt-role');
+const mtxtNm = document.getElementById('mtxt-nm');
+const mbodyUl = document.getElementById('mbody-ul');
+const mfootDetail = document.getElementById('mfoot-detail');
+
+function openCard(card){
+  const name = card.dataset.name;
+  const role = card.dataset.role;
+  const bio = (card.dataset.bio || '').split(/\\n/).map(s => s.trim()).filter(Boolean);
+  const photo = card.querySelector('.mphoto');
+  const detail = card.dataset.detail;
+
+  mtxtRole.textContent = role;
+  mtxtNm.textContent = name;
+  if (photo && photo.tagName === 'IMG') {
+    mphotoLg.src = photo.src;
+    mphotoLg.alt = name;
+    mphotoLg.className = 'mphoto-lg';
+    mphotoLg.style.display = '';
+  } else {
+    mphotoLg.style.display = 'none';
+  }
+  mbodyUl.innerHTML = bio.length
+    ? bio.map(b => '<li>'+b.replace(/^-+\\s*/,'')+'</li>').join('')
+    : '<li style="color:var(--fg2);">프로필 정보가 준비 중입니다.</li>';
+  if (detail){ mfootDetail.href = detail; mfootDetail.style.display = 'inline-flex'; }
+  else { mfootDetail.style.display = 'none'; }
+  modalBg.classList.add('on');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(){ modalBg.classList.remove('on'); document.body.style.overflow = ''; }
+document.querySelectorAll('.mcard').forEach(c => c.addEventListener('click', () => openCard(c)));
+document.getElementById('modalClose').addEventListener('click', closeModal);
+modalBg.addEventListener('click', e => { if (e.target === modalBg) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && modalBg.classList.contains('on')) closeModal(); });
+
+// Smooth scroll for jump nav
+document.querySelectorAll('.jump a[href^="#"]').forEach(a => a.addEventListener('click', e => {
+  e.preventDefault();
+  const el = document.querySelector(a.getAttribute('href'));
+  if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+}));
+</script>
+<style>
+.sns-rail{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:55;display:flex;flex-direction:column;gap:8px;}
+.sns-rail a{width:56px;height:56px;background:var(--hanji);color:var(--ink);border:1px solid var(--border-hairline);display:flex;align-items:center;justify-content:center;font-size:24px;transition:all var(--dur-fast) var(--ease-gentle);text-decoration:none;}
+.sns-rail a:hover{background:var(--dancheong-red);color:var(--hanji);border-color:var(--dancheong-red);}
+.sns-rail a .cafe{font-family:var(--font-serif-kr);font-weight:700;font-size:15px;letter-spacing:-.02em;line-height:1;}
+@media (max-width:900px){.sns-rail{right:12px;top:auto;bottom:96px;transform:none;}.sns-rail a{width:48px;height:48px;font-size:20px;}.sns-rail a .cafe{font-size:13px;}}
+</style>
+<aside class="sns-rail" aria-label="SNS links">
+  <a href="https://www.youtube.com/channel/UC1bDwqbsVZEEW-0pBsp9ktQ" target="_blank" rel="noopener" title="YouTube"><i class="ph ph-youtube-logo"></i></a>
+  <a href="https://www.instagram.com/sejong_gugak" target="_blank" rel="noopener" title="Instagram"><i class="ph ph-instagram-logo"></i></a>
+  <a href="https://www.facebook.com/sejonggugak/" target="_blank" rel="noopener" title="Facebook"><i class="ph ph-facebook-logo"></i></a>
+  <a href="http://cafe.daum.net/isejong21" target="_blank" rel="noopener" title="다음카페"><span class="cafe">카페</span></a>
+</aside>
+</body></html>
