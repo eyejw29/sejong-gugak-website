@@ -101,16 +101,20 @@ body::before{
 .hero-poster::before{
   content:"";position:absolute;inset:0;
   background:
-    radial-gradient(ellipse at 30% 20%, rgba(184,137,75,0.25), transparent 50%),
-    linear-gradient(180deg, transparent 0%, rgba(26,22,20,0.6) 70%, rgba(26,22,20,0.95) 100%);
+    linear-gradient(180deg, rgba(26,22,20,0.15) 0%, rgba(26,22,20,0.55) 55%, rgba(26,22,20,0.92) 100%);
   z-index:1;
+}
+.hero-poster .hero-photo{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:center 30%;
+  z-index:0;filter:saturate(1.05) contrast(1.02);
 }
 .hero-poster .hanja{
   position:absolute;
   font-family:var(--font-serif-kr);font-weight:800;
   font-size:520px;line-height:0.8;
-  color:rgba(246,241,232,0.04);
-  top:-40px;right:-60px;user-select:none;z-index:0;
+  color:rgba(246,241,232,0.1);
+  top:-40px;right:-60px;user-select:none;z-index:1;pointer-events:none;
 }
 .hero-poster .pmeta{
   position:relative;z-index:2;
@@ -245,8 +249,8 @@ body::before{
 .season-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:0;}
 .perf{
   grid-column:span 12;
-  display:grid;grid-template-columns:90px 1fr 1fr 1fr 180px;gap:32px;align-items:center;
-  padding:32px 0;border-top:1px solid rgba(246,241,232,0.14);
+  display:grid;grid-template-columns:70px 140px 1fr 1fr 160px;gap:28px;align-items:center;
+  padding:24px 0;border-top:1px solid rgba(246,241,232,0.14);
   cursor:pointer;transition:all var(--dur-base) var(--ease-gentle);
   position:relative;
 }
@@ -258,15 +262,23 @@ body::before{
 }
 .perf:hover{padding-left:24px;padding-right:24px;margin:0 -24px;color:var(--hanji);}
 .perf:hover::before{width:100%;}
-.perf:hover .perf-ch{color:rgba(246,241,232,0.2);}
+.perf:hover .perf-thumb{filter:none;transform:scale(1.04);}
 .perf:hover .perf-sub{color:rgba(246,241,232,0.85);}
 .perf:hover .perf-meta{color:rgba(246,241,232,0.85);}
 .perf:hover .perf-n{color:rgba(246,241,232,0.6);}
 
-.perf-n{font-family:var(--font-serif-en);font-style:italic;font-size:32px;color:var(--geumbak-gold);letter-spacing:-.02em;line-height:1;}
-.perf-ch{
-  font-family:var(--font-serif-kr);font-weight:800;font-size:56px;color:var(--hanji);
-  line-height:1;letter-spacing:-.02em;transition:color var(--dur-base) var(--ease-gentle);
+.perf-n{font-family:var(--font-serif-en);font-style:italic;font-size:28px;color:var(--geumbak-gold);letter-spacing:-.02em;line-height:1;}
+.perf-thumb{
+  width:140px;height:100px;position:relative;overflow:hidden;
+  background-size:cover;background-position:center;
+  filter:saturate(0.9) contrast(1.05);
+  transition:filter var(--dur-base) var(--ease-gentle), transform var(--dur-base) var(--ease-gentle);
+}
+.perf-thumb::after{
+  content:attr(data-ch);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-serif-kr);font-weight:800;font-size:52px;color:rgba(246,241,232,0.45);
+  background:linear-gradient(135deg, rgba(26,22,20,0.45), rgba(26,22,20,0.15));
+  mix-blend-mode:normal;letter-spacing:-.02em;pointer-events:none;
 }
 .perf-title{display:flex;flex-direction:column;gap:10px;}
 .perf-title h3{font-family:var(--font-serif-kr);font-weight:700;font-size:26px;margin:0;line-height:1.2;word-break:keep-all;letter-spacing:-.01em;}
@@ -381,7 +393,7 @@ body::before{
   .season-hd h2{font-size:56px;}
   .perf{grid-template-columns:60px 1fr;gap:16px;padding:24px 0;}
   .perf-title, .perf-meta, .perf-cta{grid-column:1/-1;}
-  .perf-ch, .perf-n{display:none;}
+  .perf-thumb, .perf-n{display:none;}
   .fivel-grid{grid-template-columns:repeat(2,1fr);}
   .notice{grid-template-columns:1fr;}
   .ftr-grid{grid-template-columns:1fr 1fr;}
@@ -446,6 +458,7 @@ body::before{
 
   <div class="hero-right">
     <div class="hero-poster">
+      <img class="hero-photo" src="assets/photos/hero/big-07.jpg" alt="세종국악관현악단 공연 장면">
       <div class="hanja">樂</div>
       <div class="pmeta">
         <span>FEATURED · NEXT PROGRAM</span>
@@ -534,7 +547,7 @@ body::before{
     <div class="season-grid">
       <div class="perf">
         <div class="perf-n">N° 01</div>
-        <div class="perf-ch">和</div>
+        <div class="perf-thumb" data-ch="和" style="background-image:url('assets/photos/performances/perf-01.jpg')"></div>
         <div class="perf-title">
           <h3>한낮의 음악회 〈여음〉 두번째 시리즈</h3>
           <div class="perf-sub">송현민 사회 · 이영조 작곡가 · 안소은 & 소리소은 소리단. '소리'는 어떻게 '곡'이 되고, '곡'은 다시 '소리'가 되는가.</div>
@@ -548,7 +561,7 @@ body::before{
 
       <div class="perf">
         <div class="perf-n">N° 02</div>
-        <div class="perf-ch">樂</div>
+        <div class="perf-thumb" data-ch="樂" style="background-image:url('assets/photos/performances/perf-02.jpg')"></div>
         <div class="perf-title">
           <h3>제30회 정기연주회 — 도전과 개척</h3>
           <div class="perf-sub">박상우 지휘 · 창단 30주년 기념 무대. 국악심포니오케스트라의 정수를 한 자리에서 만나는 대형 무대.</div>
@@ -562,7 +575,7 @@ body::before{
 
       <div class="perf">
         <div class="perf-n">N° 03</div>
-        <div class="perf-ch">音</div>
+        <div class="perf-thumb" data-ch="音" style="background-image:url('assets/photos/performances/perf-03.jpg')"></div>
         <div class="perf-title">
           <h3>달달한 콘서트 — 가야금산조 협주곡 〈파사칼리아〉</h3>
           <div class="perf-sub">강태홍류 가야금산조. 가족과 함께 즐기는 한낮의 국악 콘서트.</div>
@@ -576,7 +589,7 @@ body::before{
 
       <div class="perf">
         <div class="perf-n">N° 04</div>
-        <div class="perf-ch">夢</div>
+        <div class="perf-thumb" data-ch="夢" style="background-image:url('assets/photos/performances/perf-04.jpg')"></div>
         <div class="perf-title">
           <h3>국악심포니 초청공연 〈고래의 꿈〉</h3>
           <div class="perf-sub">지휘 박상우 · 국악관현악 창작 초연. 해양을 주제로 한 신작 국악관현악.</div>
@@ -590,7 +603,7 @@ body::before{
 
       <div class="perf">
         <div class="perf-n">N° 05</div>
-        <div class="perf-ch">流</div>
+        <div class="perf-thumb" data-ch="流" style="background-image:url('assets/photos/performances/perf-05.jpg')"></div>
         <div class="perf-title">
           <h3>세종 × 클래식 — 동서의 만남</h3>
           <div class="perf-sub">국악과 서양 클래식의 크로스오버. 브람스와 정악이 한 무대에서.</div>
@@ -783,4 +796,17 @@ window.addEventListener('scroll', () => {
   else hdr.classList.remove('scrolled');
 });
 </script>
+<style>
+.sns-rail{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:55;display:flex;flex-direction:column;gap:8px;}
+.sns-rail a{width:44px;height:44px;background:var(--hanji);color:var(--ink);border:1px solid var(--border-hairline);display:flex;align-items:center;justify-content:center;font-size:20px;transition:all var(--dur-fast) var(--ease-gentle);text-decoration:none;}
+.sns-rail a:hover{background:var(--dancheong-red);color:var(--hanji);border-color:var(--dancheong-red);}
+.sns-rail a .cafe{font-family:var(--font-serif-kr);font-weight:700;font-size:12px;letter-spacing:-.02em;line-height:1;}
+@media (max-width:900px){.sns-rail{right:12px;top:auto;bottom:96px;transform:none;}.sns-rail a{width:38px;height:38px;font-size:16px;}.sns-rail a .cafe{font-size:10px;}}
+</style>
+<aside class="sns-rail" aria-label="SNS links">
+  <a href="https://www.youtube.com/channel/UC1bDwqbsVZEEW-0pBsp9ktQ" target="_blank" rel="noopener" title="YouTube" aria-label="YouTube"><i class="ph ph-youtube-logo"></i></a>
+  <a href="https://www.instagram.com/sejong_gugak" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram"><i class="ph ph-instagram-logo"></i></a>
+  <a href="https://www.facebook.com/sejonggugak/" target="_blank" rel="noopener" title="Facebook" aria-label="Facebook"><i class="ph ph-facebook-logo"></i></a>
+  <a href="http://cafe.daum.net/isejong21" target="_blank" rel="noopener" title="다음카페" aria-label="다음카페"><span class="cafe">카페</span></a>
+</aside>
 </body></html>

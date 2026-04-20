@@ -398,8 +398,17 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
       <div class="count"><strong>03</strong>people featured</div>
     </div>
     <div class="musi-lead">
+      <a class="musi-card" href="member-parkhosung.html" style="text-decoration:none;color:inherit;display:block;">
+        <div class="img v2"><img class="face" src="assets/photos/members/park-hosung.jpg" alt="박호성"><span class="glyph">樂</span></div>
+        <div class="bd">
+          <div class="role">Founding Conductor · 창단 및 초대지휘자</div>
+          <h4>박호성</h4>
+          <div class="en">Park Ho-seong</div>
+          <div class="ins">세종국악관현악단 창단(1992) 및 초대지휘자(~2014). 국립민속국악원장, 서울시국악관현악단장 역임. <span style="color:var(--dancheong-red);font-weight:700;">프로필 보기 →</span></div>
+        </div>
+      </a>
       <a class="musi-card" href="member.html" style="text-decoration:none;color:inherit;display:block;">
-        <div class="img v1"><img class="face" src="http://www.sejonggugak.com/data/file/member/thumb-3552798045_lZFNd6Bz_94bd20cb08500f59829ea010ac068649b7d0500f_400x512.jpg" alt="박상우" referrerpolicy="no-referrer" onerror="this.remove()"><span class="glyph">指</span></div>
+        <div class="img v1"><img class="face" src="assets/photos/members/park-sangwoo.jpg" alt="박상우"><span class="glyph">指</span></div>
         <div class="bd">
           <div class="role">Conductor · 지휘 · 총괄팀장</div>
           <h4>박상우</h4>
@@ -407,15 +416,6 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
           <div class="ins">상임지휘자 · 공연기획 총괄팀장. 추계예술대 국악작곡 전공, 한양대 지휘 전공 석사. <span style="color:var(--dancheong-red);font-weight:700;">프로필 보기 →</span></div>
         </div>
       </a>
-      <div class="musi-card">
-        <div class="img v2"><img class="face" src="http://www.sejonggugak.com/data/file/member/thumb-3552798045_XOSxQoWz_0cd4f8783b548ab6a12679d09ccf46dd09f20453_400x512.jpg" alt="박호성" referrerpolicy="no-referrer" onerror="this.remove()"><span class="glyph">樂</span></div>
-        <div class="bd">
-          <div class="role">Founding Conductor · 창단 · 초대지휘자</div>
-          <h4>박호성</h4>
-          <div class="en">Park Ho-seong</div>
-          <div class="ins">세종국악관현악단 창단(1992) 및 초대지휘자(~2014). 국립민속국악원장, 서울시국악관현악단장 역임.</div>
-        </div>
-      </div>
       <div class="musi-card">
         <div class="img v3"><img class="face" src="http://www.sejonggugak.com/data/file/member/thumb-2009322809_b3tQURyk_3007b9bff00795055385cfa9b1a55e8a45bc8084_400x512.jpg" alt="곽재혁" referrerpolicy="no-referrer" onerror="this.remove()"><span class="glyph">管</span></div>
         <div class="bd">
@@ -586,4 +586,17 @@ document.querySelectorAll('.musi-hd .chip').forEach(c => {
   });
 });
 </script>
+<style>
+.sns-rail{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:55;display:flex;flex-direction:column;gap:8px;}
+.sns-rail a{width:44px;height:44px;background:var(--hanji);color:var(--ink);border:1px solid var(--border-hairline);display:flex;align-items:center;justify-content:center;font-size:20px;transition:all var(--dur-fast) var(--ease-gentle);text-decoration:none;}
+.sns-rail a:hover{background:var(--dancheong-red);color:var(--hanji);border-color:var(--dancheong-red);}
+.sns-rail a .cafe{font-family:var(--font-serif-kr);font-weight:700;font-size:12px;letter-spacing:-.02em;line-height:1;}
+@media (max-width:900px){.sns-rail{right:12px;top:auto;bottom:96px;transform:none;}.sns-rail a{width:38px;height:38px;font-size:16px;}.sns-rail a .cafe{font-size:10px;}}
+</style>
+<aside class="sns-rail" aria-label="SNS links">
+  <a href="https://www.youtube.com/channel/UC1bDwqbsVZEEW-0pBsp9ktQ" target="_blank" rel="noopener" title="YouTube" aria-label="YouTube"><i class="ph ph-youtube-logo"></i></a>
+  <a href="https://www.instagram.com/sejong_gugak" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram"><i class="ph ph-instagram-logo"></i></a>
+  <a href="https://www.facebook.com/sejonggugak/" target="_blank" rel="noopener" title="Facebook" aria-label="Facebook"><i class="ph ph-facebook-logo"></i></a>
+  <a href="http://cafe.daum.net/isejong21" target="_blank" rel="noopener" title="다음카페" aria-label="다음카페"><span class="cafe">카페</span></a>
+</aside>
 </body></html>
