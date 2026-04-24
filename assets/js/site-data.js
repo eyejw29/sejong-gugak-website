@@ -635,27 +635,38 @@
 
   // -----------------------------------------------------------------------
   // 7) archive.html — counter 자동 집계 (v2.6.2)
+  //   실제 DOM: <section class="counter"><div><div class="n">29<span class="u">회</span></div><div class="lb">정기연주회 · Regular Concerts</div></div>...
   // -----------------------------------------------------------------------
   async function hydrateArchiveCounter() {
-    const counter = document.querySelector('.counter');
+    const counter = document.querySelector('section.counter');
     if (!counter) return;
     const stats = await safeFetch('/public/stats');
     if (!stats) return;
-    // counter 구조: <div class="c-item"><span class="n">숫자</span><span class="l">라벨</span></div>
-    const items = counter.querySelectorAll('.c-item');
+    // 직접 자식 div들을 순회 (4개)
+    const items = counter.querySelectorAll(':scope > div');
     if (!items.length) return;
     const values = [
-      { n: stats.performance_total, l: '정기·기획 공연' },
-      { n: stats.press_total, l: '보도·기사' },
-      { n: stats.overseas_total, l: '해외 무대' },
-      { n: stats.outreach_total, l: '교육·아웃리치' },
+      { n: stats.performance_total, unit: '건', lb: '정기·기획 공연 · Performances' },
+      { n: stats.press_total, unit: '건', lb: '언론보도 · Press Coverage' },
+      { n: stats.overseas_total, unit: '국', lb: '해외 무대 · Countries Toured' },
+      { n: stats.outreach_total, unit: '+', lb: '기획·교육공연 · Outreach' },
     ];
     items.forEach((item, i) => {
       if (!values[i]) return;
-      const nEl = item.querySelector('.n, .num, strong');
-      const lEl = item.querySelector('.l, .label, small');
-      if (nEl) nEl.textContent = values[i].n;
-      if (lEl) lEl.textContent = values[i].l;
+      const nEl = item.querySelector('.n');
+      const lbEl = item.querySelector('.lb');
+      if (nEl) {
+        // 기존 .u span 유지하면서 숫자만 교체
+        const uEl = nEl.querySelector('.u');
+        nEl.textContent = String(values[i].n);
+        if (uEl) {
+          const u = document.createElement('span');
+          u.className = 'u';
+          u.textContent = values[i].unit;
+          nEl.appendChild(u);
+        }
+      }
+      if (lbEl) lbEl.textContent = values[i].lb;
     });
   }
 
