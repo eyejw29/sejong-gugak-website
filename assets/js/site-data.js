@@ -95,14 +95,22 @@
   //   3) 'YYYY/MM/ulid.ext' 형식 (R2 업로드) → Workers 프록시 /public/media/
   //   4) 그 외 상대 경로 (assets/photos/…) → GitHub Pages 'assets/' prefix
   //   TODO (v2.7): cdn.sejonggugak.com 로 통합
-  const R2_KEY_RE = /^\d{4}\/\d{2}\/[a-z0-9]{20,}\.(?:jpg|jpeg|png|webp|svg|pdf)$/i;
+  // R2 키로 인식할 패턴들 (모두 /public/media/ 프록시로 라우팅)
+  //   - YYYY/MM/<ulid>.<ext>   (admin 업로드)
+  //   - legacy/<board>/<file>  (백업 이관)
+  //   - partners/<file>        (협력체 로고)
+  const R2_KEY_RES = [
+    /^\d{4}\/\d{2}\/[a-z0-9]{20,}\.(?:jpg|jpeg|png|webp|svg|pdf)$/i,
+    /^legacy\/[a-z0-9]+\/[\w\-.]+\.(?:jpg|jpeg|png|webp|svg|pdf|gif|hwp|hwpx)$/i,
+    /^partners\/[\w\-.]+\.(?:jpg|jpeg|png|webp|svg)$/i,
+  ];
   function mediaUrl(key) {
     if (!key) return null;
     // 구 Gnuboard 백업의 http:// 외부 URL은 mixed content + 호스트 사망 가능성 → null
     if (key.startsWith('http://')) return null;
     if (key.startsWith('https://')) return key;
     const cleaned = key.replace(/^\/+/, '');
-    if (R2_KEY_RE.test(cleaned)) {
+    if (R2_KEY_RES.some(re => re.test(cleaned))) {
       return API_BASE + '/public/media/' + cleaned;
     }
     return 'assets/' + cleaned;
@@ -700,6 +708,25 @@
     });
   }
 
+  // 8-A) 협력체 로고 띠 (v2.6.4)
+  async function hydratePartners() {
+    const host = document.querySelector('[data-db="partners-strip"]');
+    if (!host) return;
+    const data = await safeFetch('/public/partners');
+    const items = data?.items || [];
+    if (items.length === 0) return;
+    host.innerHTML = items.map((p) => {
+      const logo = mediaUrl(p.logo_key);
+      const inner = logo
+        ? `<img src="${escAttr(logo)}" alt="${escAttr(p.name)}" loading="lazy" style="height:48px;max-width:160px;object-fit:contain;filter:grayscale(0.2) opacity(0.85);transition:filter 0.3s;">`
+        : `<span style="font-family:var(--font-serif-kr);font-weight:700;font-size:14px;color:var(--fg2);padding:14px 20px;border:1px solid var(--border-hairline);">${escHtml(p.name)}</span>`;
+      const wrap = (content) => p.url
+        ? `<a href="${escAttr(p.url)}" target="_blank" rel="noopener" title="${escAttr(p.name)}" class="partner-logo">${content}</a>`
+        : `<span title="${escAttr(p.name)}" class="partner-logo">${content}</span>`;
+      return wrap(inner);
+    }).join('');
+  }
+
   // 8) 단원 수 표기 (about.html #sec-musicians 헤더에 총 단원 수 표시)
   async function hydrateMemberCount() {
     const placeholder = document.querySelector('[data-db="member-count"]');
@@ -721,6 +748,7 @@
     hydrateArchive();
     hydrateArchiveCounter();
     hydrateMemberCount();
+    hydratePartners();
   }
 
   if (document.readyState === 'loading') {

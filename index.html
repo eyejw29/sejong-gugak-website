@@ -724,6 +724,31 @@ body::before{
   </div>
 </section>
 
+<!-- ==================== PARTNERS (v2.6.4) ==================== -->
+<section class="partners" style="position:relative;z-index:2;background:var(--hanji-deep);padding:48px 44px;border-top:1px solid var(--border-hairline);">
+  <div style="max-width:var(--max-w);margin:0 auto;">
+    <div style="display:flex;justify-content:space-between;align-items:end;margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid var(--border-hairline);">
+      <div>
+        <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;color:var(--dancheong-red);text-transform:uppercase;margin-bottom:6px;">In Partnership With</div>
+        <h3 style="font-family:var(--font-serif-kr);font-weight:700;font-size:22px;letter-spacing:-.01em;margin:0;">함께하는 곳</h3>
+      </div>
+      <div style="font-family:var(--font-mono);font-size:11px;color:var(--fg2);letter-spacing:.08em;">Cultural Partners · 협력기관</div>
+    </div>
+    <div data-db="partners-strip" class="partners-strip" style="display:flex;flex-wrap:wrap;gap:36px 48px;align-items:center;justify-content:center;padding:12px 0;">
+      <!-- 관리자 > 협력체 메뉴에서 등록한 항목 자동 노출 -->
+    </div>
+  </div>
+</section>
+<style>
+  .partner-logo { display:inline-flex; align-items:center; justify-content:center; min-height:60px; text-decoration:none; color:inherit; }
+  .partner-logo img { transition: filter 0.3s var(--ease-gentle); }
+  .partner-logo:hover img { filter: grayscale(0) opacity(1) !important; }
+  @media (max-width: 768px) {
+    .partners-strip { gap: 24px 32px !important; }
+    .partner-logo img { height: 36px !important; max-width: 120px !important; }
+  }
+</style>
+
 <!-- ==================== FOOTER ==================== -->
 <footer class="ftr">
   <div class="c">
@@ -815,5 +840,5 @@ window.addEventListener('scroll', () => {
   <a href="https://www.facebook.com/sejonggugak/" target="_blank" rel="noopener" title="Facebook" aria-label="Facebook"><i class="ph ph-facebook-logo"></i></a>
   <a href="http://cafe.daum.net/isejong21" target="_blank" rel="noopener" title="다음카페" aria-label="다음카페"><span class="cafe">카페</span></a>
 </aside>
-<script src="assets/js/site-data.js?v=2.6.3"></script>
+<script src="assets/js/site-data.js?v=2.6.4"></script>
 </body></html>
