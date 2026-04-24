@@ -459,7 +459,8 @@ body::before{
   </div>
 
   <div class="hero-right">
-    <div class="hero-poster">
+    <div class="hero-poster" data-db="hero-rotator">
+      <!-- 관리자에서 "메인 배너 롤링" 체크한 공연이 여기에 자동 노출. 없으면 아래 샘플 유지. -->
       <img class="hero-photo" src="assets/photos/hero/big-07.jpg" alt="세종국악관현악단 공연 장면">
       <div class="hanja">樂</div>
       <div class="pmeta">
@@ -546,7 +547,8 @@ body::before{
       </div>
     </div>
 
-    <div class="season-grid">
+    <div class="season-grid" data-db="upcoming-grid">
+      <!-- 관리자 > 공연 > "다가오는 공연" 체크한 항목이 여기 자동 렌더. 없으면 아래 샘플 유지. -->
       <div class="perf">
         <div class="perf-n">N° 01</div>
         <div class="perf-thumb" data-ch="和" style="background-image:url('assets/photos/performances/perf-01.jpg')"></div>
@@ -687,7 +689,7 @@ body::before{
 
 <!-- ==================== NOTICES ==================== -->
 <section class="notice">
-  <div class="feature">
+  <div class="feature" data-db="notice-feature">
     <div class="eb">ANNOUNCEMENT · PRIMARY</div>
     <h3>2026년도 상반기 신입단원 모집(추가)</h3>
     <div class="desc">대한민국 최초의 양·국악 혼합편성 관현악단인 세종국악관현악단 & 세종국악심포니오케스트라는 2026년도 도전과 개척정신으로 함께 할 진취적이고 열정적인 상반기 신입단원을 공개 모집합니다.</div>
@@ -699,7 +701,8 @@ body::before{
 
   <div class="col">
     <h3>공지사항 <a href="notices.html">VIEW ALL →</a></h3>
-    <ul class="nl">
+    <ul class="nl" data-db="notices-col">
+      <!-- 관리자 > 공지·보도 에서 카테고리 'notice'로 발행한 게시물 자동 노출 -->
       <li><span class="d">03.26</span><div class="tt"><span class="tag r">MODIF</span>2026년도 상반기 신입단원(국악, 양악) 모집(추가) 공고</div></li>
       <li><span class="d">02.25</span><div class="tt"><span class="tag">NOTICE</span>연수단원(공연기획·창작실연) 최종 합격자 발표</div></li>
       <li><span class="d">02.23</span><div class="tt"><span class="tag">NOTICE</span>연수단원 모집 1차 합격 발표</div></li>
@@ -710,7 +713,8 @@ body::before{
 
   <div class="col">
     <h3>기사 · 보도자료 <a href="notices.html">VIEW ALL →</a></h3>
-    <ul class="nl">
+    <ul class="nl" data-db="press-col">
+      <!-- 관리자 > 공지·보도 에서 카테고리 'press'로 발행한 게시물 자동 노출 -->
       <li><span class="d">10.24</span><div class="tt"><span class="tag g">PRESS</span>세종국악관현악단, 설화와 국악심포니 만나다 — 배리어프리 공연</div></li>
       <li><span class="d">07.21</span><div class="tt"><span class="tag g">PRESS</span>세종국악심포니, 2023 군포한여름쿨페스티벌 성료</div></li>
       <li><span class="d">07.21</span><div class="tt"><span class="tag g">PRESS</span>전통국악관현악부터 클래식·대중음악까지</div></li>
@@ -811,4 +815,5 @@ window.addEventListener('scroll', () => {
   <a href="https://www.facebook.com/sejonggugak/" target="_blank" rel="noopener" title="Facebook" aria-label="Facebook"><i class="ph ph-facebook-logo"></i></a>
   <a href="http://cafe.daum.net/isejong21" target="_blank" rel="noopener" title="다음카페" aria-label="다음카페"><span class="cafe">카페</span></a>
 </aside>
+<script src="assets/js/site-data.js"></script>
 </body></html>

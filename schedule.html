@@ -234,8 +234,8 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
 </section>
 
 <!-- LIST VIEW -->
-<section class="list-wrap off" id="listView">
-
+<section class="list-wrap off" id="listView" data-db="schedule-list">
+  <!-- 관리자 > 공연 CRUD에 등록된 모든 공연이 월별로 자동 렌더. 비어있으면 아래 샘플 유지. -->
   <div class="month-header">
     <div style="display:flex;align-items:end;gap:18px;">
       <span class="y">2026</span><span class="m">04</span><span class="han">사월</span>
@@ -602,4 +602,5 @@ if (searchBox) {
   <a href="https://www.facebook.com/sejonggugak/" target="_blank" rel="noopener" title="Facebook" aria-label="Facebook"><i class="ph ph-facebook-logo"></i></a>
   <a href="http://cafe.daum.net/isejong21" target="_blank" rel="noopener" title="다음카페" aria-label="다음카페"><span class="cafe">카페</span></a>
 </aside>
+<script src="assets/js/site-data.js"></script>
 </body></html>

@@ -62,17 +62,20 @@
   --font-sans-en:    'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --font-mono:       'IBM Plex Mono', ui-monospace, monospace;
 
-  /* Sizes — perfect-fourth scale (1.333) */
-  --size-12:  12px;
-  --size-14:  14px;
-  --size-16:  16px;
-  --size-20:  20px;
-  --size-24:  24px;
-  --size-32:  32px;
-  --size-44:  44px;
-  --size-60:  60px;
-  --size-80:  80px;
-  --size-108: 108px;
+  /* Sizes — v2.6.1 (2026-04-25) 가독성 상향
+     연령대 높은 사용자 대응. 작은 라벨(12→13), 본문(14→16, 16→17) 중점 확대.
+     제목(32 이상)은 이미 충분하므로 유지. */
+  --size-12:  13px;  /* was 12 — 작은 라벨/메타 */
+  --size-14:  16px;  /* was 14 — 보조 본문 */
+  --size-16:  17px;  /* was 16 — 본문 기본 */
+  --size-18:  18px;  /* new — 본문 강조 */
+  --size-20:  21px;  /* was 20 — 리드 문단 */
+  --size-24:  26px;  /* was 24 */
+  --size-32:  34px;  /* was 32 */
+  --size-44:  44px;  /* 유지 */
+  --size-60:  60px;  /* 유지 */
+  --size-80:  80px;  /* 유지 */
+  --size-108: 108px; /* 유지 */
 
   /* Leading */
   --lh-tight:   1.1;
@@ -239,4 +242,51 @@
   font-family: var(--font-mono);
   font-size: var(--size-14);
   color: var(--fg1);
+}
+
+/* =========================================================================
+   v2.6.1 — 기본 가독성 상향 (전역 폴백)
+   - 인라인 style이나 독립 <style> 블록에서 선언하지 않은 모든 텍스트의 최소치를 보장.
+   - 연령대 있는 사용자 타깃 — body 16px → 17px, line-height 강화.
+   ========================================================================= */
+html { font-size: 17px; }
+body {
+  font-family: var(--font-sans-kr);
+  font-size: 17px;
+  line-height: 1.75;
+  color: var(--fg1);
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+}
+
+/* 본문 텍스트 기본 (기존 클래스 미적용 요소) */
+p { font-size: 17px; line-height: 1.85; word-break: keep-all; }
+
+/* PC 해상도 — 조금 더 여유 */
+@media (min-width: 1024px) {
+  html { font-size: 17px; }
+  body { font-size: 17px; }
+}
+
+/* 태블릿 */
+@media (max-width: 1024px) and (min-width: 641px) {
+  html { font-size: 17px; }
+}
+
+/* 모바일 — 가독성 보정 */
+@media (max-width: 640px) {
+  html { font-size: 16px; }
+  body { font-size: 16px; line-height: 1.7; }
+  /* 너무 작은 라벨 강제 상향 */
+  .meta-mono, .caption { font-size: 13px !important; }
+  /* 본문 강제 상향 */
+  .p-sm { font-size: 15px !important; }
+  .p { font-size: 16px !important; }
+  .p-lead { font-size: 18px !important; }
+}
+
+/* 아주 작은 모바일 */
+@media (max-width: 380px) {
+  html { font-size: 15.5px; }
+  body { font-size: 15.5px; }
 }

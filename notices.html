@@ -237,12 +237,11 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
 <section class="ctrl">
   <div class="ctrl-inner">
     <div class="chips">
-      <button class="active" data-k="all">ALL <span class="c">94</span></button>
-      <button data-k="notice">공지 <span class="c">38</span></button>
-      <button>오디션 <span class="c">12</span></button>
-      <button>보도 <span class="c">21</span></button>
-      <button>프로그램 <span class="c">18</span></button>
-      <button>후원·기부 <span class="c">5</span></button>
+      <button class="active" data-k="all">ALL <span class="c">—</span></button>
+      <button data-k="notice">공지 <span class="c">—</span></button>
+      <button data-k="recruit">오디션 <span class="c">—</span></button>
+      <button data-k="press">보도 <span class="c">—</span></button>
+      <button data-k="general">프로그램 <span class="c">—</span></button>
     </div>
     <div class="search">
       <i class="ph ph-magnifying-glass"></i>
@@ -269,7 +268,8 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
     <div style="text-align:right;">Views</div>
     <div></div>
   </div>
-
+  <div data-db="notices-rows">
+  <!-- 관리자 > 공지·보도 CRUD에 등록된 모든 게시물이 카테고리 분류되어 자동 렌더. URL ?slug=...로 상세 -->
 
   <div class="row new">
     <div class="no">068</div>
@@ -502,6 +502,7 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
     <div class="views">1,435</div>
     <div class="arr">→</div>
   </div>
+  </div><!-- /data-db="notices-rows" -->
   <!-- PAGINATION -->
   <div class="pagi">
     <div class="info">Page 1 · 전체 74건 중 1–21 표시</div>
@@ -662,4 +663,5 @@ window.SEJONG_SUBSCRIBE_URL = '__PASTE_GAS_URL_HERE__';
   <a href="https://www.facebook.com/sejonggugak/" target="_blank" rel="noopener" title="Facebook" aria-label="Facebook"><i class="ph ph-facebook-logo"></i></a>
   <a href="http://cafe.daum.net/isejong21" target="_blank" rel="noopener" title="다음카페" aria-label="다음카페"><span class="cafe">카페</span></a>
 </aside>
+<script src="assets/js/site-data.js"></script>
 </body></html>

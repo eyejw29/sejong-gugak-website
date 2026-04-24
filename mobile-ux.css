@@ -209,3 +209,52 @@ textarea:focus-visible,select:focus-visible,.chip:focus-visible,
   .rail button span:not([class]){display:none;}
   .rail button{gap:0 !important;}
 }
+
+/* =========================================================================
+   v2.6.1 (2026-04-25) — PC 가독성 보강
+   연령대 높은 사용자 대응 — PC에서도 10·11px 라벨이 너무 작다는 피드백 반영.
+   ========================================================================= */
+@media (min-width: 641px) {
+  /* 본문 기본 상향 */
+  body { font-size: 17px; }
+
+  /* 메타/라벨 — 10·11px → 최소 12px 보장 */
+  .meta-mono, .caption { font-size: 13px !important; }
+
+  /* 푸터 링크 — 가독성 강화 */
+  .ftr-grid .col a.l { font-size: 15px !important; line-height: 2.1 !important; }
+  .ftr-grid .col h4 { font-size: 12px !important; letter-spacing: 0.18em !important; }
+  .ftr-addr { font-size: 15px !important; line-height: 2.0 !important; }
+
+  /* 네비게이션 — 주 메뉴 텍스트 확대 */
+  .nav a { font-size: 15px !important; }
+
+  /* 공연/공지 카드 내 소형 텍스트 */
+  .perf-sub, .feature .desc, .notice .nl .tt { font-size: 15px !important; line-height: 1.75 !important; }
+  .perf-meta { font-size: 13px !important; }
+  .nl .d { font-size: 13px !important; }
+  .nl .tag { font-size: 11px !important; padding: 3px 7px !important; }
+
+  /* 공연탭 evt-row */
+  .evt-row .meta { font-size: 13px !important; }
+  .evt-row h3 { font-size: 20px !important; }
+
+  /* 공지 리스트 테이블 */
+  .list .row .ti h4 { font-size: 16px !important; line-height: 1.55 !important; }
+  .list .row .cat { font-size: 12px !important; }
+  .list .row .date { font-size: 13px !important; }
+  .list-head div { font-size: 12px !important; }
+
+  /* 문의 폼 */
+  .fld label { font-size: 12px !important; }
+  .fld input, .fld textarea, .fld select { font-size: 16px !important; }
+
+  /* crumb/eyebrow */
+  .crumb, .eyebrow, .eb { font-size: 12px !important; }
+}
+
+/* PC 대화면에서는 조금 더 여유 */
+@media (min-width: 1280px) {
+  body { font-size: 17px; line-height: 1.8; }
+  .ftr-grid .col a.l { font-size: 16px !important; }
+}
