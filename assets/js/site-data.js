@@ -85,13 +85,20 @@
       .replace(/data:text\/html/gi, 'blocked:');
   }
 
-  // 포스터/배너 이미지 URL — R2 키를 전체 URL로 변환
-  // TODO (v2.7): cdn.sejonggugak.com 으로 변경
+  // 포스터/배너 이미지 URL — 키 형식에 따라 자동 라우팅 (v2.6.1)
+  //   1) 풀 URL → 그대로
+  //   2) 'YYYY/MM/ulid.ext' 형식 (R2 업로드) → Workers 프록시 /public/media/
+  //   3) 그 외 상대 경로 (assets/photos/…) → GitHub Pages 'assets/' prefix
+  //   TODO (v2.7): cdn.sejonggugak.com 로 통합
+  const R2_KEY_RE = /^\d{4}\/\d{2}\/[a-z0-9]{20,}\.(?:jpg|jpeg|png|webp|svg|pdf)$/i;
   function mediaUrl(key) {
     if (!key) return null;
     if (key.startsWith('http')) return key;
-    // 임시: 로컬 에셋 폴더 기반 (배포 URL 정해지면 변경)
-    return 'assets/' + key.replace(/^\/+/, '');
+    const cleaned = key.replace(/^\/+/, '');
+    if (R2_KEY_RE.test(cleaned)) {
+      return API_BASE + '/public/media/' + cleaned;
+    }
+    return 'assets/' + cleaned;
   }
 
   // 예매 버튼 라벨/상태
