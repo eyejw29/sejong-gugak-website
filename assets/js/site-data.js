@@ -90,19 +90,30 @@
   }
 
   // 포스터/배너 이미지 URL — 키 형식에 따라 자동 라우팅 (v2.6.1)
-  //   1) 풀 URL → 그대로
-  //   2) 'YYYY/MM/ulid.ext' 형식 (R2 업로드) → Workers 프록시 /public/media/
-  //   3) 그 외 상대 경로 (assets/photos/…) → GitHub Pages 'assets/' prefix
+  //   1) https URL → 그대로
+  //   2) http URL (구 호스팅 백업 데이터) → null 반환 (mixed content + 죽은 호스트 회피)
+  //   3) 'YYYY/MM/ulid.ext' 형식 (R2 업로드) → Workers 프록시 /public/media/
+  //   4) 그 외 상대 경로 (assets/photos/…) → GitHub Pages 'assets/' prefix
   //   TODO (v2.7): cdn.sejonggugak.com 로 통합
   const R2_KEY_RE = /^\d{4}\/\d{2}\/[a-z0-9]{20,}\.(?:jpg|jpeg|png|webp|svg|pdf)$/i;
   function mediaUrl(key) {
     if (!key) return null;
-    if (key.startsWith('http')) return key;
+    // 구 Gnuboard 백업의 http:// 외부 URL은 mixed content + 호스트 사망 가능성 → null
+    if (key.startsWith('http://')) return null;
+    if (key.startsWith('https://')) return key;
     const cleaned = key.replace(/^\/+/, '');
     if (R2_KEY_RE.test(cleaned)) {
       return API_BASE + '/public/media/' + cleaned;
     }
     return 'assets/' + cleaned;
+  }
+
+  // 이미지 누락 시 placeholder (단청 그라디언트 + 한자) — inline SVG data URL
+  function placeholderUrl(category) {
+    const HAN = { performance: '樂', education: '學', outreach: '行', collab: '合', other: '集' };
+    const ch = HAN[category] || '樂';
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="%231A1614"/><stop offset="100%" stop-color="%23B8342A"/></linearGradient></defs><rect width="400" height="300" fill="url(%23g)"/><text x="50%" y="58%" text-anchor="middle" font-family="serif" font-size="160" font-weight="800" fill="rgba(246,241,232,0.18)">${ch}</text><text x="50%" y="92%" text-anchor="middle" font-family="monospace" font-size="11" fill="rgba(246,241,232,0.55)" letter-spacing="2">SEJONG GUGAK</text></svg>`;
+    return 'data:image/svg+xml;utf8,' + svg;
   }
 
   // 예매 버튼 라벨/상태
@@ -540,7 +551,8 @@
     const heightCycle = ['h-md', 'h-lg', 'h-sm', 'h-md', 'h-lg', 'h-sm'];
 
     host.innerHTML = items.map((a, i) => {
-      const cover = mediaUrl(a.cover_image_key) || 'assets/photos/performances/perf-01.jpg';
+      // 이미지 우선순위: cover_image_key (https/R2) → placeholder (단청 그라디언트)
+      const cover = mediaUrl(a.cover_image_key) || placeholderUrl(a.category);
       const han = HAN[a.category] || '樂';
       const hClass = heightCycle[i % heightCycle.length];
       const corner = a.is_featured ? '<div class="badge-corner">FEATURED</div>' : (a.video_url ? '<div class="badge-corner gold">FILMED</div>' : '');
@@ -638,39 +650,53 @@
   }
 
   // -----------------------------------------------------------------------
-  // 7) archive.html — counter 자동 집계 (v2.6.2)
-  //   실제 DOM: <section class="counter"><div><div class="n">29<span class="u">회</span></div><div class="lb">정기연주회 · Regular Concerts</div></div>...
+  // 7) archive.html — counter (v2.6.3): baseline + 신규 누적
+  //   /public/stats.counter = { regular_concerts, commissions, overseas, outreach }
+  //   각각 { base, new, total, unit, label }
+  //   기존 누적값을 baseline으로 고정하고, baseline_at 이후 등록만 +1.
   // -----------------------------------------------------------------------
   async function hydrateArchiveCounter() {
     const counter = document.querySelector('section.counter');
     if (!counter) return;
     const stats = await safeFetch('/public/stats');
-    if (!stats) return;
-    // 직접 자식 div들을 순회 (4개)
+    if (!stats || !stats.counter) return;
+    const c = stats.counter;
     const items = counter.querySelectorAll(':scope > div');
     if (!items.length) return;
-    const values = [
-      { n: stats.performance_total, unit: '건', lb: '정기·기획 공연 · Performances' },
-      { n: stats.press_total, unit: '건', lb: '언론보도 · Press Coverage' },
-      { n: stats.overseas_total, unit: '국', lb: '해외 무대 · Countries Toured' },
-      { n: stats.outreach_total, unit: '+', lb: '기획·교육공연 · Outreach' },
+
+    // counter HTML의 4개 div 순서 = [정기연주회, 위촉초연, 해외무대, 기획·교육]
+    const order = [
+      { key: 'regular_concerts', enLabel: 'Regular Concerts' },
+      { key: 'commissions', enLabel: 'Commissions Premiered' },
+      { key: 'overseas', enLabel: 'Countries Toured' },
+      { key: 'outreach', enLabel: 'Outreach' },
     ];
+
     items.forEach((item, i) => {
-      if (!values[i]) return;
+      const def = order[i];
+      if (!def) return;
+      const data = c[def.key];
+      if (!data) return;
       const nEl = item.querySelector('.n');
       const lbEl = item.querySelector('.lb');
       if (nEl) {
-        // 기존 .u span 유지하면서 숫자만 교체
-        const uEl = nEl.querySelector('.u');
-        nEl.textContent = String(values[i].n);
-        if (uEl) {
+        nEl.textContent = String(data.total);
+        if (data.unit) {
           const u = document.createElement('span');
           u.className = 'u';
-          u.textContent = values[i].unit;
+          u.textContent = data.unit;
           nEl.appendChild(u);
         }
+        // 신규 등록이 있으면 작은 +N 배지 추가 (선택적)
+        if (data.new > 0) {
+          const badge = document.createElement('span');
+          badge.style.cssText = 'display:inline-block;margin-left:8px;padding:2px 6px;background:var(--dancheong-red);color:var(--hanji);font-family:var(--font-mono);font-size:11px;letter-spacing:.04em;vertical-align:middle;border-radius:2px;';
+          badge.textContent = '+' + data.new;
+          badge.title = `최근 ${data.new}건 신규 등록`;
+          nEl.appendChild(badge);
+        }
       }
-      if (lbEl) lbEl.textContent = values[i].lb;
+      if (lbEl) lbEl.textContent = `${data.label} · ${def.enLabel}`;
     });
   }
 
