@@ -125,8 +125,17 @@
     const host = document.querySelector('[data-db="hero-rotator"]');
     if (!host) return;
 
-    const data = await safeFetch('/public/performances?region=main_banner&limit=5');
-    const items = (data?.items || []).filter((p) => p.visibility !== 'private');
+    // v2.6.2: main_banner 전용이 없으면 upcoming 상위 3건으로 자동 폴백
+    const [bannerData, upcomingData] = await Promise.all([
+      safeFetch('/public/performances?region=main_banner&limit=5'),
+      safeFetch('/public/performances?region=upcoming&limit=3'),
+    ]);
+    const bannerItems = (bannerData?.items || []).filter((p) => p.visibility !== 'private');
+    const upcomingItems = (upcomingData?.items || []).filter((p) => p.visibility !== 'private');
+    // 배너로 명시 체크된 것 우선, 모자라면 upcoming 최상위 3건까지 채움
+    const seen = new Set(bannerItems.map((p) => p.id));
+    const fillers = upcomingItems.filter((p) => !seen.has(p.id));
+    const items = [...bannerItems, ...fillers].slice(0, 3);
     if (items.length === 0) return; // 하드코딩 유지
 
     host.style.position = 'relative';
@@ -416,13 +425,26 @@
           general: '일반 · General',
         }[p.category] || p.category;
         const isNew = p.published_at && (new Date() - new Date(p.published_at)) < 7 * 24 * 3600 * 1000;
+        const isPress = p.category === 'press';
+        // press는 외부 링크가 있으면 바로 새 탭으로
+        const hrefAttr = isPress && p.external_url
+          ? `href="${escAttr(p.external_url)}" target="_blank" rel="noopener"`
+          : `href="?slug=${encodeURIComponent(p.slug)}"`;
+        const attachBadge = p.attachment_count > 0
+          ? `<span class="pdf" title="첨부 ${p.attachment_count}건"><i class="ph ph-paperclip"></i>${p.attachment_count}</span>`
+          : '';
+        const externalBadge = isPress && p.external_url
+          ? `<span class="pdf" style="color:var(--dancheong-blue);" title="외부 링크"><i class="ph ph-arrow-square-out"></i>원문</span>`
+          : '';
         return `
-          <a class="row ${isNew ? 'new' : ''}" href="?slug=${encodeURIComponent(p.slug)}" style="text-decoration:none;color:inherit;">
+          <a class="row ${isNew ? 'new' : ''}" ${hrefAttr} style="text-decoration:none;color:inherit;">
             <div class="no">${no}</div>
             <div class="ti">
               <h4>${escHtml(p.title)}</h4>
               ${isNew ? '<span class="new-badge">NEW</span>' : ''}
               ${p.is_pinned ? '<span class="pdf"><i class="ph ph-push-pin"></i>PIN</span>' : ''}
+              ${attachBadge}
+              ${externalBadge}
             </div>
             <div class="cat ${catClass}">${catLabelKr}</div>
             <div class="date">${fmtKrDate(p.published_at)}</div>
@@ -449,6 +471,31 @@
       return;
     }
     const catLabel = post.category === 'notice' ? '공지사항' : post.category === 'press' ? '언론보도' : post.category === 'recruit' ? '오디션·모집' : '일반';
+    const attachments = Array.isArray(post.attachments) ? post.attachments : [];
+
+    const attachmentsHtml = attachments.length > 0 ? `
+      <section style="margin-top:48px;padding:24px;background:var(--hanji-deep);border-left:3px solid var(--dancheong-red);">
+        <h3 style="font-family:var(--font-serif-kr);font-weight:700;font-size:17px;margin:0 0 16px;letter-spacing:-.005em;">📎 첨부파일 (${attachments.length})</h3>
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;">
+          ${attachments.map((a, i) => {
+            const name = a.filename || `첨부파일 ${i+1}`;
+            const href = a.r2_key ? mediaUrl(a.r2_key) : a.original_url;
+            const size = a.byte_size ? ` (${(a.byte_size/1024).toFixed(0)}KB)` : '';
+            if (!href) return '';
+            return `<li><a href="${escAttr(href)}" target="_blank" rel="noopener" style="display:inline-flex;gap:8px;align-items:center;padding:8px 12px;background:var(--hanji);border:1px solid var(--border-hairline);text-decoration:none;color:var(--fg1);font-size:14px;"><i class="ph ph-download-simple" style="color:var(--dancheong-red);"></i>${escHtml(name)}${size}</a></li>`;
+          }).join('')}
+        </ul>
+        <p style="font-size:12px;color:var(--fg2);margin-top:12px;margin-bottom:0;">※ 원본 파일이 호스팅 이전 시점에 접근 불가일 수 있습니다. 필요 시 대표전화(031-391-8784)로 요청해주세요.</p>
+      </section>
+    ` : '';
+
+    const externalHtml = post.external_url ? `
+      <section style="margin-top:32px;padding:18px 24px;background:var(--hanji);border:1px dashed var(--dancheong-blue);">
+        <h3 style="font-family:var(--font-serif-kr);font-weight:700;font-size:15px;margin:0 0 8px;color:var(--dancheong-blue);">🔗 외부 원문</h3>
+        <a href="${escAttr(post.external_url)}" target="_blank" rel="noopener" style="color:var(--dancheong-red);font-size:14px;word-break:break-all;">${escHtml(post.external_url)} <i class="ph ph-arrow-up-right"></i></a>
+      </section>
+    ` : '';
+
     host.innerHTML = `
       <article class="notice-detail" style="max-width:900px;margin:0 auto;padding:60px 40px;">
         <a href="notices.html" style="display:inline-block;margin-bottom:40px;font-family:var(--font-mono);font-size:12px;letter-spacing:.1em;color:var(--dancheong-red);text-decoration:none;">← 목록으로</a>
@@ -456,6 +503,8 @@
         <h1 style="font-family:var(--font-serif-kr);font-weight:800;font-size:clamp(32px,4.5vw,48px);line-height:1.25;letter-spacing:-.02em;margin:0 0 20px;word-break:keep-all;">${escHtml(post.title)}</h1>
         <div style="font-family:var(--font-mono);font-size:13px;color:var(--fg2);padding-bottom:32px;border-bottom:1px solid var(--border-strong);margin-bottom:40px;letter-spacing:.04em;">${fmtKrDate(post.published_at)}</div>
         <div class="notice-body" style="font-size:17px;line-height:1.95;color:var(--fg1);word-break:keep-all;">${safeBodyHtml(post.body_html) || '<p style="color:var(--fg2);">(본문 없음)</p>'}</div>
+        ${externalHtml}
+        ${attachmentsHtml}
       </article>
     `;
   }
@@ -585,6 +634,41 @@
   }
 
   // -----------------------------------------------------------------------
+  // 7) archive.html — counter 자동 집계 (v2.6.2)
+  // -----------------------------------------------------------------------
+  async function hydrateArchiveCounter() {
+    const counter = document.querySelector('.counter');
+    if (!counter) return;
+    const stats = await safeFetch('/public/stats');
+    if (!stats) return;
+    // counter 구조: <div class="c-item"><span class="n">숫자</span><span class="l">라벨</span></div>
+    const items = counter.querySelectorAll('.c-item');
+    if (!items.length) return;
+    const values = [
+      { n: stats.performance_total, l: '정기·기획 공연' },
+      { n: stats.press_total, l: '보도·기사' },
+      { n: stats.overseas_total, l: '해외 무대' },
+      { n: stats.outreach_total, l: '교육·아웃리치' },
+    ];
+    items.forEach((item, i) => {
+      if (!values[i]) return;
+      const nEl = item.querySelector('.n, .num, strong');
+      const lEl = item.querySelector('.l, .label, small');
+      if (nEl) nEl.textContent = values[i].n;
+      if (lEl) lEl.textContent = values[i].l;
+    });
+  }
+
+  // 8) 단원 수 표기 (about.html #sec-musicians 헤더에 총 단원 수 표시)
+  async function hydrateMemberCount() {
+    const placeholder = document.querySelector('[data-db="member-count"]');
+    if (!placeholder) return;
+    const stats = await safeFetch('/public/stats');
+    if (!stats) return;
+    placeholder.textContent = stats.member_total + '명';
+  }
+
+  // -----------------------------------------------------------------------
   // 초기화 — DOM ready 시 자동 실행
   // -----------------------------------------------------------------------
   function init() {
@@ -594,6 +678,8 @@
     hydrateScheduleList();
     hydrateNoticesList();
     hydrateArchive();
+    hydrateArchiveCounter();
+    hydrateMemberCount();
   }
 
   if (document.readyState === 'loading') {

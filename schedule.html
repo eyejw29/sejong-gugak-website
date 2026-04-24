@@ -202,8 +202,8 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
 
 <section class="toolbar">
   <div class="view-toggle">
-    <button class="on" data-view="cal"><i class="ph ph-calendar-blank"></i>CALENDAR</button>
-    <button data-view="list"><i class="ph ph-list-bullets"></i>LIST</button>
+    <button class="on" data-view="list"><i class="ph ph-list-bullets"></i>LIST</button>
+    <button data-view="cal"><i class="ph ph-calendar-blank"></i>CALENDAR</button>
   </div>
   <div class="filters-row">
     <button class="chip active">ALL</button>
@@ -217,7 +217,7 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
 </section>
 
 <!-- CALENDAR VIEW -->
-<section class="cal-wrap on" id="calView">
+<section class="cal-wrap off" id="calView">
   <div class="cal-nav">
     <div class="ym">
       <span class="y">2026</span>
@@ -234,7 +234,7 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
 </section>
 
 <!-- LIST VIEW -->
-<section class="list-wrap off" id="listView" data-db="schedule-list">
+<section class="list-wrap on" id="listView" data-db="schedule-list">
   <!-- 관리자 > 공연 CRUD에 등록된 모든 공연이 월별로 자동 렌더. 비어있으면 아래 샘플 유지. -->
   <div class="month-header">
     <div style="display:flex;align-items:end;gap:18px;">
@@ -444,14 +444,16 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
 const hdr = document.getElementById('hdr');
 window.addEventListener('scroll', () => { if (window.scrollY > 30) hdr.classList.add('scrolled'); else hdr.classList.remove('scrolled'); });
 
-// View toggle
+// View toggle — 기본 리스트 (v2.6.2)
 document.querySelectorAll('.view-toggle button').forEach(b => {
   b.addEventListener('click', () => {
     document.querySelectorAll('.view-toggle button').forEach(x => x.classList.remove('on'));
     b.classList.add('on');
     const view = b.dataset.view;
     document.getElementById('calView').classList.toggle('on', view === 'cal');
-    document.getElementById('listView').classList.toggle('off', view === 'cal');
+    document.getElementById('calView').classList.toggle('off', view !== 'cal');
+    document.getElementById('listView').classList.toggle('on', view === 'list');
+    document.getElementById('listView').classList.toggle('off', view !== 'list');
   });
 });
 
@@ -465,21 +467,32 @@ document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () =
 const dows = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
 const hanMonth = ['정월','이월','삼월','사월','오월','유월','칠월','팔월','구월','시월','동짓달','섣달'];
 
-// Events by "YYYY-M-D" key. cls ∈ '', 'gold', 'blue'
-const EVENTS = {
-  '2026-3-26': {t:'한낮의 음악회 〈여음〉 두번째 시리즈', cls:'ended', sub:'14:00 · 군포 수리홀 [종료]'},
-  '2026-4-12': {t:'2026 봄 기획공연 〈국악의 봄〉', cls:'ended', sub:'17:00 · 예술의전당 [종료]'},
-  '2026-4-18': {t:'토요상설 〈국악, 봄에 깨다〉', cls:'ended', sub:'15:00 · 군포 [종료]'},
-  '2026-4-22': {t:'국악으로 듣는 詩', cls:'gold', sub:'19:30 · JCC'},
-  '2026-4-29': {t:'찾아가는 국악교실 · 산본중', cls:'blue', sub:'11:00 · 산본중'},
-  '2026-5-17': {t:'한낮의 음악회 〈여음〉', cls:'gold', sub:'14:00 · 군포 수리홀'},
-  '2026-6-8':  {t:'제30회 정기연주회 — 도전과 개척', cls:'', sub:'19:30 · 세종 그랜드홀'},
-  '2026-7-12': {t:'달달한 콘서트 〈파사칼리아〉', cls:'blue', sub:'15:00 · 군포 수리홀'},
-  '2026-8-24': {t:'국악심포니 〈고래의 꿈〉', cls:'', sub:'19:00 · 예술의전당'},
-  '2026-9-14': {t:'세종 × 클래식 — 동서의 만남', cls:'gold', sub:'17:00 · 롯데콘서트홀'},
-  '2026-10-11':{t:'제31회 정기연주회 준비 쇼케이스', cls:'blue', sub:'비공개 · 내부'},
-  '2026-11-14':{t:'제31회 정기연주회', cls:'', sub:'19:30 · 예술의전당'},
-};
+// Events by "YYYY-M-D" key. v2.6.2: DB에서 자동 채움. 기본은 빈 객체 → fetch 후 renderCalendar() 재호출.
+let EVENTS = {};
+
+// DB에서 공연 일정 로드 → EVENTS 채우고 renderCalendar 다시 호출
+(async () => {
+  try {
+    const res = await fetch('https://sejong-admin-api.eyejw29.workers.dev/public/performances?limit=200', { credentials: 'omit' });
+    const data = await res.json();
+    if (!data.ok) return;
+    const items = data.data?.items || [];
+    items.forEach((p) => {
+      const d = new Date(p.starts_at);
+      if (isNaN(d)) return;
+      const key = `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
+      const isPast = d < new Date();
+      const cls = isPast ? 'ended' : (p.booking_status === 'on_sale' ? 'gold' : p.booking_status === 'free' ? 'blue' : '');
+      const timeStr = String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+      EVENTS[key] = {
+        t: p.title,
+        cls,
+        sub: `${timeStr} · ${p.venue || ''} ${isPast ? '[종료]' : ''}`.trim(),
+      };
+    });
+    if (typeof renderCalendar === 'function') renderCalendar();
+  } catch (err) { console.warn('캘린더 DB 로드 실패', err); }
+})();
 
 let calY = 2026, calM = 4;   // 현재 표시 년·월
 const today = new Date();    // 오늘 (실시간)
