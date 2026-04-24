@@ -593,24 +593,31 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
   <div class="form-inner">
     <div class="form-hd">
       <div>
-        <div class="l">Submit Inquiry · 문의 접수</div>
-        <h3 id="form-title">간단히 남겨주세요.<span class="it">Leave a brief message.</span></h3>
+        <div class="l">Booking & Partnership Inquiry · 공연 의뢰·파트너십</div>
+        <h3 id="form-title">공연 의뢰를 남겨주세요.<span class="it">For booking, commissioning, and partnership.</span></h3>
       </div>
       <div class="note" id="form-note" style="background:var(--hanji-deep);padding:20px 24px;border-left:3px solid var(--dancheong-red);">
-        <strong>전화가 가장 빠릅니다 — <a href="tel:031-391-8784" style="color:var(--dancheong-red);font-weight:700;">031-391-8784</a></strong><br>
-        아래에 <strong>이름·연락처·간단한 내용</strong>만 남겨주시면, 담당자가 직접 전화드려 상세한 내용을 여쭤봅니다. 평일 10시–18시 운영.
+        <strong>공연 의뢰 전용 창구입니다.</strong><br>
+        공연 섭외·교육·대관·공동 기획 등 <strong>의뢰성 문의</strong>만 이 폼으로 받습니다.
+        간단한 개요만 남겨주시면 담당자가 <strong>24시간 내 연락</strong>드려 상세 협의합니다.<br><br>
+        <strong>티켓 예매·공연 관람 문의</strong>는 <a href="schedule.html" style="color:var(--dancheong-red);font-weight:700;">공연일정 페이지</a> 또는 전화 <a href="tel:031-391-8784" style="color:var(--dancheong-red);font-weight:700;">031-391-8784</a>.
       </div>
     </div>
 
     <div class="form-grid">
       <form class="form-body" id="inquiryForm" novalidate>
 
-        <div class="sct">문의 유형</div>
+        <div class="sct">의뢰 유형</div>
         <div class="chip-group">
-          <input type="radio" name="inquiry_type" id="t1" value="audience" checked><label for="t1"><span class="k">관객 · 예매 문의</span></label>
-          <input type="radio" name="inquiry_type" id="t2" value="booking"><label for="t2"><span class="k">공연 섭외 · 초청</span></label>
-          <input type="radio" name="inquiry_type" id="t3" value="education"><label for="t3"><span class="k">교육 · 단체 관람</span></label>
-          <input type="radio" name="inquiry_type" id="t4" value="general"><label for="t4"><span class="k">기타</span></label>
+          <input type="radio" name="inquiry_type" id="t2" value="booking" checked><label for="t2"><span class="k">공연 섭외 · 초청</span></label>
+          <input type="radio" name="inquiry_type" id="t3" value="education"><label for="t3"><span class="k">교육 · 워크숍 · 아웃리치</span></label>
+          <input type="radio" name="inquiry_type" id="t5" value="rental"><label for="t5"><span class="k">대관 · 공동 기획</span></label>
+          <input type="radio" name="inquiry_type" id="t4" value="general"><label for="t4"><span class="k">기타 (언론·후원 등)</span></label>
+        </div>
+
+        <div style="background:var(--hanji-deep);padding:14px 18px;border-left:3px solid var(--dancheong-blue);margin:16px 0;font-size:13px;line-height:1.7;color:var(--fg1);">
+          <strong>📌 이 폼은 <em>공연 의뢰·섭외</em> 전용입니다.</strong><br>
+          <span style="color:var(--fg2);">티켓 예매·공연장 위치·개별 공연 정보는 <a href="schedule.html" style="color:var(--dancheong-red);text-decoration:underline;">공연일정 페이지</a>의 예매처 링크 또는 <a href="tel:031-391-8784" style="color:var(--dancheong-red);text-decoration:underline;">031-391-8784</a>로 바로 문의 주세요.</span>
         </div>
 
         <div class="sct">연락처</div>
