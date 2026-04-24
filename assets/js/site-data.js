@@ -21,9 +21,13 @@
   // -----------------------------------------------------------------------
   async function safeFetch(path) {
     try {
-      const res = await fetch(API_BASE + path, {
+      // 브라우저·CDN 캐시 우회 (공연/공지 갱신 즉시 반영)
+      const sep = path.includes('?') ? '&' : '?';
+      const url = API_BASE + path + sep + '_=' + Math.floor(Date.now() / 60000); // 1분 bucket
+      const res = await fetch(url, {
         headers: { 'Accept': 'application/json' },
         credentials: 'omit',
+        cache: 'no-cache',
       });
       if (!res.ok) return null;
       const data = await res.json().catch(() => null);
