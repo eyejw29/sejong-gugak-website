@@ -310,7 +310,7 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
   </nav>
   <div class="util">
     <span class="t">031·391·8784</span>
-    <button class="cta"><span class="dot"></span>티켓 예매</button>
+    <a class="cta" href="inquiry.html" style="text-decoration:none;"><span class="dot"></span>문의하기</a>
   </div>
 </header>
 
@@ -330,177 +330,6 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
       E. sejong8784@hanmail.net
     </div>
   </div>
-
-  <!-- persona picker -->
-  <div class="persona" id="persona">
-    <div class="p-tile active" data-persona="audience" data-glyph="樂">
-      <div class="step"><span class="num">01</span><span>For Audience · 관객</span></div>
-      <h2>공연을 보러<br>오시는 분<span class="en">Listeners &amp; Ticket Holders</span></h2>
-      <p class="dsc">티켓 예매·환불, 관람 유의사항, 좌석·할인, 단체 관람, 장애인 접근성 등. 자주 묻는 질문과 실시간 상담 채널로 연결됩니다.</p>
-      <div class="chips"><span class="chip">Ticketing</span><span class="chip">Seating</span><span class="chip">Access</span><span class="chip">Group</span></div>
-      <div class="go"><span>관객 문의로 이동</span><div class="arr"></div></div>
-    </div>
-    <div class="p-tile" data-persona="organizer" data-glyph="業">
-      <div class="step"><span class="num">02</span><span>For Partners · 주최·섭외</span></div>
-      <h2>공연을 의뢰<br>하시는 분<span class="en">Presenters, Venues &amp; Producers</span></h2>
-      <p class="dsc">공연 섭외·대관·협업 제작·위촉 작곡·교육 워크숍. 편성 규모와 예산에 맞춘 맞춤 제안서를 48시간 내 회신드립니다.</p>
-      <div class="chips"><span class="chip">Booking</span><span class="chip">Co-production</span><span class="chip">Commission</span><span class="chip">Education</span></div>
-      <div class="go"><span>주최자 문의로 이동</span><div class="arr"></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ========== AUDIENCE PANEL ========== -->
-<section class="panel active" data-panel="audience">
-  <!-- Quick FAQ cards -->
-  <div class="quick-hd">
-    <div>
-      <div class="lbl">Quick Answers · 빠른 답변</div>
-      <h3>먼저 확인해주세요.</h3>
-    </div>
-    <div class="desc">대부분의 문의는 아래 카테고리 안에 답이 있습니다. 해당되는 카드를 눌러 관련 FAQ로 이동하세요.</div>
-  </div>
-
-  <div class="faq-grid">
-    <div class="faq-card">
-      <div class="cnt">12 <strong>Qs</strong></div>
-      <div class="ic"><i class="ph ph-ticket"></i></div>
-      <h4>티켓 예매 &amp; 환불</h4>
-      <div class="sub">구매·취소·환불 규정, 예매처별 안내, 결제 수단, 모바일 티켓.</div>
-    </div>
-    <div class="faq-card">
-      <div class="cnt">08 <strong>Qs</strong></div>
-      <div class="ic"><i class="ph ph-armchair"></i></div>
-      <h4>좌석 &amp; 시야</h4>
-      <div class="sub">좌석 등급별 차이, 시야 제한석, 어린이 동반, 교환·업그레이드.</div>
-    </div>
-    <div class="faq-card">
-      <div class="cnt">06 <strong>Qs</strong></div>
-      <div class="ic"><i class="ph ph-hand-heart"></i></div>
-      <h4>할인 &amp; 멤버십</h4>
-      <div class="sub">학생·청소년·장애인·단체·조기예매·세종 멤버십 혜택.</div>
-    </div>
-    <div class="faq-card">
-      <div class="cnt">09 <strong>Qs</strong></div>
-      <div class="ic"><i class="ph ph-wheelchair"></i></div>
-      <h4>접근성 &amp; 관람편의</h4>
-      <div class="sub">휠체어석, 수어통역, 자막, 배리어프리 공연, 어린이 동반 연령.</div>
-    </div>
-  </div>
-
-  <!-- FAQ accordion -->
-  <div class="acc-hd">
-    <div>
-      <div class="lbl">FAQ · 자주 묻는 질문</div>
-      <h3>관객 FAQ.</h3>
-    </div>
-    <div class="filt">
-      <span class="on">전체</span><span>예매</span><span>환불</span><span>좌석</span><span>할인</span><span>접근성</span>
-    </div>
-  </div>
-
-  <div class="acc">
-    <details class="acc-row" open>
-      <summary>
-        <div class="q-n">Q.01</div>
-        <div class="q-t"><span class="tag">환불</span>공연 당일 갑자기 못 가게 되었어요. 환불이 가능한가요?</div>
-        <div class="q-ic"></div>
-      </summary>
-      <div class="a">
-        <p>죄송하지만 <strong>공연 당일 환불은 불가</strong>합니다. 환불 정책은 다음과 같습니다:</p>
-        <ul>
-          <li>공연 10일 전까지 — <strong>전액 환불</strong> (수수료 없음)</li>
-          <li>공연 7일 전까지 — 티켓 금액의 <strong>90% 환불</strong></li>
-          <li>공연 3일 전까지 — 티켓 금액의 <strong>70% 환불</strong></li>
-          <li>공연 1일 전·당일 — 환불 불가</li>
-        </ul>
-        <p>단, 천재지변·질병 등 불가피한 사유의 경우 진단서 등 증빙 제출 시 개별 검토합니다.</p>
-        <div class="ref"><strong>관련 문의:</strong> 예매처별 환불 진행 — 인터파크 1544-1555 · 티켓링크 1588-7890 · 자체예매 031-391-8784</div>
-      </div>
-    </details>
-
-    <details class="acc-row">
-      <summary>
-        <div class="q-n">Q.02</div>
-        <div class="q-t"><span class="tag">예매</span>어린이(8세 미만)도 입장할 수 있나요?</div>
-        <div class="q-ic"></div>
-      </summary>
-      <div class="a">
-        <p>정기연주회·특별공연은 <strong>8세(초등학생) 이상만 입장 가능</strong>합니다. 공연 중 소음 발생 시 퇴장을 안내드릴 수 있습니다.</p>
-        <p>가족 단위 관람객을 위한 <strong>어린이 국악 교실</strong>(5–12세)과 <strong>주말 패밀리 콘서트</strong>(7세 이상)를 별도로 운영하고 있으니 확인 바랍니다.</p>
-      </div>
-    </details>
-
-    <details class="acc-row">
-      <summary>
-        <div class="q-n">Q.03</div>
-        <div class="q-t"><span class="tag">좌석</span>VIP석과 R석 중에서 어떤 좌석이 음향이 좋은가요?</div>
-        <div class="q-ic"></div>
-      </summary>
-      <div class="a">
-        <p>예술의전당 콘서트홀 기준, 국악관현악의 음향 밸런스가 가장 좋은 구역은 <strong>1층 R석 중앙(10–15열)</strong>로 알려져 있습니다. VIP석은 앞쪽 시야가 압도적이나 타악기·가야금 산조 같은 섬세한 음역은 중간열에서 더 균형있게 들립니다.</p>
-        <p>2층 합창석(B석)은 무대 바로 위에서 내려다보는 독특한 감상 포지션으로, 지휘자 시점을 경험하고 싶은 분들께 추천드립니다.</p>
-      </div>
-    </details>
-
-    <details class="acc-row">
-      <summary>
-        <div class="q-n">Q.04</div>
-        <div class="q-t"><span class="tag">할인</span>장애인 할인은 어떻게 신청하나요?</div>
-        <div class="q-ic"></div>
-      </summary>
-      <div class="a">
-        <p>장애인 복지카드 소지자 본인 및 동반 1인까지 <strong>50% 할인</strong>이 적용됩니다. 예매 시 장애인 할인 항목을 선택하고, 공연 당일 복지카드를 지참해 주세요.</p>
-        <p>휠체어석은 콘서트홀 1층 A열 우측 4석으로, 사전 전화 예약(031-391-8784)을 권장드립니다. 수어통역·자막 서비스는 배리어프리 공연일에 한해 제공됩니다.</p>
-      </div>
-    </details>
-
-    <details class="acc-row">
-      <summary>
-        <div class="q-n">Q.05</div>
-        <div class="q-t"><span class="tag">예매</span>학생 할인은 몇 살까지 적용되나요?</div>
-        <div class="q-ic"></div>
-      </summary>
-      <div class="a">
-        <p>학생 할인은 <strong>만 8세 이상 24세 이하</strong>까지 적용되며, 티켓 40% 할인 혜택을 받을 수 있습니다. 공연 당일 학생증·신분증 지참이 필수입니다.</p>
-      </div>
-    </details>
-
-    <details class="acc-row">
-      <summary>
-        <div class="q-n">Q.06</div>
-        <div class="q-t"><span class="tag">예매</span>모바일 티켓으로도 입장이 가능한가요?</div>
-        <div class="q-ic"></div>
-      </summary>
-      <div class="a">
-        <p>네, 가능합니다. 예매 후 문자로 발송되는 QR 티켓을 공연장 입구에서 제시하시면 됩니다. 배리어프리 공연의 경우 사전에 별도의 좌석 확인 절차가 있을 수 있습니다.</p>
-      </div>
-    </details>
-  </div>
-
-  <!-- Direct contacts for audience -->
-  <div class="aud-contact">
-    <div class="cell">
-      <div class="lbl">Box Office · 예매 문의</div>
-      <h5>티켓·예매 전화상담</h5>
-      <div class="v">031-391-8784</div>
-      <div class="sub">평일 10:00–18:00 · 점심 12:30–13:30 제외</div>
-    </div>
-    <div class="cell">
-      <div class="lbl">Email · 이메일 문의</div>
-      <h5>메일로 문의하기</h5>
-      <div class="v">ticket@sejonggugak.com</div>
-      <div class="sub">평균 회신 24시간 이내 · 영업일 기준</div>
-    </div>
-    <div class="cell">
-      <div class="lbl">Chat · 실시간 상담</div>
-      <h5>카카오톡 채널</h5>
-      <div class="v">@세종국악관현악단</div>
-      <div class="sub">공연 당일 현장 안내도 제공됩니다</div>
-    </div>
-  </div>
-</section>
-
 <!-- ========== ORGANIZER PANEL ========== -->
 <section class="panel" data-panel="organizer">
   <div class="org-wrap">
@@ -711,18 +540,8 @@ window.addEventListener('scroll', () => {
   if (window.scrollY > 30) hdr.classList.add('scrolled'); else hdr.classList.remove('scrolled');
 });
 
-// Persona picker — switches the intro panel only (form is now unified)
-const tiles = document.querySelectorAll('#persona .p-tile');
-const panels = document.querySelectorAll('.panel[data-panel]');
-
-function setPersona(p){
-  tiles.forEach(t => t.classList.toggle('active', t.dataset.persona === p));
-  panels.forEach(panel => panel.classList.toggle('active', panel.dataset.panel === p));
-  // Pre-select matching inquiry type in the simplified form
-  if (p === 'audience') { const r = document.getElementById('t1'); if (r) r.checked = true; }
-  if (p === 'organizer') { const r = document.getElementById('t2'); if (r) r.checked = true; }
-}
-tiles.forEach(t => t.addEventListener('click', () => setPersona(t.dataset.persona)));
+// Persona picker + audience panel 제거됨 (공연 의뢰 전용 페이지).
+// 관련 JS 제거 — 더 이상 tile/panel 없음.
 
 // Accordion — only one open at a time
 document.querySelectorAll('.acc-row').forEach(row => {
