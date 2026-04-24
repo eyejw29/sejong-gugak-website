@@ -603,42 +603,48 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
     </div>
 
     <div class="form-grid">
-      <div class="form-body">
+      <form class="form-body" id="inquiryForm" novalidate>
 
         <div class="sct">문의 유형</div>
         <div class="chip-group">
-          <input type="radio" name="i-type" id="t1" checked><label for="t1"><span class="k">관객 · 예매 문의</span></label>
-          <input type="radio" name="i-type" id="t2"><label for="t2"><span class="k">공연 섭외 · 초청</span></label>
-          <input type="radio" name="i-type" id="t3"><label for="t3"><span class="k">교육 · 단체 관람</span></label>
-          <input type="radio" name="i-type" id="t4"><label for="t4"><span class="k">기타</span></label>
+          <input type="radio" name="inquiry_type" id="t1" value="audience" checked><label for="t1"><span class="k">관객 · 예매 문의</span></label>
+          <input type="radio" name="inquiry_type" id="t2" value="booking"><label for="t2"><span class="k">공연 섭외 · 초청</span></label>
+          <input type="radio" name="inquiry_type" id="t3" value="education"><label for="t3"><span class="k">교육 · 단체 관람</span></label>
+          <input type="radio" name="inquiry_type" id="t4" value="general"><label for="t4"><span class="k">기타</span></label>
         </div>
 
         <div class="sct">연락처</div>
         <div class="row">
-          <div class="fld"><label>이름 <span class="req">*</span></label><input type="text" placeholder="홍길동"></div>
-          <div class="fld"><label>연락처 <span class="req">*</span></label><input type="tel" placeholder="010-0000-0000" required></div>
+          <div class="fld"><label for="f-name">이름 <span class="req">*</span></label><input id="f-name" name="name" type="text" placeholder="홍길동" required maxlength="100"></div>
+          <div class="fld"><label for="f-phone">연락처 <span class="req">*</span></label><input id="f-phone" name="phone" type="tel" placeholder="010-0000-0000" required maxlength="40"></div>
         </div>
         <div class="row f">
-          <div class="fld"><label>이메일 <small style="color:var(--fg2);font-weight:400;margin-left:6px;">(선택)</small></label><input type="email" placeholder="example@email.com"></div>
+          <div class="fld"><label for="f-email">이메일 <small style="color:var(--fg2);font-weight:400;margin-left:6px;">(선택)</small></label><input id="f-email" name="email" type="email" placeholder="example@email.com" maxlength="254"></div>
         </div>
 
         <div class="sct">어떤 내용이신가요?</div>
         <div class="row f">
           <div class="fld">
-            <label>간단한 메모 <span class="req">*</span></label>
-            <textarea placeholder="한두 줄로 남겨주세요. 예: '제30회 정기연주회 예매 문의드립니다 — 단체 10명'" style="min-height:100px;" required></textarea>
+            <label for="f-message">간단한 메모 <span class="req">*</span></label>
+            <textarea id="f-message" name="message" placeholder="한두 줄로 남겨주세요. 예: '제30회 정기연주회 예매 문의드립니다 — 단체 10명'" style="min-height:100px;" required maxlength="5000"></textarea>
           </div>
         </div>
 
+        <!-- Honeypot (봇 차단용, 화면에 안 보임) -->
+        <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0;" aria-hidden="true">
+
         <div class="consent">
-          <input type="checkbox" checked id="consent">
+          <input type="checkbox" checked id="consent" required>
           <label for="consent">연락드리기 위해 <a href="#">개인정보 수집·이용</a>에 동의합니다. (필수 · 회신 후 파기)</label>
         </div>
+
+        <div id="form-feedback" style="display:none;padding:16px;margin-top:12px;border-radius:4px;font-weight:600;"></div>
+
         <div class="submit-bar">
           <div class="hint">전화 회신 — <strong id="hint-sla">평일 1영업일 이내</strong></div>
-          <button class="btn-submit" type="submit">문의 보내기 <i class="ph ph-arrow-up-right"></i></button>
+          <button class="btn-submit" type="submit" id="submitBtn">문의 보내기 <i class="ph ph-arrow-up-right"></i></button>
         </div>
-      </div>
+      </form>
 
       <div class="side">
         <div class="side-stack">
@@ -727,6 +733,80 @@ document.querySelectorAll('.filt span').forEach(s => {
     s.classList.add('on');
   });
 });
+
+/* ===================================================================
+   문의 폼 — Cloudflare Workers API로 제출
+   ================================================================= */
+const API_BASE = 'https://sejong-admin-api.eyejw29.workers.dev';
+const form = document.getElementById('inquiryForm');
+const submitBtn = document.getElementById('submitBtn');
+const feedback = document.getElementById('form-feedback');
+
+function showFeedback(type, msg) {
+  feedback.style.display = 'block';
+  feedback.textContent = msg;
+  if (type === 'success') {
+    feedback.style.background = 'rgba(95,138,107,0.15)';
+    feedback.style.color = '#3e5f48';
+    feedback.style.borderLeft = '3px solid var(--success)';
+  } else {
+    feedback.style.background = 'rgba(184,52,42,0.1)';
+    feedback.style.color = 'var(--dancheong-red)';
+    feedback.style.borderLeft = '3px solid var(--dancheong-red)';
+  }
+}
+
+if (form) {
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    feedback.style.display = 'none';
+
+    const fd = new FormData(form);
+    const payload = {
+      name: (fd.get('name') || '').toString().trim(),
+      phone: (fd.get('phone') || '').toString().trim(),
+      email: (fd.get('email') || '').toString().trim() || null,
+      inquiry_type: (fd.get('inquiry_type') || 'general').toString(),
+      message: (fd.get('message') || '').toString().trim(),
+      website: (fd.get('website') || '').toString(), // honeypot
+    };
+
+    // 클라이언트 최소 검증
+    if (!payload.name) return showFeedback('error', '이름을 입력해주세요.');
+    if (!payload.phone) return showFeedback('error', '연락처를 입력해주세요.');
+    if (!payload.message || payload.message.length < 2) return showFeedback('error', '문의 내용을 입력해주세요.');
+    if (!document.getElementById('consent').checked) return showFeedback('error', '개인정보 수집 동의가 필요합니다.');
+
+    submitBtn.disabled = true;
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '전송 중... <i class="ph ph-circle-notch"></i>';
+
+    try {
+      const res = await fetch(API_BASE + '/public/inquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+      if (res.ok && data.ok) {
+        showFeedback('success', data.data.message || '문의가 접수되었습니다. 담당자가 곧 연락드립니다.');
+        form.reset();
+        // 기본 라디오 복원
+        const firstRadio = document.getElementById('t1');
+        if (firstRadio) firstRadio.checked = true;
+        document.getElementById('consent').checked = true;
+      } else {
+        const msg = data?.error?.message || '문의 전송에 실패했습니다. 전화(031-391-8784)로 연락 주세요.';
+        showFeedback('error', msg);
+      }
+    } catch (err) {
+      showFeedback('error', '네트워크 오류. 잠시 후 다시 시도하거나 전화(031-391-8784)로 연락 주세요.');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalText;
+    }
+  });
+}
 </script>
 <style>
 .sns-rail{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:55;display:flex;flex-direction:column;gap:8px;}
