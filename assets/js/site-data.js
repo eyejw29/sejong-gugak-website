@@ -166,12 +166,11 @@
     host.innerHTML = `
       ${items.map((p, i) => `
         <div class="hero-slide" data-slide="${i}" style="${i === 0 ? '' : 'display:none;'} position: absolute; inset: 0;">
-          ${p.hero_image_key
-            ? `<img class="hero-photo" src="${escAttr(mediaUrl(p.hero_image_key))}" alt="${escAttr(p.title)}">`
-            : p.poster_key
-              ? `<img class="hero-photo" src="${escAttr(mediaUrl(p.poster_key))}" alt="${escAttr(p.title)}">`
-              : `<div class="hero-photo" style="background:linear-gradient(135deg,var(--ink),var(--dancheong-red));position:absolute;inset:0;"></div>`
-          }
+          ${(() => {
+            // hero_image_key > poster_key > placeholder SVG (단청 한자) — 빈 그라디언트 회피
+            const url = mediaUrl(p.hero_image_key) || mediaUrl(p.poster_key) || placeholderUrl('performance');
+            return `<img class="hero-photo" src="${escAttr(url)}" alt="${escAttr(p.title)}" onerror="this.onerror=null;this.src='${placeholderUrl('performance').replace(/'/g, '%27')}'">`;
+          })()}
           <div class="hanja">樂</div>
           <div class="pmeta">
             <span>FEATURED · NEXT PROGRAM</span>
@@ -229,7 +228,8 @@
 
     host.innerHTML = items.map((p, i) => {
       const n = String(i + 1).padStart(2, '0');
-      const poster = mediaUrl(p.poster_key || p.hero_image_key) || 'assets/photos/performances/perf-01.jpg';
+      // poster > hero > placeholder
+      const poster = mediaUrl(p.poster_key) || mediaUrl(p.hero_image_key) || placeholderUrl('performance');
       const bookable = p.ticket_url && bookingAvailable(p.booking_status);
       return `
         <a class="perf" href="${bookable ? escAttr(p.ticket_url) : 'schedule.html'}" ${bookable ? 'target="_blank" rel="noopener"' : ''} style="text-decoration: none; color: inherit; display: block;">
