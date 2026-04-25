@@ -708,6 +708,139 @@
     });
   }
 
+  // -----------------------------------------------------------------------
+  // 9) 사이트 공지 — Top Bar + Popup (v2.7.0)
+  //    cookie 기반 "오늘 그만 보기" + 모바일 친화 floating banner
+  // -----------------------------------------------------------------------
+  const TOPBAR_COLOR = {
+    red: { bg: 'var(--dancheong-red)', fg: 'var(--hanji)' },
+    blue: { bg: 'var(--dancheong-blue)', fg: 'var(--hanji)' },
+    gold: { bg: 'var(--geumbak-gold)', fg: 'var(--ink)' },
+    ink: { bg: 'var(--ink)', fg: 'var(--hanji)' },
+  };
+
+  function getCookie(name) {
+    const m = document.cookie.match(new RegExp('(?:^|;\\s*)' + name + '=([^;]+)'));
+    return m ? decodeURIComponent(m[1]) : null;
+  }
+  function setCookie(name, value, hours) {
+    const d = new Date();
+    d.setTime(d.getTime() + hours * 3600 * 1000);
+    document.cookie = `${name}=${encodeURIComponent(value)}; expires=${d.toUTCString()}; path=/; SameSite=Lax`;
+  }
+
+  async function hydrateAnnouncements() {
+    const data = await safeFetch('/public/announcements');
+    if (!data) return;
+    if (data.topbar) renderTopBar(data.topbar);
+    if (data.popup) renderPopup(data.popup);
+  }
+
+  function renderTopBar(tb) {
+    if (!tb || !tb.enabled || !tb.message) return;
+    // 24시간 dismiss 쿠키 (메시지 해시로 키 — 새 공지 시 다시 노출)
+    const cookieKey = 'topbar_dismiss_' + simpleHash(tb.message);
+    if (getCookie(cookieKey)) return;
+
+    const color = TOPBAR_COLOR[tb.bg_color] || TOPBAR_COLOR.red;
+    const bar = document.createElement('div');
+    bar.className = 'sejong-topbar';
+    bar.style.cssText = `position: sticky; top: 0; left: 0; right: 0; z-index: 100; background: ${color.bg}; color: ${color.fg}; padding: 10px 20px; display: flex; justify-content: center; align-items: center; gap: 16px; font-size: 14px; line-height: 1.4; box-shadow: 0 1px 4px rgba(0,0,0,0.08);`;
+    bar.innerHTML = `
+      <span style="font-family: var(--font-serif-kr); font-weight: 600; letter-spacing: -0.005em;">${escHtml(tb.message)}</span>
+      ${tb.link_url ? `<a href="${escAttr(tb.link_url)}" target="_blank" rel="noopener" style="color: inherit; text-decoration: underline; font-weight: 700; font-size: 13px;">${escHtml(tb.link_label || '자세히')} →</a>` : ''}
+      <button class="topbar-close" aria-label="닫기" style="background: transparent; border: 0; color: inherit; font-size: 16px; cursor: pointer; opacity: 0.85; padding: 4px 8px;">×</button>
+    `;
+    document.body.insertBefore(bar, document.body.firstChild);
+    bar.querySelector('.topbar-close').addEventListener('click', () => {
+      setCookie(cookieKey, '1', 24);
+      bar.remove();
+    });
+  }
+
+  function renderPopup(pp) {
+    if (!pp || !pp.enabled || !pp.title) return;
+    const cookieKey = 'popup_dismiss_' + simpleHash(pp.title);
+    if (getCookie(cookieKey)) return;
+    // 메인 페이지에서만 노출 (index.html)
+    const path = location.pathname;
+    if (!(path === '/' || path.endsWith('/index.html') || path === '')) return;
+
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    if (isMobile) return renderPopupMobileBanner(pp, cookieKey);
+
+    const overlay = document.createElement('div');
+    overlay.className = 'sejong-popup-overlay';
+    overlay.style.cssText = 'position: fixed; inset: 0; background: rgba(26,22,20,0.7); backdrop-filter: blur(4px); z-index: 999; display: flex; align-items: center; justify-content: center; padding: 24px; animation: sejongFadeIn 0.3s;';
+
+    const imgUrl = pp.image_key ? mediaUrl(pp.image_key) : null;
+    const bodyHtml = (pp.body_md || '').split('\n').map(l => `<p style="margin:0 0 8px;">${escHtml(l)}</p>`).join('');
+
+    overlay.innerHTML = `
+      <div class="sejong-popup" style="background: var(--hanji); max-width: 520px; width: 100%; box-shadow: 0 24px 64px rgba(0,0,0,0.3); position: relative; animation: sejongPopupIn 0.4s var(--ease-gentle); max-height: 90vh; overflow-y: auto;">
+        <button class="popup-close" aria-label="닫기" style="position: absolute; top: 14px; right: 14px; background: rgba(0,0,0,0.05); border: 0; width: 32px; height: 32px; cursor: pointer; font-size: 18px; color: var(--ink); z-index: 2;">×</button>
+        ${imgUrl ? `<img src="${escAttr(imgUrl)}" alt="" style="width: 100%; max-height: 280px; object-fit: cover; display: block;">` : ''}
+        <div style="padding: 28px 32px 24px;">
+          <div style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; color: var(--dancheong-red); text-transform: uppercase; margin-bottom: 12px;">Announcement</div>
+          <h3 style="font-family: var(--font-serif-kr); font-weight: 800; font-size: 22px; line-height: 1.3; letter-spacing: -0.015em; margin: 0 0 16px;">${escHtml(pp.title)}</h3>
+          <div style="font-size: 14px; line-height: 1.75; color: var(--fg1); word-break: keep-all;">${bodyHtml}</div>
+        </div>
+        <div style="padding: 16px 32px 24px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-hairline);">
+          <label style="font-size: 12px; color: var(--fg2); display: flex; gap: 6px; align-items: center; cursor: pointer;">
+            <input type="checkbox" class="popup-dismiss-today"> 오늘 그만 보기
+          </label>
+          ${pp.link_url ? `<a href="${escAttr(pp.link_url)}" target="_blank" rel="noopener" style="background: var(--ink); color: var(--hanji); padding: 10px 20px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; text-decoration: none;">${escHtml(pp.link_label || '자세히 보기')} →</a>` : ''}
+        </div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+
+    // 애니메이션 keyframe 한 번만 삽입
+    if (!document.getElementById('sejong-popup-anim')) {
+      const style = document.createElement('style');
+      style.id = 'sejong-popup-anim';
+      style.textContent = '@keyframes sejongFadeIn{from{opacity:0}to{opacity:1}} @keyframes sejongPopupIn{from{transform:translateY(20px) scale(0.96);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}';
+      document.head.appendChild(style);
+    }
+
+    function close() {
+      const dismissToday = overlay.querySelector('.popup-dismiss-today').checked;
+      if (dismissToday) setCookie(cookieKey, '1', 24);
+      overlay.style.opacity = '0';
+      setTimeout(() => overlay.remove(), 250);
+    }
+    overlay.querySelector('.popup-close').addEventListener('click', close);
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+    document.addEventListener('keydown', function esc(e) {
+      if (e.key === 'Escape') { close(); document.removeEventListener('keydown', esc); }
+    });
+  }
+
+  // 모바일: 하단 floating banner (전체 화면 안 가림)
+  function renderPopupMobileBanner(pp, cookieKey) {
+    const banner = document.createElement('div');
+    banner.style.cssText = 'position: fixed; bottom: 16px; left: 16px; right: 16px; z-index: 999; background: var(--ink); color: var(--hanji); padding: 14px 16px 14px 18px; box-shadow: 0 8px 24px rgba(0,0,0,0.25); display: flex; gap: 12px; align-items: center; animation: sejongFadeIn 0.3s;';
+    banner.innerHTML = `
+      <div style="flex:1; min-width:0;">
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:.16em;color:var(--geumbak-gold);text-transform:uppercase;margin-bottom:2px;">공지</div>
+        <div style="font-family:var(--font-serif-kr);font-weight:700;font-size:14px;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escHtml(pp.title)}</div>
+      </div>
+      ${pp.link_url ? `<a href="${escAttr(pp.link_url)}" target="_blank" rel="noopener" style="color:var(--geumbak-gold);font-family:var(--font-mono);font-size:11px;text-decoration:none;letter-spacing:.06em;white-space:nowrap;">${escHtml(pp.link_label || '보기')} →</a>` : ''}
+      <button class="mobile-close" aria-label="닫기" style="background:transparent;border:0;color:var(--hanji);font-size:18px;cursor:pointer;opacity:0.7;padding:4px;">×</button>
+    `;
+    document.body.appendChild(banner);
+    banner.querySelector('.mobile-close').addEventListener('click', () => {
+      setCookie(cookieKey, '1', 24);
+      banner.remove();
+    });
+  }
+
+  function simpleHash(s) {
+    let h = 0;
+    for (let i = 0; i < s.length; i++) { h = ((h << 5) - h) + s.charCodeAt(i); h |= 0; }
+    return Math.abs(h).toString(36).slice(0, 8);
+  }
+
   // 8-A) 협력체 로고 띠 (v2.6.4)
   async function hydratePartners() {
     const host = document.querySelector('[data-db="partners-strip"]');
@@ -749,6 +882,7 @@
     hydrateArchiveCounter();
     hydrateMemberCount();
     hydratePartners();
+    hydrateAnnouncements();
   }
 
   if (document.readyState === 'loading') {
