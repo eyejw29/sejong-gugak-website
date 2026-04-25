@@ -165,7 +165,7 @@
     host.style.overflow = 'hidden';
     host.innerHTML = `
       ${items.map((p, i) => `
-        <div class="hero-slide" data-slide="${i}" style="${i === 0 ? '' : 'display:none;'} position: absolute; inset: 0;">
+        <div class="hero-slide" data-slide="${i}" style="position: absolute; inset: 0; padding: 36px 36px 32px; display: ${i === 0 ? 'flex' : 'none'}; flex-direction: column; justify-content: space-between;">
           ${(() => {
             // hero_image_key > poster_key > placeholder SVG (단청 한자) — 빈 그라디언트 회피
             const url = mediaUrl(p.hero_image_key) || mediaUrl(p.poster_key) || placeholderUrl('performance');
@@ -203,7 +203,7 @@
       const dots = host.querySelectorAll('.hero-dot');
       const interval = 6000;
       function show(i) {
-        slides.forEach((s, n) => { s.style.display = n === i ? 'block' : 'none'; });
+        slides.forEach((s, n) => { s.style.display = n === i ? 'flex' : 'none'; });
         dots.forEach((d, n) => { d.style.background = n === i ? 'var(--hanji)' : 'transparent'; });
         idx = i;
       }
