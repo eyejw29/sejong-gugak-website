@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1A1614"/>
+      <stop offset="100%" stop-color="#2B1A18"/>
+    </linearGradient>
+    <pattern id="hanji" patternUnits="userSpaceOnUse" width="200" height="200">
+      <rect width="200" height="200" fill="url(#bg)"/>
+      <circle cx="100" cy="100" r="0.6" fill="rgba(246,241,232,0.04)"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#hanji)"/>
+  <text x="80" y="200" font-family="'Noto Serif KR',serif" font-weight="800" font-size="76" fill="#F6F1E8" letter-spacing="-2">세종국악관현악단</text>
+  <text x="82" y="260" font-family="'Noto Serif KR',serif" font-weight="800" font-size="44" fill="#B8342A" letter-spacing="-1">세종국악심포니오케스트라</text>
+  <text x="80" y="340" font-family="Georgia,serif" font-style="italic" font-size="24" fill="rgba(246,241,232,0.55)" letter-spacing="2">Sejong Korean Music Orchestra · since 1992</text>
+  <line x1="80" y1="400" x2="280" y2="400" stroke="#B8342A" stroke-width="2"/>
+  <text x="80" y="460" font-family="'Noto Sans KR',sans-serif" font-size="22" fill="rgba(246,241,232,0.85)">정기연주회 · 창작초연 · 가족콘서트 · 배리어프리</text>
+  <text x="80" y="495" font-family="'Noto Sans KR',sans-serif" font-size="20" fill="rgba(246,241,232,0.6)">군포문화예술회관 상주 · 박호성 창단 지휘자 · 박상우 상임지휘자</text>
+  <text x="1120" y="580" text-anchor="end" font-family="'Noto Serif KR',serif" font-weight="800" font-size="180" fill="rgba(184,52,42,0.18)">樂</text>
+  <text x="80" y="580" font-family="'JetBrains Mono',monospace" font-size="14" fill="rgba(246,241,232,0.45)" letter-spacing="3">SEJONGGUGAK.COM</text>
+</svg>

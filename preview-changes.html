@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<title>변경 검토 미리보기 — 박상우 지휘자·대표 요청 7건</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Sans+KR:wght@300;400;500;700;800&family=Crimson+Text:ital,wght@0,400;1,400&family=IBM+Plex+Mono:wght@400;700&display=swap">
+<style>
+:root{
+  --ink:#1A1614; --hanji:#F6F1E8; --paper:#FBF8F2; --hanji-deep:#ECE4D1;
+  --red:#B8342A; --gold:#B8894B; --jade:#1F4B44;
+  --stone-3:#8E8778; --stone-4:#5A544B; --border:rgba(26,22,20,0.12);
+  --font-serif:'Nanum Myeongjo',serif; --font-sans:'Noto Sans KR',sans-serif;
+  --font-en:'Crimson Text',Georgia,serif; --font-mono:'IBM Plex Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{background:var(--hanji);color:var(--ink);font-family:var(--font-sans);line-height:1.6;}
+.wrap{max-width:1100px;margin:0 auto;padding:48px 24px 96px;}
+.h-page{padding:32px 0 48px;border-bottom:2px solid var(--ink);margin-bottom:48px;}
+.h-page .lbl{font-family:var(--font-mono);font-size:11px;letter-spacing:0.2em;color:var(--red);margin-bottom:12px;}
+.h-page h1{font-family:var(--font-serif);font-weight:800;font-size:36px;letter-spacing:-0.02em;line-height:1.2;margin-bottom:14px;}
+.h-page p{font-size:14px;line-height:1.85;color:var(--stone-4);max-width:760px;}
+.h-page .warn{margin-top:16px;padding:14px 18px;background:#FEF6E0;border-left:3px solid var(--gold);font-size:13px;line-height:1.7;}
+
+.toc{background:var(--paper);padding:24px 28px;border:1px solid var(--border);margin-bottom:48px;}
+.toc h2{font-family:var(--font-mono);font-size:11px;letter-spacing:0.18em;color:var(--red);margin-bottom:14px;}
+.toc ol{padding-left:20px;}
+.toc li{padding:5px 0;font-size:14px;}
+.toc li a{color:var(--ink);text-decoration:none;border-bottom:1px dashed transparent;}
+.toc li a:hover{border-bottom-color:var(--red);color:var(--red);}
+
+.item{margin-bottom:64px;padding:0 0 64px;border-bottom:1px dashed var(--border);}
+.item:last-child{border-bottom:0;}
+.item .num{font-family:var(--font-en);font-style:italic;font-size:48px;color:var(--red);line-height:1;margin-bottom:8px;}
+.item .ask{font-family:var(--font-mono);font-size:11px;letter-spacing:0.14em;color:var(--gold);margin-bottom:6px;}
+.item h2{font-family:var(--font-serif);font-weight:800;font-size:26px;letter-spacing:-0.015em;margin-bottom:14px;line-height:1.3;}
+.item .req{padding:14px 18px;background:var(--hanji-deep);border-left:3px solid var(--ink);font-size:13.5px;line-height:1.85;margin-bottom:24px;word-break:keep-all;}
+.item .ba{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px;}
+.item .ba > div{padding:18px 20px;background:var(--paper);border:1px solid var(--border);}
+.item .ba .lbl{font-family:var(--font-mono);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:10px;}
+.item .ba .before .lbl{color:var(--stone-4);}
+.item .ba .after .lbl{color:var(--red);}
+.item .ba p{font-size:13px;line-height:1.75;color:var(--stone-4);word-break:keep-all;}
+.item .demo{margin-top:18px;padding:0;background:var(--ink);overflow:hidden;}
+
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;background:var(--ink);color:var(--hanji);font-family:var(--font-mono);font-size:11px;letter-spacing:0.08em;text-decoration:none;text-transform:uppercase;font-weight:700;cursor:pointer;border:0;}
+.btn:hover{background:var(--red);}
+
+/* ── 데모 1: 인트로 (로고 → 텍스트 순) ── */
+.intro-demo{position:relative;height:520px;background:#1A1614;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#F6F1E8;}
+.intro-demo::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 30% 30%,rgba(184,52,42,0.08),transparent 60%),radial-gradient(ellipse at 70% 70%,rgba(184,137,75,0.06),transparent 60%);}
+.intro-demo .demo-logo{width:200px;height:auto;opacity:0;transform:scale(0.85);position:relative;z-index:2;}
+.intro-demo .demo-wm{font-family:var(--font-serif);font-weight:800;font-size:48px;letter-spacing:-0.04em;color:#F6F1E8;display:flex;gap:0.04em;margin-top:24px;}
+.intro-demo .demo-wm .ch{display:inline-block;opacity:0;transform:translateY(20px);}
+.intro-demo .demo-sub{font-family:var(--font-en);font-style:italic;font-size:14px;letter-spacing:0.2em;color:rgba(246,241,232,0.7);margin-top:14px;opacity:0;}
+.intro-demo .replay-btn{position:absolute;bottom:16px;right:16px;}
+.intro-demo.playing .demo-logo{animation:demoLogo 1.2s cubic-bezier(.4,0,.2,1) 0.3s both;}
+.intro-demo.playing .demo-wm .ch{animation:demoCh 0.6s cubic-bezier(.4,0,.2,1) forwards;}
+.intro-demo.playing .demo-wm .ch:nth-child(1){animation-delay:1.5s;}
+.intro-demo.playing .demo-wm .ch:nth-child(2){animation-delay:1.6s;}
+.intro-demo.playing .demo-wm .ch:nth-child(3){animation-delay:1.7s;}
+.intro-demo.playing .demo-wm .ch:nth-child(4){animation-delay:1.8s;}
+.intro-demo.playing .demo-wm .ch:nth-child(5){animation-delay:1.9s;}
+.intro-demo.playing .demo-wm .ch:nth-child(6){animation-delay:2.0s;}
+.intro-demo.playing .demo-wm .ch:nth-child(7){animation-delay:2.1s;}
+.intro-demo.playing .demo-wm .ch:nth-child(8){animation-delay:2.2s;}
+.intro-demo.playing .demo-sub{animation:demoFade 0.8s ease-out 2.8s forwards;}
+@keyframes demoLogo{from{opacity:0;transform:scale(0.85);}to{opacity:1;transform:scale(1);}}
+@keyframes demoCh{to{opacity:1;transform:translateY(0);}}
+@keyframes demoFade{to{opacity:1;}}
+
+/* ── 데모 2: 헤더 brand ── */
+.hdr-demo{padding:14px 24px;background:rgba(246,241,232,0.96);border:1px solid var(--border);display:flex;align-items:center;gap:14px;}
+.hdr-demo img{height:40px;}
+.hdr-demo .stk{display:flex;flex-direction:column;line-height:1.05;}
+.hdr-demo .stk .kr{font-family:var(--font-serif);font-weight:800;font-size:15px;letter-spacing:-0.01em;}
+.hdr-demo .stk .kr2{font-family:var(--font-serif);font-weight:600;font-size:12px;color:var(--stone-4);margin-top:2px;}
+.hdr-demo .nav{margin-left:auto;display:flex;gap:24px;}
+.hdr-demo .nav a{font-size:13px;color:var(--ink);text-decoration:none;}
+.hdr-demo .nav a.new{color:var(--red);font-weight:700;}
+
+/* ── 데모 3: GNB 메뉴 비교 ── */
+.menu-list{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:8px;}
+.menu-list .it{padding:12px 14px;background:var(--paper);border:1px solid var(--border);text-align:center;font-size:12.5px;font-weight:600;}
+.menu-list .it.new{background:var(--red);color:var(--hanji);border-color:var(--red);}
+
+/* ── 데모 4: SNS rail 컬러 ── */
+.sns-demo{display:flex;gap:8px;padding:18px;background:var(--paper);justify-content:center;}
+.sns-demo a{width:48px;height:48px;display:flex;align-items:center;justify-content:center;color:#fff;text-decoration:none;font-size:22px;border-radius:0;}
+.sns-demo a.yt{background:#FF0000;}
+.sns-demo a.ig{background:linear-gradient(45deg,#F58529,#DD2A7B,#8134AF,#515BD4);}
+.sns-demo a.fb{background:#1877F2;}
+.sns-demo a.cf{background:#FFCD00;color:#1A1614;font-family:var(--font-serif);font-weight:800;font-size:14px;}
+.sns-demo.bw a{background:var(--hanji);color:var(--ink);border:1px solid var(--border);}
+
+/* ── 데모 5: 영상 섹션 ── */
+.video-grid-demo{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+.video-grid-demo .vid{background:var(--ink);color:var(--hanji);overflow:hidden;text-decoration:none;}
+.video-grid-demo .vid .thumb{aspect-ratio:16/9;position:relative;overflow:hidden;}
+.video-grid-demo .vid .thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.video-grid-demo .vid .thumb::after{content:"▶";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,0.9);color:var(--ink);display:flex;align-items:center;justify-content:center;padding-left:4px;}
+.video-grid-demo .bd{padding:14px 16px;}
+.video-grid-demo h4{font-family:var(--font-serif);font-weight:700;font-size:15px;line-height:1.4;}
+.video-grid-demo .meta{font-family:var(--font-mono);font-size:10px;color:rgba(246,241,232,0.5);margin-top:4px;}
+
+/* ── 데모 7: 여음 포스터 ── */
+.poster-cmp{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.poster-cmp > div{background:var(--paper);padding:14px;border:1px solid var(--border);}
+.poster-cmp img{width:100%;height:auto;display:block;border:1px solid var(--border);}
+.poster-cmp .lbl{font-family:var(--font-mono);font-size:10px;letter-spacing:0.16em;color:var(--red);margin-bottom:8px;}
+
+@media (max-width:780px){
+  .item .ba,.poster-cmp,.video-grid-demo{grid-template-columns:1fr !important;}
+  .menu-list{grid-template-columns:repeat(3,1fr) !important;}
+  .h-page h1{font-size:26px;}
+}
+
+.feedback-box{background:var(--ink);color:var(--hanji);padding:32px 28px;margin-top:48px;}
+.feedback-box h3{font-family:var(--font-serif);font-weight:800;font-size:20px;margin-bottom:14px;}
+.feedback-box p{font-size:14px;line-height:1.85;color:rgba(246,241,232,0.85);word-break:keep-all;}
+.feedback-box .check{margin-top:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px 16px;}
+.feedback-box label{display:flex;gap:8px;align-items:center;font-size:13px;color:rgba(246,241,232,0.9);cursor:pointer;}
+.feedback-box label input{accent-color:var(--gold);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<header class="h-page">
+  <div class="lbl">— Internal Preview · 검토 전용 (검색 미노출)</div>
+  <h1>박상우 지휘자 + 대표님 요청<br>변경사항 7건 미리보기</h1>
+  <p>요청받은 7가지 변경사항을 라이브 사이트에 적용하기 전에 시안으로 정리했습니다. 각 항목별로 <b>현재 상태(BEFORE)</b>와 <b>변경 후(AFTER)</b>를 나란히 보실 수 있습니다. 검토 후 OK한 항목만 라이브 적용합니다.</p>
+  <div class="warn">
+    ⚠ <b>이 페이지는 검토 전용</b>입니다. 검색엔진에 노출되지 않으며, 라이브 사이트(<code>sejonggugak.com</code>)에는 어떤 변경도 반영되지 않은 상태입니다.
+  </div>
+</header>
+
+<nav class="toc">
+  <h2>— 검토 항목</h2>
+  <ol>
+    <li><a href="#i1">인트로 — 로고 먼저 등장 후 텍스트</a> <span style="color:var(--stone-3);">(박상우 지휘자)</span></li>
+    <li><a href="#i2">헤더 단명 — 두 단명 함께 표기</a> <span style="color:var(--stone-3);">(박상우 지휘자)</span></li>
+    <li><a href="#i3">GNB — 단원소개 독립 메뉴 + 파트 통합</a> <span style="color:var(--stone-3);">(박상우 지휘자)</span></li>
+    <li><a href="#i4">SNS 링크 — 원래 로고 컬러 적용</a> <span style="color:var(--stone-3);">(박상우 지휘자)</span></li>
+    <li><a href="#i5">메인 영상 섹션 — 유튜브 썸네일 + 제목</a> <span style="color:var(--stone-3);">(박상우 지휘자)</span></li>
+    <li><a href="#i6">메인 명인협연 도장 삭제</a> <span style="color:var(--stone-3);">(대표님)</span></li>
+    <li><a href="#i7">여음 카드 이미지 → 공식 포스터로 교체</a> <span style="color:var(--stone-3);">(대표님)</span></li>
+  </ol>
+</nav>
+
+<!-- ============ 1. 인트로 ============ -->
+<section class="item" id="i1">
+  <div class="num">01</div>
+  <div class="ask">— 박상우 지휘자 요청</div>
+  <h2>오프닝 페이지에 로고가 먼저 뜨고 그 다음 글씨가 뜨게</h2>
+  <div class="req">"오프닝 페이지에 세종국악관현악단 팝업 로고랑 같이 뜨면 좋을 듯. <b>중앙에 크게 로고가 먼저 뜨고 글씨가 뜨는 형식</b>"</div>
+
+  <div class="ba">
+    <div class="before">
+      <div class="lbl">BEFORE — 현재</div>
+      <p>검정 배경에 "세종국악관현악단" 한 글자씩 등장 (로고 없음, 글씨만)</p>
+    </div>
+    <div class="after">
+      <div class="lbl">AFTER — 변경 후</div>
+      <p>검정 배경에 <b>로고 등장 (1.2초 페이드인)</b> → 그 아래 한 글자씩 텍스트 등장 → 영문 부제 → since 1992</p>
+    </div>
+  </div>
+
+  <div class="demo">
+    <div class="intro-demo" id="introDemo">
+      <img class="demo-logo" src="https://api.sejonggugak.com/public/media/legacy/branding/logo-symphony.png" alt="세종국악심포니오케스트라 로고">
+      <div class="demo-wm"><span class="ch">세</span><span class="ch">종</span><span class="ch">국</span><span class="ch">악</span><span class="ch">관</span><span class="ch">현</span><span class="ch">악</span><span class="ch">단</span></div>
+      <div class="demo-sub">Sejong Korean Music Orchestra · since 1992</div>
+      <button class="btn replay-btn" onclick="replayIntro()">▶ 다시 재생</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2. 헤더 brand ============ -->
+<section class="item" id="i2">
+  <div class="num">02</div>
+  <div class="ask">— 박상우 지휘자 요청</div>
+  <h2>왼쪽 상단 로고 옆에 두 단명 함께 표기</h2>
+  <div class="req">"홈페이지 왼쪽 상단의 로고 오른쪽에 단명 함께 넣기 — <b>세종국악관현악단 & 세종국악심포니오케스트라</b>"</div>
+
+  <div class="ba">
+    <div class="before">
+      <div class="lbl">BEFORE — 현재</div>
+      <p>로고 + "세종국악관현악단" + 영문 부제</p>
+    </div>
+    <div class="after">
+      <div class="lbl">AFTER — 변경 후</div>
+      <p>로고 + "세종국악관현악단" / "& 세종국악심포니오케스트라" 두 줄</p>
+    </div>
+  </div>
+
+  <div style="margin-top:8px;">
+    <div class="lbl" style="font-family:var(--font-mono);font-size:10px;color:var(--red);margin-bottom:8px;">— 변경 후 시안 (PC 헤더)</div>
+    <div class="hdr-demo">
+      <img src="https://api.sejonggugak.com/public/media/legacy/branding/logo-symphony.png" alt="">
+      <div class="stk">
+        <span class="kr">세종국악관현악단</span>
+        <span class="kr2">& 세종국악심포니오케스트라</span>
+      </div>
+      <nav class="nav">
+        <a>악단소개</a><a class="new">단원소개</a><a>공연</a><a>아카이브</a><a>공지사항</a><a>문의</a>
+      </nav>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. GNB 단원소개 ============ -->
+<section class="item" id="i3">
+  <div class="num">03</div>
+  <div class="ask">— 박상우 지휘자 요청</div>
+  <h2>GNB에 "단원소개" 독립 메뉴 신설 + 파트 구분 없는 단순 리스트</h2>
+  <div class="req">"오른쪽 메뉴에 악단 소개 다음 메뉴로 <b>단원소개를 독립적 메뉴로 설정</b>하는 것이 좋을 것 같으며, <b>인원이 유동적인 점을 감안하여 파트는 나누지 않는 것이 나을 것</b>"</div>
+
+  <div class="ba">
+    <div class="before">
+      <div class="lbl">BEFORE — 현재 메뉴</div>
+      <div class="menu-list" style="grid-template-columns:repeat(5,1fr);">
+        <div class="it">악단소개</div>
+        <div class="it">공연</div>
+        <div class="it">아카이브</div>
+        <div class="it">공지사항</div>
+        <div class="it">문의</div>
+      </div>
+      <p style="margin-top:10px;font-size:12px;color:var(--stone-4);">악단소개 페이지 안에 단원이 가야금부·해금부 등 <b>파트별로 그룹</b>되어 있음.</p>
+    </div>
+    <div class="after">
+      <div class="lbl">AFTER — 변경 후</div>
+      <div class="menu-list">
+        <div class="it">악단소개</div>
+        <div class="it new">단원소개</div>
+        <div class="it">공연</div>
+        <div class="it">아카이브</div>
+        <div class="it">공지사항</div>
+        <div class="it">문의</div>
+      </div>
+      <p style="margin-top:10px;font-size:12px;color:var(--stone-4);">단원소개 페이지에서 파트 구분 없이 <b>단순 리스트</b>로 표시 (이름·역할만, 가야금부·해금부 헤더 제거).</p>
+    </div>
+  </div>
+
+  <p style="margin-top:14px;font-size:13px;color:var(--stone-4);background:var(--paper);padding:12px 16px;border-left:3px solid var(--gold);">
+    📝 <b>구현 노트</b>: 신규 <code>members.html</code> 또는 <code>about.html#musicians</code> 단순 리스트 모드 추가. 관리자 페이지의 단원 데이터(악기군 필드)는 그대로 두고 화면에서만 파트 구분 안 함.
+  </p>
+</section>
+
+<!-- ============ 4. SNS 컬러 ============ -->
+<section class="item" id="i4">
+  <div class="num">04</div>
+  <div class="ask">— 박상우 지휘자 요청</div>
+  <h2>SNS 플로팅 — 원래 로고 컬러 살리기</h2>
+  <div class="req">"메인화면에 유튜브·인스타·페이스북 링크는 <b>눈에 들어오도록 원래 로고 컬러를 살리는 것</b>이 좋을 것 같음"</div>
+
+  <div class="ba">
+    <div class="before">
+      <div class="lbl">BEFORE — 현재 (한지 흑백)</div>
+      <div class="sns-demo bw">
+        <a><i style="font-size:18px;">▶</i></a>
+        <a><i style="font-size:18px;">📷</i></a>
+        <a><i style="font-size:18px;">f</i></a>
+        <a class="cf">카페</a>
+      </div>
+      <p style="margin-top:8px;font-size:12px;color:var(--stone-4);">우측 플로팅 4개 모두 한지 배경 + 먹빛 글자 (브랜드 통일 목적이었음)</p>
+    </div>
+    <div class="after">
+      <div class="lbl">AFTER — 변경 후 (각 브랜드 컬러)</div>
+      <div class="sns-demo">
+        <a class="yt">▶</a>
+        <a class="ig">📷</a>
+        <a class="fb">f</a>
+        <a class="cf">카페</a>
+      </div>
+      <p style="margin-top:8px;font-size:12px;color:var(--stone-4);">유튜브 빨강·인스타 그라데이션·페북 파랑·다음카페 노랑 — 시각적 인지도 ↑</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5. 영상 섹션 ============ -->
+<section class="item" id="i5">
+  <div class="num">05</div>
+  <div class="ask">— 박상우 지휘자 요청</div>
+  <h2>메인 화면에 영상 섹션 신설 — 유튜브 썸네일 + 제목</h2>
+  <div class="req">"메인 화면에 세션을 나눠 영상링크는 기존 홈페이지처럼 눈에 들어오도록 <b>유튜브 미리보기 화면과 간략한 제목이 뜨도록</b>"</div>
+
+  <div class="ba">
+    <div class="before">
+      <div class="lbl">BEFORE — 현재</div>
+      <p>홈페이지 메인에 영상 섹션 없음. 우측 SNS rail에 유튜브 아이콘만 있어 채널로 이동.</p>
+    </div>
+    <div class="after">
+      <div class="lbl">AFTER — 변경 후</div>
+      <p>홈페이지 "다가오는 무대" 아래 새 섹션. 유튜브 썸네일 + 제목 4개. 클릭 시 해당 영상 새 탭으로.</p>
+    </div>
+  </div>
+
+  <div style="margin-top:14px;">
+    <div class="lbl" style="font-family:var(--font-mono);font-size:10px;color:var(--red);margin-bottom:8px;">— 변경 후 시안 (회사소개서 v3에 이미 적용된 영상 4개 활용)</div>
+    <div class="video-grid-demo">
+      <a class="vid" href="https://www.youtube.com/watch?v=prNt08QwbUk" target="_blank">
+        <div class="thumb"><img src="https://i.ytimg.com/vi/prNt08QwbUk/hqdefault.jpg" alt=""></div>
+        <div class="bd"><h4>친절한돼지씨 — 어린이 음악극</h4><div class="meta">YouTube · 가족 콘서트</div></div>
+      </a>
+      <a class="vid" href="https://www.youtube.com/watch?v=0kGRpMfmHMU" target="_blank">
+        <div class="thumb"><img src="https://i.ytimg.com/vi/0kGRpMfmHMU/hqdefault.jpg" alt=""></div>
+        <div class="bd"><h4>청소년 대상 공연</h4><div class="meta">YouTube · 학교 순회</div></div>
+      </a>
+      <a class="vid" href="https://www.youtube.com/watch?v=1_8f_K15ji0" target="_blank">
+        <div class="thumb"><img src="https://i.ytimg.com/vi/1_8f_K15ji0/hqdefault.jpg" alt=""></div>
+        <div class="bd"><h4>지역유통 · 기획공연</h4><div class="meta">YouTube · 예술경영지원센터</div></div>
+      </a>
+      <a class="vid" href="https://www.youtube.com/watch?v=iPv52gipojA" target="_blank">
+        <div class="thumb"><img src="https://i.ytimg.com/vi/iPv52gipojA/hqdefault.jpg" alt=""></div>
+        <div class="bd"><h4>송년·해피 콘서트</h4><div class="meta">YouTube · 시즌 갈라</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6. 명인협연 삭제 ============ -->
+<section class="item" id="i6">
+  <div class="num">06</div>
+  <div class="ask">— 대표님 요청</div>
+  <h2>메인 화면 "명인협연" 빨간 도장 삭제</h2>
+  <div class="req">"메인 화면에 명인협연 삭제"</div>
+
+  <div class="ba">
+    <div class="before">
+      <div class="lbl">BEFORE — 현재</div>
+      <div style="position:relative;height:180px;background:linear-gradient(135deg,#1A1614,#3a2820);overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:14px;color:var(--hanji);">
+        <div style="position:absolute;right:8px;top:14px;width:54px;height:54px;background:var(--red);color:var(--hanji);display:flex;align-items:center;justify-content:center;font-family:var(--font-serif);font-weight:800;font-size:13px;line-height:1;text-align:center;transform:rotate(6deg);box-shadow:0 4px 24px rgba(184,52,42,0.3);">명인<br>협연</div>
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.18em;color:var(--gold);">FEATURED · NEXT PROGRAM</div>
+        <div style="font-family:var(--font-serif);font-weight:700;font-size:16px;margin-top:4px;">한낮의 음악회 〈여음〉 II</div>
+      </div>
+    </div>
+    <div class="after">
+      <div class="lbl">AFTER — 변경 후</div>
+      <div style="position:relative;height:180px;background:linear-gradient(135deg,#1A1614,#3a2820);overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:14px;color:var(--hanji);">
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.18em;color:var(--gold);">FEATURED · NEXT PROGRAM</div>
+        <div style="font-family:var(--font-serif);font-weight:700;font-size:16px;margin-top:4px;">한낮의 음악회 〈여음〉 II</div>
+      </div>
+    </div>
+  </div>
+
+  <p style="margin-top:14px;font-size:13px;color:var(--stone-4);background:var(--paper);padding:12px 16px;border-left:3px solid var(--gold);">
+    📝 <b>구현</b>: <code>index.html</code>의 <code>.seal</code> 요소 제거. 다른 페이지의 도장은 유지 (의도된 디자인일 경우).
+  </p>
+</section>
+
+<!-- ============ 7. 여음 포스터 ============ -->
+<section class="item" id="i7">
+  <div class="num">07</div>
+  <div class="ask">— 대표님 요청</div>
+  <h2>여음 카드 — 돼지씨 사진 → 공식 포스터로 교체</h2>
+  <div class="req">"여음 내용에 돼지씨 사진 대신 <b>포스터가 들어가면 좋겠다</b>"</div>
+
+  <div class="poster-cmp">
+    <div>
+      <div class="lbl">BEFORE — 현재 (다른 공연 사진)</div>
+      <div style="aspect-ratio:3/4;background:linear-gradient(135deg,#3a2820,#1A1614);display:flex;align-items:center;justify-content:center;color:rgba(246,241,232,0.4);font-family:var(--font-serif);font-size:14px;text-align:center;padding:20px;">관련 없는<br>공연 사진<br>(돼지씨 등)</div>
+    </div>
+    <div>
+      <div class="lbl">AFTER — 변경 후 (공식 여음 포스터)</div>
+      <img src="https://api.sejonggugak.com/public/media/legacy/posters/yeoeum-2026-05.jpg" alt="여음 II 공식 포스터">
+    </div>
+  </div>
+
+  <p style="margin-top:14px;font-size:13px;color:var(--stone-4);background:var(--paper);padding:12px 16px;border-left:3px solid var(--gold);">
+    📝 <b>구현</b>: 관리자 페이지에서 "한낮의 음악회 〈여음〉 II" 공연의 <code>poster_key</code> 또는 <code>hero_image_key</code>를 <code>legacy/posters/yeoeum-2026-05.jpg</code>로 갱신. 또는 SQL 한 줄.
+  </p>
+</section>
+
+<!-- ============ 검토 응답 ============ -->
+<section class="feedback-box">
+  <h3>📋 검토 결과 회신</h3>
+  <p>각 항목별로 적용 여부를 결정해 주세요. 아래에 메모하시거나, 항목 번호로 알려주시면 즉시 라이브에 반영합니다.</p>
+  <div class="check">
+    <label><input type="checkbox" checked> 1. 인트로 (로고 → 텍스트)</label>
+    <label><input type="checkbox" checked> 2. 헤더 두 단명</label>
+    <label><input type="checkbox" checked> 3. GNB 단원소개 + 파트 통합</label>
+    <label><input type="checkbox" checked> 4. SNS 원색 적용</label>
+    <label><input type="checkbox" checked> 5. 메인 영상 섹션</label>
+    <label><input type="checkbox" checked> 6. 명인협연 삭제</label>
+    <label><input type="checkbox" checked> 7. 여음 포스터 교체</label>
+  </div>
+  <p style="margin-top:18px;color:rgba(246,241,232,0.6);font-size:12.5px;">
+    ※ 새 로고 PNG는 R2에 업로드되어 있습니다. AI 원본 파일에서 변환된 정식 SVG가 추가로 필요하면 말씀해 주세요 (현재 PNG로도 모든 화면에서 사용 가능).
+  </p>
+</section>
+
+</div>
+
+<script>
+function replayIntro(){
+  const el = document.getElementById('introDemo');
+  el.classList.remove('playing');
+  void el.offsetWidth;  // reflow trigger
+  el.classList.add('playing');
+}
+window.addEventListener('load',()=>setTimeout(replayIntro,300));
+</script>
+</body></html>

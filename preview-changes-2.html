@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<title>변경 시안 v2 — 6월 공연·이메일·공연횟수</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="colors_and_type.css?v=2.8.90">
+<style>
+:root{--max-w:1280px;}
+html,body{margin:0;background:var(--bg1);color:var(--fg1);}
+body{font-family:var(--font-sans-kr);}
+.wrap{max-width:var(--max-w);margin:0 auto;padding:48px 32px 96px;}
+.kicker{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;color:var(--dancheong-red);text-transform:uppercase;margin-bottom:8px;}
+h1{font-family:var(--font-serif-kr);font-weight:800;font-size:40px;letter-spacing:-.03em;margin:0 0 6px;color:var(--ink);}
+.lede{font-size:15px;color:var(--fg2);max-width:720px;line-height:1.7;}
+.section{margin-top:64px;padding-top:32px;border-top:1px solid var(--border-strong);}
+.section h2{font-family:var(--font-serif-kr);font-weight:800;font-size:26px;margin:0 0 6px;letter-spacing:-.02em;}
+.section .desc{font-size:13px;color:var(--fg2);margin-bottom:20px;line-height:1.65;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+.card{background:var(--hanji-deep);border:1px solid var(--border-hairline);padding:22px;}
+.card .lbl{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;color:var(--fg3);text-transform:uppercase;margin-bottom:14px;}
+.card.before{background:#FAF6EE;border-style:dashed;}
+.card.after{background:var(--hanji-deep);border-color:var(--dancheong-red);border-width:2px;}
+.card.after .lbl{color:var(--dancheong-red);}
+
+/* 다가오는 공연 카드 — index.html 와 같은 디자인 */
+.perf{background:var(--hanji);border:1px solid var(--border-hairline);overflow:hidden;display:flex;flex-direction:column;}
+.perf-n{font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;color:var(--dancheong-red);padding:14px 18px 0;}
+.perf-thumb{aspect-ratio:4/3;background-size:cover;background-position:center;background-color:var(--ink);position:relative;}
+.perf-thumb::after{content:attr(data-ch);position:absolute;right:14px;bottom:8px;font-family:var(--font-serif-kr);font-weight:800;font-size:60px;color:rgba(246,241,232,0.18);line-height:1;}
+.perf-title{padding:18px 18px 12px;}
+.perf-title h3{font-family:var(--font-serif-kr);font-weight:700;font-size:18px;line-height:1.35;margin:0 0 8px;letter-spacing:-.01em;word-break:keep-all;}
+.perf-sub{font-size:12.5px;color:var(--fg2);line-height:1.6;word-break:keep-all;}
+.perf-meta{padding:10px 18px;border-top:1px solid var(--border-hairline);font-family:var(--font-mono);font-size:11px;color:var(--fg2);}
+.perf-meta .big{font-family:var(--font-serif-kr);font-weight:800;font-size:15px;color:var(--ink);display:block;margin-bottom:4px;}
+.perf-cta{padding:12px 18px;border-top:1px solid var(--border-hairline);font-family:var(--font-sans-kr);font-weight:600;font-size:12.5px;color:var(--ink);display:flex;justify-content:space-between;align-items:center;}
+.perf-cta .arrow{color:var(--dancheong-red);}
+.perf .stamp{position:absolute;top:14px;right:14px;background:var(--dancheong-red);color:var(--hanji);font-family:var(--font-mono);font-size:9px;letter-spacing:.14em;padding:5px 9px;text-transform:uppercase;}
+
+/* 다이프 변화 표시 */
+.diff{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start;}
+.diff .col{padding:18px;border:1px solid var(--border-hairline);background:var(--hanji);border-radius:0;}
+.diff .col.b{background:#FAF6EE;border-style:dashed;}
+.diff .col.a{border-color:var(--dancheong-red);border-width:2px;}
+.diff .lh{font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px;color:var(--fg3);}
+.diff .col.a .lh{color:var(--dancheong-red);}
+.del{text-decoration:line-through;color:var(--fg3);}
+.add{color:var(--dancheong-red);font-weight:700;}
+
+/* 통계 카드 */
+.stat-card{padding:28px;background:var(--hanji);border:1px solid var(--border-hairline);text-align:center;}
+.stat-card .num{font-family:var(--font-serif-kr);font-weight:800;font-size:64px;line-height:0.95;letter-spacing:-.04em;color:var(--ink);}
+.stat-card .num .u{font-family:var(--font-serif-en);font-style:italic;font-size:0.45em;color:var(--dancheong-red);margin-left:6px;}
+.stat-card .lb{font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;color:var(--fg2);text-transform:uppercase;margin-top:10px;}
+.stat-card .dsc{font-size:12.5px;color:var(--fg2);margin-top:8px;}
+
+/* schedule monthly demo */
+.sched-list{display:flex;flex-direction:column;gap:8px;}
+.evt-row{display:grid;grid-template-columns:96px 1fr 220px 130px 120px;gap:18px;padding:18px;align-items:center;border-bottom:1px solid var(--border-hairline);background:var(--hanji);}
+.evt-row .date-block .d{display:block;font-family:var(--font-serif-kr);font-weight:800;font-size:34px;color:var(--ink);line-height:1;}
+.evt-row .date-block .day{font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:var(--fg2);text-transform:uppercase;margin-top:5px;display:block;}
+.evt-row .info h3{font-family:var(--font-serif-kr);font-weight:700;font-size:17px;margin:0 0 6px;}
+.evt-row .info .meta{display:flex;gap:14px;font-size:11.5px;color:var(--fg2);flex-wrap:wrap;}
+.evt-row .venue{font-size:12.5px;}
+.evt-row .venue strong{display:block;font-weight:700;color:var(--ink);margin-bottom:2px;}
+.evt-row .price{font-family:var(--font-mono);font-size:12.5px;color:var(--ink);text-align:right;}
+.evt-row .price small{display:block;color:var(--fg3);font-size:10px;letter-spacing:.12em;margin-bottom:3px;}
+.evt-row .badge-stack{text-align:right;}
+.evt-row .b{display:inline-block;padding:5px 10px;font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;}
+.evt-row .b.live{background:var(--dancheong-red);color:var(--hanji);}
+.evt-row .b.free{background:var(--dancheong-cyan);color:var(--hanji);}
+.evt-row .b.soon{background:var(--ink);color:var(--hanji);}
+.evt-row .b.barrier{background:var(--geumbak-gold);color:var(--ink);}
+.evt-row .b.delete-mark{background:var(--fg3);color:var(--hanji);text-decoration:line-through;}
+.evt-row.add{border-left:4px solid var(--dancheong-red);padding-left:14px;}
+.evt-row.del{opacity:0.5;}
+.evt-row.del h3, .evt-row.del .d{text-decoration:line-through;}
+
+@media (max-width:900px){
+  .grid2,.grid3,.grid4,.diff{grid-template-columns:1fr !important;}
+  .evt-row{grid-template-columns:1fr;gap:8px;padding:14px;}
+}
+
+/* 검토 체크리스트 */
+.feedback{margin-top:64px;padding:32px;background:var(--ink);color:var(--hanji);}
+.feedback h2{color:var(--hanji);font-family:var(--font-serif-kr);margin:0 0 18px;font-size:22px;}
+.feedback ul{padding-left:18px;line-height:2;}
+.feedback li{font-size:14px;color:rgba(246,241,232,0.85);}
+.feedback strong{color:var(--geumbak-gold);}
+
+.note{padding:14px 18px;background:rgba(184,52,42,0.06);border-left:3px solid var(--dancheong-red);font-size:13px;color:var(--ink);line-height:1.7;margin:18px 0;}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="kicker">PREVIEW v2 — 추가 변경사항 시안</div>
+  <h1>6월 공연 일정 · 이메일 · 공연횟수 — 적용 전 미리보기</h1>
+  <p class="lede">박상우 지휘자/대표님 추가 요청 6건의 시안입니다. 라이브에 반영하기 전 검토 부탁드립니다. 검색엔진 미노출(noindex).</p>
+
+  <!-- 1. 다가오는 공연 카드 — 4 → 3 변경 -->
+  <div class="section">
+    <h2>① 메인 페이지 — 다가오는 공연 카드 (4개 → 3개)</h2>
+    <div class="desc">기존 N°02, N°03 교체 + N°04 삭제. 3카드는 데스크톱에서 1/3 너비로 자동 분할되어 카드가 약간 커집니다 (가로 비율 유지).</div>
+
+    <div class="kicker" style="margin-top:24px;color:var(--fg3);">BEFORE — 4 카드</div>
+    <div class="grid4" style="margin-top:8px;opacity:0.7;">
+      <div class="perf"><div class="perf-n">N° 01</div><div class="perf-thumb" data-ch="和" style="background-image:url('https://api.sejonggugak.com/public/media/legacy/posters/yeoeum-2026-05.jpg');"></div><div class="perf-title"><h3>한낮의 음악회 〈여음〉</h3><div class="perf-sub">송현민 사회 · 이영조 작곡</div></div><div class="perf-meta"><span class="big">2026.05.17</span>SAT · GUNPO SURI</div></div>
+      <div class="perf" style="opacity:0.45;"><div class="perf-n">N° 02</div><div class="perf-thumb" data-ch="樂" style="background-image:url('assets/photos/performances/perf-02.jpg');"></div><div class="perf-title"><h3 class="del">제30회 정기연주회 — 도전과 개척</h3><div class="perf-sub del">박상우 지휘 · 30주년 기념 무대</div></div><div class="perf-meta"><span class="big del">2026.06.08</span><span class="del">SEJONG GRAND HALL</span></div></div>
+      <div class="perf" style="opacity:0.45;"><div class="perf-n">N° 03</div><div class="perf-thumb" data-ch="音" style="background-image:url('assets/photos/performances/perf-03.jpg');"></div><div class="perf-title"><h3 class="del">달달한 콘서트 — 가야금산조</h3><div class="perf-sub del">강태홍류 가야금산조</div></div><div class="perf-meta"><span class="big del">2026.07.12</span><span class="del">SUN · GUNPO SURI</span></div></div>
+      <div class="perf" style="opacity:0.45;"><div class="perf-n">N° 04</div><div class="perf-thumb" data-ch="夢" style="background-image:url('assets/photos/performances/perf-04.jpg');"></div><div class="perf-title"><h3 class="del">국악심포니 초청공연 〈고래의 꿈〉</h3><div class="perf-sub del">국립국악원 예악당</div></div><div class="perf-meta"><span class="big del">2026.06.14</span><span class="del">SUN · GUGAK CENTER</span></div></div>
+    </div>
+
+    <div class="kicker" style="margin-top:36px;color:var(--dancheong-red);">AFTER — 3 카드 (요청대로)</div>
+    <div class="grid3" style="margin-top:8px;">
+      <!-- N°01 여음 -->
+      <div class="perf">
+        <div class="perf-n">N° 01</div>
+        <div class="perf-thumb" data-ch="和" style="background-image:url('https://api.sejonggugak.com/public/media/legacy/posters/yeoeum-2026-05.jpg');"></div>
+        <div class="perf-title"><h3>한낮의 음악회 〈여음〉 두번째 시리즈</h3><div class="perf-sub">송현민 사회 · 이영조 작곡가 · 안소은 & 소리소은 소리단</div></div>
+        <div class="perf-meta"><span class="big">2026.05.17</span>SAT · 14:00 · GUNPO CAC SURI HALL</div>
+        <div class="perf-cta">예매처 안내 <span class="arrow">↗</span></div>
+      </div>
+      <!-- N°02 김경호 신규 -->
+      <div class="perf" style="position:relative;">
+        <div class="perf-n">N° 02 <span class="add" style="font-size:10px;margin-left:6px;">NEW</span></div>
+        <div class="perf-thumb" data-ch="阿" style="background-image:url('assets/photos/performances/perf-08.jpg');"></div>
+        <div class="perf-title"><h3>세종국악심포니오케스트라 & 김경호 〈아리랑 목동〉</h3><div class="perf-sub">예술경영지원센터 공연예술지역유통사업 · 인천 / 부산 2회 공연</div></div>
+        <div class="perf-meta"><span class="big">2026.06.13 · 06.19</span>SAT 17:00 인천중구 / FRI 19:30 부산동래</div>
+        <div class="perf-cta">예매처 안내 <span class="arrow">↗</span></div>
+      </div>
+      <!-- N°03 친절한 돼지씨 신규 -->
+      <div class="perf">
+        <div class="perf-n">N° 03 <span class="add" style="font-size:10px;margin-left:6px;">NEW</span></div>
+        <div class="perf-thumb" data-ch="豚" style="background-image:url('assets/photos/performances/perf-09.jpg');"></div>
+        <div class="perf-title"><h3>친절한 돼지씨 — 배리어프리 국악갈라콘서트</h3><div class="perf-sub">2026 장애예술활성화 지원사업 · 포천/세종/전남 3회 무료 공연</div></div>
+        <div class="perf-meta"><span class="big">2026.05.22 · 06.04 · 06.26</span>찾아가는 배리어프리 공연 · 무료</div>
+        <div class="perf-cta">사전예약 안내 <span class="arrow">↗</span></div>
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>📷 이미지 안내</strong><br>
+      • <b>김경호 아리랑목동</b>: 첨부해주신 무대 사진을 <code>assets/photos/performances/perf-symphony-arirang.jpg</code>로 저장해주시면 자동 반영됩니다. 현재는 임시로 <code>perf-08.jpg</code> 사용 중.<br>
+      • <b>친절한 돼지씨</b>: 임시로 <code>perf-09.jpg</code> 사용. 공식 포스터/사진이 있으면 같은 경로(<code>perf-pig.jpg</code>)에 저장 부탁드립니다.<br>
+      • <b>여음</b>: R2 공식 포스터(이미 업로드됨) 그대로 사용.
+    </div>
+  </div>
+
+  <!-- 2. 이메일 일괄 변경 -->
+  <div class="section">
+    <h2>② 단체 이메일 — 사이트 전체 일괄 교체</h2>
+    <div class="desc">9개 HTML 파일 · JSON-LD 구조화데이터 · OpenGraph · footer 등 모든 곳에서 일괄 교체.</div>
+    <div class="diff">
+      <div class="col b">
+        <div class="lh">BEFORE</div>
+        <div style="font-family:var(--font-mono);font-size:14px;" class="del">sejong<b>8784</b>@<b>hanmail.net</b></div>
+      </div>
+      <div class="col a">
+        <div class="lh">AFTER</div>
+        <div style="font-family:var(--font-mono);font-size:14px;" class="add">sejong<b>8785</b>@<b>naver.com</b></div>
+      </div>
+    </div>
+    <div class="note">전화번호(031-391-8784, 010-6228-8784)는 변경 없음 · 이메일만 8784→8785 + 도메인 변경.</div>
+  </div>
+
+  <!-- 3. 공연횟수 -->
+  <div class="section">
+    <h2>③ 공연횟수 — 1,750여회 → 1,900여회</h2>
+    <div class="desc">메인 페이지 PHILOSOPHY 섹션의 통계 카드 (about.html에도 동일 적용).</div>
+    <div class="grid2">
+      <div class="stat-card" style="opacity:0.55;">
+        <div class="lh kicker" style="margin-bottom:12px;color:var(--fg3);">BEFORE</div>
+        <div class="num del">1,750<span class="u">+</span></div>
+        <div class="lb">Performances · 누적 공연</div>
+        <div class="dsc">국악·양악·재즈·K-pop 최정상급 연주자와 함께.</div>
+      </div>
+      <div class="stat-card" style="border-color:var(--dancheong-red);border-width:2px;">
+        <div class="lh kicker" style="margin-bottom:12px;color:var(--dancheong-red);">AFTER</div>
+        <div class="num">1,900<span class="u">+</span></div>
+        <div class="lb">Performances · 누적 공연</div>
+        <div class="dsc">국악·양악·재즈·K-pop 최정상급 연주자와 함께.</div>
+      </div>
+    </div>
+    <div class="note"><strong>※ 확인 필요</strong>: 현재 통계 라벨이 <b>Musicians 누적 단원</b>으로 되어 있습니다. <b>Performances 누적 공연</b>으로 라벨도 같이 변경할까요? (1,900여회는 단원이 아니라 공연 횟수이므로 라벨 변경이 자연스러움)</div>
+  </div>
+
+  <!-- 4. 월별 공연 (schedule.html) 추가 -->
+  <div class="section">
+    <h2>④ 월별 공연 (schedule.html) — 신규 5개 일정 추가</h2>
+    <div class="desc">5월~6월 신규 공연 5건이 추가됩니다 (김경호 2회 + 친절한 돼지씨 3회). 기존 일정은 유지.</div>
+
+    <div class="kicker" style="margin-top:18px;color:var(--dancheong-red);">2026 / 05월 — 추가</div>
+    <div class="sched-list">
+      <div class="evt-row add">
+        <div class="date-block"><span class="d">22</span><span class="day">FRI · 금요일</span></div>
+        <div class="info">
+          <h3>친절한 돼지씨 — 배리어프리 국악갈라콘서트 <span style="color:var(--dancheong-red);font-size:11px;font-family:var(--font-mono);margin-left:8px;">NEW</span></h3>
+          <div class="meta"><span>오후 2시 · 70분</span><span>2026 장애예술활성화</span><span>찾아가는 공연</span></div>
+        </div>
+        <div class="venue"><strong>포천 청각장애인복지관</strong>운보원 · 포천</div>
+        <div class="price"><small>무료 · FREE</small>사전예약</div>
+        <div class="badge-stack"><span class="b free">무료</span></div>
+      </div>
+    </div>
+
+    <div class="kicker" style="margin-top:32px;color:var(--dancheong-red);">2026 / 06월 — 추가</div>
+    <div class="sched-list">
+      <div class="evt-row add">
+        <div class="date-block"><span class="d">04</span><span class="day">THU · 목요일</span></div>
+        <div class="info">
+          <h3>친절한 돼지씨 — 배리어프리 국악갈라콘서트 <span style="color:var(--dancheong-red);font-size:11px;font-family:var(--font-mono);margin-left:8px;">NEW</span></h3>
+          <div class="meta"><span>오전 11시 · 70분</span><span>2026 장애예술활성화</span></div>
+        </div>
+        <div class="venue"><strong>한국농아인협회</strong>세종시 · 조치원 복합 커뮤니티센터</div>
+        <div class="price"><small>무료 · FREE</small>사전예약</div>
+        <div class="badge-stack"><span class="b free">무료</span></div>
+      </div>
+      <div class="evt-row add">
+        <div class="date-block"><span class="d">13</span><span class="day">SAT · 토요일</span></div>
+        <div class="info">
+          <h3>세종국악심포니오케스트라 & 김경호의 〈아리랑 목동〉 <span style="color:var(--dancheong-red);font-size:11px;font-family:var(--font-mono);margin-left:8px;">NEW</span></h3>
+          <div class="meta"><span>오후 5시 · 100분</span><span>예술경영지원센터 지역유통</span></div>
+        </div>
+        <div class="venue"><strong>인천중구문화회관</strong>인천 중구</div>
+        <div class="price"><small>지정석</small>예매처 안내</div>
+        <div class="badge-stack"><span class="b live">예매중</span></div>
+      </div>
+      <div class="evt-row add">
+        <div class="date-block"><span class="d">19</span><span class="day">FRI · 금요일</span></div>
+        <div class="info">
+          <h3>세종국악심포니오케스트라 & 김경호의 〈아리랑 목동〉 <span style="color:var(--dancheong-red);font-size:11px;font-family:var(--font-mono);margin-left:8px;">NEW</span></h3>
+          <div class="meta"><span>오후 7시 30분 · 100분</span><span>예술경영지원센터 지역유통</span></div>
+        </div>
+        <div class="venue"><strong>부산동래구문화회관</strong>부산 동래</div>
+        <div class="price"><small>지정석</small>예매처 안내</div>
+        <div class="badge-stack"><span class="b live">예매중</span></div>
+      </div>
+      <div class="evt-row add">
+        <div class="date-block"><span class="d">26</span><span class="day">FRI · 금요일</span></div>
+        <div class="info">
+          <h3>친절한 돼지씨 — 배리어프리 국악갈라콘서트 <span style="color:var(--dancheong-red);font-size:11px;font-family:var(--font-mono);margin-left:8px;">NEW</span></h3>
+          <div class="meta"><span>오후 2시 · 70분</span><span>2026 장애예술활성화</span></div>
+        </div>
+        <div class="venue"><strong>(사)전남농아인협회</strong>정미소 공연장 · 전남</div>
+        <div class="price"><small>무료 · FREE</small>사전예약</div>
+        <div class="badge-stack"><span class="b free">무료</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. JSON-LD 구조화데이터 정리 -->
+  <div class="section">
+    <h2>⑤ JSON-LD 구조화데이터 — 삭제 3건 + 추가 5건</h2>
+    <div class="desc">검색엔진(Google·Naver)에 노출되는 구조화 이벤트 데이터. 잘못된 정보가 그대로 노출되면 안되므로 정확한 데이터로 교체.</div>
+    <div class="diff">
+      <div class="col b">
+        <div class="lh">삭제 (잘못된 정보)</div>
+        <ul style="margin:0;padding-left:18px;line-height:2;font-size:13px;">
+          <li class="del">제30회 정기연주회 — 한강, 다시 흐르다 (2026.04.18)</li>
+          <li class="del">설화와 국악심포니 Vol.4 — 선녀와 나무꾼 (2026.06.14)</li>
+          <li class="del">한강 달빛 콘서트 (2026.07.11)</li>
+          <li class="del">악기들의 모험 Vol.4 (2026.05.05) <small>(요청에 없으나 검증 필요)</small></li>
+        </ul>
+      </div>
+      <div class="col a">
+        <div class="lh">추가 (확정된 일정)</div>
+        <ul style="margin:0;padding-left:18px;line-height:2;font-size:13px;">
+          <li class="add">한낮의 음악회 〈여음〉 두번째 시리즈 (2026.05.17) — 유지</li>
+          <li class="add">친절한 돼지씨 — 포천 (2026.05.22)</li>
+          <li class="add">친절한 돼지씨 — 세종 (2026.06.04)</li>
+          <li class="add">아리랑 목동 — 인천 (2026.06.13)</li>
+          <li class="add">아리랑 목동 — 부산 (2026.06.19)</li>
+          <li class="add">친절한 돼지씨 — 전남 (2026.06.26)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 검토 체크리스트 -->
+  <div class="feedback">
+    <h2>🔎 검토 체크리스트</h2>
+    <ul>
+      <li>① 다가오는 공연 — <strong>3카드 레이아웃</strong>으로 진행 (요청대로)</li>
+      <li>② 이메일 — <strong>sejong8785@naver.com → sejong8785@naver.com</strong> 사이트 전체 일괄</li>
+      <li>③ 공연횟수 — <strong>1,750+ → 1,900+</strong>, 라벨도 "Performances 누적 공연"으로 변경?</li>
+      <li>④ schedule.html — <strong>5건 신규 추가</strong> (김경호 2 + 돼지씨 3)</li>
+      <li>⑤ JSON-LD — <strong>3+1건 삭제 / 5건 추가</strong></li>
+      <li>📷 첨부 사진 — <strong>perf-symphony-arirang.jpg</strong> 경로에 저장하시면 자동 반영. 임시로 perf-08.jpg 사용 중.</li>
+    </ul>
+    <p style="font-size:13px;color:rgba(246,241,232,0.7);margin-top:18px;line-height:1.7;">위 5개 항목 OK 신호 주시면 즉시 라이브 반영합니다. 라벨/사진 등 추가 의견 있으면 말씀해주세요.</p>
+  </div>
+
+</div>
+</body></html>

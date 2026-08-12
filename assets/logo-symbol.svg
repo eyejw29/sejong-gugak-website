@@ -10,9 +10,6 @@
     
     <path d="M -54 6 C -30 2, 28 4, 22 28 C 16 38, 8 36, 4 30&#xA;             C 14 22, -6 20, -48 16 Z" fill="#2E5BA8"></path>
     
-    <g fill="#1A1614">
-      <ellipse cx="6" cy="8" rx="5" ry="3.4" transform="rotate(-22 6 8)"></ellipse>
-      <rect x="9.5" y="-8" width="1.5" height="17"></rect>
-    </g>
+    <!-- v2.8.32: 음표 헤드까지 완전 제거 — 컬러 swirl만 -->
   </g>
 </svg>

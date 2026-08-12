@@ -1,9 +1,36 @@
 <!doctype html>
 <html lang="ko"><head>
 <meta charset="utf-8">
-<title>세종국악관현악단 · 리뉴얼 v2</title>
-<link rel="stylesheet" href="colors_and_type.css">
-<link rel="stylesheet" href="mobile-ux.css">
+<title>세종국악관현악단 & 세종국악심포니오케스트라</title>
+<meta name="description" content="1992년 창단·군포 상주 국악관현악단. 정기연주회, 창작초연, 가족콘서트, 배리어프리·교육공연을 운영합니다. 박호성 창단 지휘자, 박상우 상임지휘자.">
+<meta name="keywords" content="국악관현악단,국악,국악오케스트라,국악심포니오케스트라,세종,세종국악관현악단,세종국악심포니오케스트라,박호성,박상우,군포문화재단,정기연주회,창작초연">
+<meta name="author" content="세종국악관현악단">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1A1614">
+<meta name="naver-site-verification" content="0d5d5cfd4d60635d8fe6a7ee180d4e8b5485ee34">
+<meta name="google-site-verification" content="IDyYTNhce-CZmv6XekjGwS01Tehy2Xx-QPDgJLjb-50">
+<link rel="sitemap" type="application/xml" href="https://sejonggugak.com/sitemap.xml">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/icon-32.png?v=2.8.90">
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/icon-192.png?v=2.8.90">
+<link rel="shortcut icon" type="image/png" href="/assets/icon-32.png?v=2.8.90">
+<link rel="apple-touch-icon" href="/assets/icon-192.png?v=2.8.90">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="canonical" href="https://sejonggugak.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="세종국악관현악단 & 세종국악심포니오케스트라">
+<meta property="og:title" content="세종국악관현악단 & 세종국악심포니오케스트라">
+<meta property="og:description" content="1992년 창단·군포 상주 국악관현악단. 정기연주회, 창작초연, 가족콘서트, 배리어프리·교육공연을 운영합니다. 박호성 창단 지휘자, 박상우 상임지휘자.">
+<meta property="og:url" content="https://sejonggugak.com/">
+<meta property="og:image" content="https://sejonggugak.com/assets/og-cover.jpg">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="세종국악관현악단 & 세종국악심포니오케스트라">
+<meta name="twitter:description" content="1992년 창단·군포 상주 국악관현악단. 정기연주회, 창작초연, 가족콘서트, 배리어프리·교육공연을 운영합니다. 박호성 창단 지휘자, 박상우 상임지휘자.">
+<meta name="twitter:image" content="https://sejonggugak.com/assets/og-cover.jpg">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<link rel="stylesheet" href="colors_and_type.css?v=2.8.90">
+<link rel="stylesheet" href="mobile-ux.css?v=2.8.90">
+<link rel="stylesheet" href="assets/css/readdy-anim.css?v=2.8.90">
 <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
 <style>
 :root{
@@ -26,7 +53,7 @@ body::before{
 
 /* ==================== HEADER ==================== */
 .hdr{
-  position:fixed;top:0;left:0;right:0;z-index:60;
+  position:sticky;top:0;z-index:60;
   display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:56px;
   padding:22px 44px;
   transition:all var(--dur-base) var(--ease-gentle);
@@ -35,11 +62,15 @@ body::before{
 .brand{display:flex;align-items:center;gap:14px;}
 .brand img{height:46px;transition:height var(--dur-base) var(--ease-gentle);}
 .hdr.scrolled .brand img{height:36px;}
-.brand .stk{display:flex;flex-direction:column;line-height:1;}
-.brand .kr{font-family:var(--font-serif-kr);font-weight:800;font-size:20px;letter-spacing:-.01em;}
+.brand .stk{display:flex;flex-direction:column;line-height:1.05;}
+.brand .kr{font-family:var(--font-serif-kr);font-weight:800;font-size:18px;letter-spacing:-.01em;}
+.brand .kr2{font-family:var(--font-serif-kr);font-weight:700;font-size:13px;letter-spacing:-.01em;color:var(--fg2);margin-top:3px;}
 .brand .en{font-family:var(--font-serif-en);font-style:italic;font-size:10px;letter-spacing:.16em;color:var(--fg2);margin-top:5px;}
-.nav{display:flex;justify-content:center;gap:44px;}
-.nav a{font-size:14px;font-weight:500;padding:6px 2px;position:relative;letter-spacing:.02em;}
+@media (max-width:1180px){.brand .en{display:none;}}
+.nav{display:flex;justify-content:center;gap:36px;}
+.nav a{font-size:14px;font-weight:500;padding:6px 2px;position:relative;letter-spacing:.02em;white-space:nowrap;}
+@media (max-width:1280px){.nav{gap:26px;} .nav a{font-size:13px;}}
+@media (max-width:1100px){.hdr{gap:32px;padding:18px 28px;} .nav{gap:20px;}}
 .nav a::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:1px;background:var(--dancheong-red);transform:scaleX(0);transform-origin:left;transition:transform var(--dur-base) var(--ease-gentle);}
 .nav a:hover::after{transform:scaleX(1);}
 .util{display:flex;align-items:center;gap:20px;}
@@ -49,14 +80,20 @@ body::before{
 .cta .dot{width:6px;height:6px;border-radius:50%;background:var(--dancheong-red);}
 .cta:hover .dot{background:var(--hanji);}
 
-/* ==================== HERO ==================== */
+/* ==================== HERO (v2.8.5 — 1화면 strict fit) ==================== */
 .hero{
-  position:relative;min-height:100vh;padding:160px 44px 80px;
-  display:grid;grid-template-columns:1fr 1fr;gap:64px;
+  position:relative;
+  height:calc(100vh - 200px);
+  min-height:600px;max-height:760px;
+  padding:32px 44px 48px;
+  display:grid;grid-template-columns:1.1fr 0.9fr;gap:48px;
   max-width:var(--max-w);margin:0 auto;
   z-index:2;
+  overflow:hidden;
 }
-.hero-left{position:relative;display:flex;flex-direction:column;justify-content:space-between;}
+.hero-left{position:relative;display:flex;flex-direction:column;justify-content:flex-start;min-height:0;height:100%;}
+.hero-right{min-height:0;display:flex;height:100%;}
+.hero-poster{aspect-ratio:auto !important;width:100%;height:100%;}
 .hero-eb{
   font-family:var(--font-serif-en);font-style:italic;font-size:16px;
   color:var(--dancheong-red);letter-spacing:.04em;
@@ -113,9 +150,12 @@ body::before{
 .hero-poster .hanja{
   position:absolute;
   font-family:var(--font-serif-kr);font-weight:800;
-  font-size:520px;line-height:0.8;
-  color:rgba(246,241,232,0.1);
-  top:-40px;right:-60px;user-select:none;z-index:1;pointer-events:none;
+  font-size:240px;line-height:0.8;
+  color:rgba(246,241,232,0.06);
+  top:auto;bottom:-30px;right:-30px;user-select:none;z-index:1;pointer-events:none;
+}
+@media (max-width: 900px){
+  .hero-poster .hanja{display:none;}
 }
 .hero-poster .pmeta{
   position:relative;z-index:2;
@@ -171,7 +211,8 @@ body::before{
   overflow:hidden;padding:22px 0;
   display:flex;gap:64px;white-space:nowrap;
 }
-.marquee-track{display:inline-flex;gap:64px;animation:marq 36s linear infinite;padding-right:64px;}
+.marquee-track{display:inline-flex;gap:64px;animation:marq 36s linear infinite;padding-right:64px;width:max-content;max-width:none;}
+.marquee-track > *{flex-shrink:0;max-width:none;}
 @keyframes marq{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
 .marquee-item{
   display:inline-flex;align-items:center;gap:16px;
@@ -276,10 +317,22 @@ body::before{
   transition:filter var(--dur-base) var(--ease-gentle), transform var(--dur-base) var(--ease-gentle);
 }
 .perf-thumb::after{
-  content:attr(data-ch);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  font-family:var(--font-serif-kr);font-weight:800;font-size:52px;color:rgba(246,241,232,0.45);
-  background:linear-gradient(135deg, rgba(26,22,20,0.45), rgba(26,22,20,0.15));
-  mix-blend-mode:normal;letter-spacing:-.02em;pointer-events:none;
+  /* v2.8.8: 한자 포인트 — 작고 미묘하게 (이미지 간섭 방지) */
+  content:attr(data-ch);position:absolute;top:10px;right:10px;
+  width:36px;height:36px;display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-serif-kr);font-weight:800;font-size:18px;
+  color:var(--hanji);background:rgba(184,52,42,0.85);
+  letter-spacing:0;pointer-events:none;
+  border:1px solid rgba(246,241,232,0.3);
+}
+.perf-thumb::before{
+  /* 이미지 위 미세한 어두운 그라데이션 — 텍스트 가독성용 */
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg, transparent 50%, rgba(26,22,20,0.25));
+  pointer-events:none;
+}
+@media (max-width: 768px){
+  .perf-thumb::after{display:none;}
 }
 .perf-title{display:flex;flex-direction:column;gap:10px;}
 .perf-title h3{font-family:var(--font-serif-kr);font-weight:700;font-size:26px;margin:0;line-height:1.2;word-break:keep-all;letter-spacing:-.01em;}
@@ -371,8 +424,9 @@ body::before{
 .ftr-addr{font-size:13px;line-height:1.9;color:rgba(246,241,232,0.7);}
 .ftr-addr strong{color:var(--hanji);font-weight:700;}
 .social{display:flex;gap:10px;margin-top:16px;}
-.social a{width:38px;height:38px;border:1px solid rgba(246,241,232,0.25);display:flex;align-items:center;justify-content:center;font-size:16px;transition:all var(--dur-fast) var(--ease-gentle);}
-.social a:hover{background:var(--dancheong-red);border-color:var(--dancheong-red);}
+.social a{width:40px;height:40px;background:var(--hanji);border:1px solid rgba(246,241,232,0.25);display:flex;align-items:center;justify-content:center;padding:5px;box-sizing:border-box;transition:all var(--dur-fast) var(--ease-gentle);}
+.social a img{width:100%;height:100%;object-fit:contain;display:block;}
+.social a:hover{transform:translateY(-2px);box-shadow:0 6px 14px rgba(0,0,0,0.18);}
 .ftr-bot{display:flex;justify-content:space-between;align-items:center;margin-top:72px;padding-top:24px;border-top:1px solid rgba(246,241,232,0.14);font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:rgba(246,241,232,0.5);}
 .ftr-bot .fam{display:flex;gap:18px;flex-wrap:wrap;}
 .ftr-bot .fam span{opacity:.7;}
@@ -402,20 +456,203 @@ body::before{
   .philos-stats{grid-template-columns:1fr;}
 }
 </style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"PerformingGroup","name":"세종국악관현악단","alternateName":["세종국악심포니오케스트라","Sejong Korean Music Orchestra"],"url":"https://sejonggugak.com","logo":"https://sejonggugak.com/assets/logo-symbol.png","foundingDate":"1992","email":"sejong8785@naver.com","telephone":"+82-31-391-8784","address":{"@type":"PostalAddress","streetAddress":"고산로 599 (군포문화예술회관 內)","addressLocality":"군포시","addressRegion":"경기도","postalCode":"15820","addressCountry":"KR"},"sameAs":["https://www.youtube.com/channel/UC1bDwqbsVZEEW-0pBsp9ktQ","https://www.instagram.com/sejong_gugak","https://www.facebook.com/sejonggugak/","http://cafe.daum.net/isejong21"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"세종국악관현악단","alternateName":"세종국악심포니오케스트라","url":"https://sejonggugak.com","inLanguage":"ko","potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://sejonggugak.com/notices?q={search_term_string}"},"query-input":"required name=search_term_string"}}</script>
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"MusicEvent","name":"한낮의 음악회 〈여음〉 두번째 시리즈","startDate":"2026-05-17T14:00:00+09:00","endDate":"2026-05-17T15:30:00+09:00","eventStatus":"https://schema.org/EventScheduled","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","location":{"@type":"Place","name":"군포문화예술회관 수리홀","address":{"@type":"PostalAddress","streetAddress":"경기도 군포시 고산로 599","addressCountry":"KR"}},"performer":{"@type":"PerformingGroup","name":"세종국악관현악단"},"organizer":{"@type":"Organization","name":"세종국악관현악단","url":"https://sejonggugak.com"},"offers":{"@type":"Offers","url":"https://www.gunpocf.or.kr","availability":"https://schema.org/InStock"},"description":"송현민 사회 · 이영조 작곡가 · 안소은 & 소리소은 소리단"},{"@context":"https://schema.org","@type":"MusicEvent","name":"찾아가는 배리어프리공연 〈친절한 돼지씨〉 국악갈라콘서트 — 포천","startDate":"2026-05-22T14:00:00+09:00","endDate":"2026-05-22T15:10:00+09:00","eventStatus":"https://schema.org/EventScheduled","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","location":{"@type":"Place","name":"포천 청각장애인복지관 운보원","address":{"@type":"PostalAddress","addressLocality":"포천","addressRegion":"경기도","addressCountry":"KR"}},"performer":{"@type":"PerformingGroup","name":"세종국악관현악단"},"organizer":{"@type":"Organization","name":"세종국악관현악단","url":"https://sejonggugak.com"},"offers":{"@type":"Offers","url":"https://sejonggugak.com/inquiry","price":"0","priceCurrency":"KRW","availability":"https://schema.org/InStock"},"description":"2026 장애예술활성화 지원사업 · 무료 배리어프리 공연"},{"@context":"https://schema.org","@type":"MusicEvent","name":"찾아가는 배리어프리공연 〈친절한 돼지씨〉 국악갈라콘서트 — 세종","startDate":"2026-06-04T11:00:00+09:00","endDate":"2026-06-04T12:10:00+09:00","eventStatus":"https://schema.org/EventScheduled","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","location":{"@type":"Place","name":"한국농아인협회 (조치원 복합 커뮤니티 센터)","address":{"@type":"PostalAddress","addressLocality":"세종시","addressCountry":"KR"}},"performer":{"@type":"PerformingGroup","name":"세종국악관현악단"},"organizer":{"@type":"Organization","name":"세종국악관현악단","url":"https://sejonggugak.com"},"offers":{"@type":"Offers","url":"https://sejonggugak.com/inquiry","price":"0","priceCurrency":"KRW","availability":"https://schema.org/InStock"},"description":"2026 장애예술활성화 지원사업 · 무료 배리어프리 공연"},{"@context":"https://schema.org","@type":"MusicEvent","name":"세종국악심포니오케스트라 & 김경호의 〈아리랑 목동〉 — 인천","startDate":"2026-06-13T17:00:00+09:00","endDate":"2026-06-13T18:40:00+09:00","eventStatus":"https://schema.org/EventScheduled","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","location":{"@type":"Place","name":"인천중구문화회관","address":{"@type":"PostalAddress","addressLocality":"인천 중구","addressCountry":"KR"}},"performer":[{"@type":"PerformingGroup","name":"세종국악심포니오케스트라"},{"@type":"Person","name":"김경호"}],"organizer":{"@type":"Organization","name":"세종국악관현악단","url":"https://sejonggugak.com"},"offers":{"@type":"Offers","url":"https://sejonggugak.com/inquiry","availability":"https://schema.org/InStock"},"description":"예술경영지원센터 공연예술지역유통사업 · 김경호 협연"},{"@context":"https://schema.org","@type":"MusicEvent","name":"세종국악심포니오케스트라 & 김경호의 〈아리랑 목동〉 — 부산","startDate":"2026-06-19T19:30:00+09:00","endDate":"2026-06-19T21:10:00+09:00","eventStatus":"https://schema.org/EventScheduled","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","location":{"@type":"Place","name":"부산동래구문화회관","address":{"@type":"PostalAddress","addressLocality":"부산 동래","addressCountry":"KR"}},"performer":[{"@type":"PerformingGroup","name":"세종국악심포니오케스트라"},{"@type":"Person","name":"김경호"}],"organizer":{"@type":"Organization","name":"세종국악관현악단","url":"https://sejonggugak.com"},"offers":{"@type":"Offers","url":"https://sejonggugak.com/inquiry","availability":"https://schema.org/InStock"},"description":"예술경영지원센터 공연예술지역유통사업 · 김경호 협연"},{"@context":"https://schema.org","@type":"MusicEvent","name":"찾아가는 배리어프리공연 〈친절한 돼지씨〉 국악갈라콘서트 — 전남","startDate":"2026-06-26T14:00:00+09:00","endDate":"2026-06-26T15:10:00+09:00","eventStatus":"https://schema.org/EventScheduled","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","location":{"@type":"Place","name":"(사)전남농아인협회 정미소 공연장","address":{"@type":"PostalAddress","addressRegion":"전라남도","addressCountry":"KR"}},"performer":{"@type":"PerformingGroup","name":"세종국악관현악단"},"organizer":{"@type":"Organization","name":"세종국악관현악단","url":"https://sejonggugak.com"},"offers":{"@type":"Offers","url":"https://sejonggugak.com/inquiry","price":"0","priceCurrency":"KRW","availability":"https://schema.org/InStock"},"description":"2026 장애예술활성화 지원사업 · 무료 배리어프리 공연"}]</script>
+<!-- ==================== INTRO OVERLAY (v2.8.21 — A안 시네마틱 인트로) ==================== -->
+<style>
+  /* 인트로는 처음 한 세션에 한 번만 표시. JS가 sessionStorage 검사 후 .intro-active 부여 */
+  html.intro-active body { overflow: hidden; }
+  html.intro-active body > *:not(.sejong-intro) { visibility: hidden; }
+  .sejong-intro {
+    position: fixed; inset: 0; z-index: 999999;
+    background: #1A1614;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    color: #F6F1E8;
+    overflow: hidden;
+    transition: opacity 0.6s cubic-bezier(.4,0,.2,1), transform 0.8s cubic-bezier(.7,0,.2,1);
+  }
+  .sejong-intro.exit { opacity: 0; transform: translateY(-100%); pointer-events: none; }
+  /* 한지 그레인 */
+  .sejong-intro::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      radial-gradient(ellipse at 30% 30%, rgba(184,52,42,0.08), transparent 60%),
+      radial-gradient(ellipse at 70% 70%, rgba(184,137,75,0.05), transparent 60%),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.96  0 0 0 0 0.94  0 0 0 0 0.91  0 0 0 0.04 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
+    opacity: 0.7;
+  }
+  /* 우상단 한자 樂 (배경) */
+  .sejong-intro .han {
+    position: absolute; top: -40px; right: -50px;
+    font-family: 'Nanum Myeongjo', 'Noto Serif KR', serif;
+    font-weight: 800; font-size: clamp(360px, 50vw, 720px);
+    color: rgba(184,52,42,0.08); line-height: 0.85;
+    user-select: none; pointer-events: none;
+    animation: introHanIn 1.2s cubic-bezier(.4,0,.2,1) 0.1s both;
+  }
+  @keyframes introHanIn { from { opacity: 0; transform: scale(1.1); } to { opacity: 1; transform: scale(1); } }
+  /* 로고 이미지 — 가장 먼저 페이드인 (HD 420×439 원본) */
+  .sejong-intro .logo-img {
+    width: clamp(140px, 18vw, 240px);
+    height: auto;
+    margin-bottom: 36px;
+    opacity: 0;
+    transform: scale(0.92);
+    filter: drop-shadow(0 6px 22px rgba(184,52,42,0.22));
+    image-rendering: -webkit-optimize-contrast;
+    animation: introLogoIn 1.0s cubic-bezier(.4,0,.2,1) 0.05s forwards;
+    position: relative; z-index: 2;
+  }
+  @keyframes introLogoIn { to { opacity: 1; transform: scale(1); } }
+  /* 메인 워드마크 — 로고 후 한 자씩 등장 */
+  .sejong-intro .wordmark {
+    font-family: 'Nanum Myeongjo', 'Noto Serif KR', serif;
+    font-weight: 800;
+    font-size: clamp(48px, 7.5vw, 96px);
+    letter-spacing: -0.04em;
+    color: #F6F1E8;
+    display: flex; gap: 0.04em;
+    position: relative; z-index: 2;
+    word-break: keep-all;
+  }
+  .sejong-intro .wordmark .ch {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(40px);
+    animation: introCharIn 0.7s cubic-bezier(.4,0,.2,1) forwards;
+  }
+  /* 로고 페이드인(약 1.05s) 끝난 시점부터 글자 등장 시작 */
+  .sejong-intro .wordmark .ch:nth-child(1) { animation-delay: 1.10s; }
+  .sejong-intro .wordmark .ch:nth-child(2) { animation-delay: 1.22s; }
+  .sejong-intro .wordmark .ch:nth-child(3) { animation-delay: 1.34s; }
+  .sejong-intro .wordmark .ch:nth-child(4) { animation-delay: 1.46s; }
+  .sejong-intro .wordmark .ch:nth-child(5) { animation-delay: 1.58s; }
+  .sejong-intro .wordmark .ch:nth-child(6) { animation-delay: 1.70s; }
+  .sejong-intro .wordmark .ch:nth-child(7) { animation-delay: 1.82s; }
+  .sejong-intro .wordmark .ch:nth-child(8) { animation-delay: 1.94s; }
+  @keyframes introCharIn { to { opacity: 1; transform: translateY(0); } }
+  /* 영문 부제 */
+  .sejong-intro .sub-en {
+    font-family: 'Crimson Text', 'Noto Serif KR', Georgia, serif;
+    font-style: italic;
+    font-size: clamp(13px, 1.4vw, 18px);
+    letter-spacing: 0.18em;
+    color: rgba(246,241,232,0.65);
+    margin-top: 32px;
+    opacity: 0; position: relative; z-index: 2;
+    animation: introFadeIn 0.8s ease-out 1.8s forwards;
+  }
+  /* since 1992 + 단청 라인 */
+  .sejong-intro .since {
+    display: flex; align-items: center; gap: 18px;
+    margin-top: 28px;
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px; letter-spacing: 0.3em;
+    color: rgba(246,241,232,0.5);
+    text-transform: uppercase;
+    opacity: 0; position: relative; z-index: 2;
+    animation: introFadeIn 0.8s ease-out 2.5s forwards;
+  }
+  .sejong-intro .since::before,
+  .sejong-intro .since::after {
+    content: ""; display: block; width: 56px; height: 1px;
+    background: #B8342A;
+  }
+  @keyframes introFadeIn { to { opacity: 1; } }
+  /* 스킵 안내 */
+  .sejong-intro .skip {
+    position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10px; letter-spacing: 0.2em; color: rgba(246,241,232,0.35);
+    text-transform: uppercase;
+    opacity: 0; animation: introFadeIn 0.6s ease-out 1.5s forwards;
+  }
+  /* 로딩 점 */
+  .sejong-intro .skip::after {
+    content: " · 클릭하여 건너뛰기";
+  }
+  @media (max-width: 768px) {
+    .sejong-intro .han { font-size: 360px; right: -30px; top: -20px; }
+    .sejong-intro .wordmark { font-size: 44px; }
+    .sejong-intro .sub-en { font-size: 12px; margin-top: 24px; }
+    .sejong-intro .since { margin-top: 20px; }
+    .sejong-intro .since::before, .sejong-intro .since::after { width: 36px; }
+  }
+  /* prefers-reduced-motion 대응 */
+  @media (prefers-reduced-motion: reduce) {
+    .sejong-intro .wordmark .ch,
+    .sejong-intro .sub-en,
+    .sejong-intro .since,
+    .sejong-intro .skip,
+    .sejong-intro .han { animation-duration: 0.01s !important; animation-delay: 0s !important; opacity: 1 !important; transform: none !important; }
+    .sejong-intro { transition: opacity 0.3s ease !important; }
+  }
+</style>
+<script>
+  // sessionStorage로 세션당 1회만 표시
+  (function () {
+    try {
+      if (sessionStorage.getItem('sejongIntroShown') === '1') return;
+      document.documentElement.classList.add('intro-active');
+    } catch (e) { /* 사파리 프라이빗 모드 등 */ }
+  })();
+</script>
+<link rel="stylesheet" href="assets/css/mobile-fix.css?v=2.8.90">
 </head>
 <body>
+
+<!-- 인트로 오버레이 (자동 제거) -->
+<div class="sejong-intro" id="sejongIntro" aria-hidden="true" role="presentation">
+  <div class="han">樂</div>
+  <img class="logo-img" src="assets/logo-symbol.png?v=hd1" alt="" aria-hidden="true">
+  <div class="wordmark"><span class="ch">세</span><span class="ch">종</span><span class="ch">국</span><span class="ch">악</span><span class="ch">관</span><span class="ch">현</span><span class="ch">악</span><span class="ch">단</span></div>
+  <div class="sub-en">Sejong Korean Music Orchestra</div>
+  <div class="since">since 1992</div>
+  <div class="skip"></div>
+</div>
+<script>
+  (function () {
+    var intro = document.getElementById('sejongIntro');
+    if (!intro) return;
+    if (!document.documentElement.classList.contains('intro-active')) {
+      intro.remove(); return;
+    }
+    var isMobile = window.matchMedia('(max-width: 768px)').matches;
+    var holdMs = isMobile ? 3000 : 4200;
+    var dismissed = false;
+    function dismiss() {
+      if (dismissed) return; dismissed = true;
+      intro.classList.add('exit');
+      try { sessionStorage.setItem('sejongIntroShown', '1'); } catch (e) {}
+      setTimeout(function () {
+        document.documentElement.classList.remove('intro-active');
+        intro.remove();
+      }, 850);
+    }
+    setTimeout(dismiss, holdMs);
+    intro.addEventListener('click', dismiss);
+    window.addEventListener('scroll', dismiss, { once: true, passive: true });
+    window.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') dismiss();
+    }, { once: true });
+  })();
+</script>
 
 <!-- ==================== HEADER ==================== -->
 <header class="hdr" id="hdr">
   <a class="brand" href="#top">
-    <img src="assets/logo-symbol.png" alt="">
+    <img src="assets/logo-symbol.png?v=hd1" alt="">
     <div class="stk">
       <span class="kr">세종국악관현악단</span>
+      <span class="kr2">&amp; 세종국악심포니오케스트라</span>
       <span class="en">Sejong Korean Music Orchestra</span>
     </div>
   </a>
   <nav class="nav">
     <a href="about.html" data-nav="about">악단소개</a>
+    <a href="members.html" data-nav="members">단원소개</a>
     <a href="schedule.html" class="active" data-nav="perf">공연</a>
     <a href="archive.html" data-nav="archive">아카이브</a>
     <a href="notices.html">공지사항</a>
@@ -425,91 +662,158 @@ body::before{
     <span class="t">031·391·8784</span>
     <a class="cta" href="inquiry.html" style="text-decoration:none;"><span class="dot"></span>문의하기</a>
   </div>
+
+  <button class="mob-toggle" id="mobToggle" aria-label="메뉴" aria-expanded="false"><span class="bars"><span></span><span></span><span></span></span></button>
 </header>
+<!-- v2.8.22 모바일 드로어 -->
+<div class="mob-drawer" id="mobDrawer" aria-hidden="true">
+  <nav class="m-nav">
+    <a href="about.html">악단소개<span class="ar">→</span></a>
+    <a href="members.html">단원소개<span class="ar">→</span></a>
+    <a href="schedule.html">공연 일정<span class="ar">→</span></a>
+    <a href="tickets.html">예매 안내<span class="ar">→</span></a>
+    <a href="archive.html">아카이브<span class="ar">→</span></a>
+    <a href="notices.html">공지사항<span class="ar">→</span></a>
+    <a href="inquiry.html">문의·오시는 길<span class="ar">→</span></a>
+  </nav>
+  <a class="m-cta" href="inquiry.html">공연 섭외 · 단체 예매 문의 →</a>
+  <div class="m-foot">
+    <div>전화 · <a href="tel:031-391-8784">031-391-8784</a></div>
+    <div>이메일 · <a href="mailto:sejong8785@naver.com">sejong8785@naver.com</a></div>
+    <div>업무시간 · 화–토 09:00–18:00</div>
+  </div>
+</div>
+<script>
+  (function(){
+    var t = document.getElementById('mobToggle');
+    var d = document.getElementById('mobDrawer');
+    if (!t || !d) return;
+    function close(){ document.body.classList.remove('mob-nav-open'); t.setAttribute('aria-expanded','false'); d.setAttribute('aria-hidden','true'); }
+    function open(){ document.body.classList.add('mob-nav-open'); t.setAttribute('aria-expanded','true'); d.setAttribute('aria-hidden','false'); }
+    t.addEventListener('click', function(e){
+      e.stopPropagation();
+      if (document.body.classList.contains('mob-nav-open')) close(); else open();
+    });
+    d.addEventListener('click', function(e){
+      // a 태그 클릭은 허용, 빈 영역 클릭은 닫기
+      if (e.target === d) close();
+    });
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
+    // 페이지 이동 시 닫힘 (실제로는 이동되지만 안전망)
+    window.addEventListener('hashchange', close);
+    window.addEventListener('resize', function(){ if (window.innerWidth > 900) close(); });
+  })();
+</script>
+
 
 <!-- ==================== HERO ==================== -->
 <section class="hero" id="top">
   <div class="hero-left">
     <div>
-      <div class="hero-eb">2026 Spring Season · No. 30</div>
-      <h1 class="hero-h">
-        우리다움을<br>
-        잃지 않는<br>
-        <span class="accent">새로운</span> <span class="stroke">Korean</span><br>
-        한국음악.
+      <!-- v2.8.3 readdy hero — 깔끔한 대중적 카피 -->
+      <div class="fade-up fade-up-sm" style="font-family:var(--font-serif-en);font-style:italic;font-weight:400;font-size:18px;color:var(--fg2);letter-spacing:.02em;margin-bottom:32px;">
+        Chapter 00 · Since 1992
+      </div>
+      <h1 class="fade-up delay-1" style="font-family:var(--font-serif-kr);font-weight:800;font-size:clamp(48px,5.5vw,80px);line-height:1.15;letter-spacing:-.03em;margin:0 0 32px;color:var(--ink);word-break:keep-all;">
+        우리다움을 잃지 않는<br>새로운 한국음악
       </h1>
     </div>
-    <div class="hero-foot">
-      <div>
-        <div class="hero-tags">
-          <span class="tag">EST. 1992</span>
-          <span class="tag">30th Anniversary</span>
-          <span class="tag">Resident · Gunpo CAC</span>
-        </div>
-        <p class="lede" style="margin-top:24px;font-family:var(--font-sans-kr);font-weight:300;font-size:16px;line-height:1.75;max-width:440px;color:var(--fg1);word-break:keep-all;">
-          대한민국 최초의 양·국악 혼합편성 관현악단.<br>
-          여민동락의 정신으로 한국음악을 현대에 재창조합니다.
-        </p>
-      </div>
-      <div class="scroll-ind">
-        <span>SCROLL</span>
-        <span class="line"></span>
-      </div>
+    <div class="hero-tags fade-up fade-up-sm delay-2" style="display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap;">
+      <span style="display:inline-block;padding:7px 16px;background:var(--dancheong-red);color:var(--hanji);font-family:var(--font-mono);font-size:12px;font-weight:700;letter-spacing:.06em;">1992 창단</span>
+      <span style="display:inline-block;padding:7px 16px;border:1.5px solid var(--dancheong-red);color:var(--dancheong-red);font-family:var(--font-mono);font-size:12px;font-weight:700;letter-spacing:.06em;">Korean First</span>
+    </div>
+    <p class="lede fade-up fade-up-sm delay-3" style="font-family:var(--font-sans-kr);font-weight:300;font-size:16px;line-height:1.85;max-width:460px;color:var(--fg2);word-break:keep-all;margin:0 0 32px;">
+      1992년 창단, 대한민국 최초의 양·국악 혼합편성 관현악단. 여민동락의 정신으로 한국음악을 현대에 재창조합니다.
+    </p>
+    <div class="hero-cta fade-up fade-up-sm delay-4" style="display:flex;gap:10px;flex-wrap:wrap;">
+      <a href="schedule.html" style="display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:var(--ink);color:var(--hanji);font-family:var(--font-sans-kr);font-weight:600;font-size:14px;letter-spacing:.02em;text-decoration:none;transition:background .2s var(--ease-gentle);">공연 일정 보기 <i class="ph ph-arrow-right" style="font-size:14px;"></i></a>
+      <a href="about.html" style="display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border:1.5px solid var(--ink);color:var(--ink);font-family:var(--font-sans-kr);font-weight:600;font-size:14px;letter-spacing:.02em;text-decoration:none;transition:background .2s var(--ease-gentle);">악단 소개</a>
+    </div>
+    <!-- SCROLL 인디케이터 — 첫 화면에만, 스크롤 시 페이드아웃 -->
+    <div class="scroll-ind" id="scroll-ind" style="position:absolute;bottom:36px;left:44px;display:flex;flex-direction:column;align-items:center;gap:10px;font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;color:var(--fg3);text-transform:uppercase;transition:opacity .3s var(--ease-gentle);pointer-events:none;">
+      <span>SCROLL</span>
+      <span class="line" style="width:1px;height:48px;background:var(--fg3);position:relative;overflow:hidden;display:block;"><span class="scroll-line-bar"></span></span>
     </div>
   </div>
 
-  <div class="hero-right">
-    <div class="hero-poster" data-db="hero-rotator">
+  <div class="hero-right fade-up delay-2">
+    <div class="hero-poster card-3d img-zoom" data-db="hero-rotator">
       <!-- 관리자에서 "메인 배너 롤링" 체크한 공연이 여기에 자동 노출. 없으면 아래 샘플 유지. -->
-      <img class="hero-photo" src="assets/photos/hero/big-07.jpg" alt="세종국악관현악단 공연 장면">
-      <div class="hanja">樂</div>
+      <img class="hero-photo" src="assets/photos/performances/perf-yeoeum-hero.jpg" alt="한낮의 음악회 〈여음〉 두번째 시리즈 공식 포스터">
+      <div class="hanja han-3d">和</div>
       <div class="pmeta">
         <span>FEATURED · NEXT PROGRAM</span>
-        <span class="num">№30</span>
+        <span class="num">Vol.2</span>
       </div>
       <div class="ptxt">
-        <h3>제30회 정기연주회<br>도전과 개척</h3>
-        <div class="psub">박상우 지휘, 김혜성 대표가 이끄는 창단 30주년 기념 무대. 명인 협연과 함께하는 국악심포니오케스트라 정기공연.</div>
+        <h3>한낮의 음악회<br>〈여음〉 두번째 시리즈</h3>
+        <div class="psub">송현민 사회 · 이영조 작곡가 · 안소은 & 소리소은 소리단. '소리'는 어떻게 '곡'이 되고, '곡'은 다시 '소리'가 되는가.</div>
         <div class="prow">
-          <div class="date">2026.06.08 · MON 19:30<small>SEJONG · GRAND HALL</small></div>
-          <a class="plink" href="tickets.html">예매처 안내 <i class="ph ph-arrow-up-right"></i></a>
+          <div class="date">2026.05.17 · SAT 14:00<small>GUNPO CAC · SURI HALL</small></div>
+          <a class="plink" href="schedule.html">예매처 안내 <i class="ph ph-arrow-up-right"></i></a>
         </div>
       </div>
     </div>
-    <div class="seal"><div class="inner">명인<br>협연</div></div>
   </div>
 </section>
 
-<!-- ==================== MARQUEE ==================== -->
-<div class="marquee">
-  <div class="marquee-track">
-    <span class="marquee-item"><span class="ch">與民同樂</span><span class="en">Yeomindongnak</span><span class="sep"></span></span>
-    <span class="marquee-item"><span>현대화</span><span class="en">Modernization</span><span class="sep"></span></span>
-    <span class="marquee-item"><span>생활화</span><span class="en">Everyday</span><span class="sep"></span></span>
-    <span class="marquee-item"><span>대중화</span><span class="en">Popularization</span><span class="sep"></span></span>
-    <span class="marquee-item"><span>세계화</span><span class="en">Globalization</span><span class="sep"></span></span>
-    <span class="marquee-item"><span>미래화</span><span class="en">Future-facing</span><span class="sep"></span></span>
-    <span class="marquee-item"><span class="ch">與民同樂</span><span class="en">Yeomindongnak</span><span class="sep"></span></span>
-    <span class="marquee-item"><span>현대화</span><span class="en">Modernization</span><span class="sep"></span></span>
-    <span class="marquee-item"><span>생활화</span><span class="en">Everyday</span><span class="sep"></span></span>
-    <span class="marquee-item"><span>대중화</span><span class="en">Popularization</span><span class="sep"></span></span>
-    <span class="marquee-item"><span>세계화</span><span class="en">Globalization</span><span class="sep"></span></span>
-    <span class="marquee-item"><span>미래화</span><span class="en">Future-facing</span><span class="sep"></span></span>
+<!-- ==================== MARQUEE (readdy v2.8.3 — 검정 띠 + 금박 한자) ==================== -->
+<div class="marquee" style="background:var(--ink) !important;border-top:0 !important;border-bottom:0 !important;padding:0 !important;">
+  <div class="marquee-track-readdy" style="font-family:var(--font-serif-kr);font-weight:700;font-size:18px;letter-spacing:-.005em;color:var(--hanji);align-items:center;padding:18px 0;">
+    <span style="display:inline-flex;gap:12px;align-items:center;"><span style="color:var(--geumbak-gold);">◆</span><span style="font-family:var(--font-serif-kr);font-weight:800;font-size:22px;color:var(--geumbak-gold);">與民同樂</span><span style="color:var(--hanji);">여민동락</span><span style="font-family:var(--font-serif-en);font-style:italic;color:rgba(246,241,232,0.55);font-size:16px;">Joy with the People</span></span>
+    <span style="display:inline-flex;gap:12px;align-items:center;"><span style="color:var(--geumbak-gold);">◆</span><span style="font-family:var(--font-serif-kr);font-weight:800;font-size:22px;color:var(--geumbak-gold);">現</span><span style="color:var(--hanji);">현대화</span><span style="font-family:var(--font-serif-en);font-style:italic;color:rgba(246,241,232,0.55);font-size:16px;">Modernization</span></span>
+    <span style="display:inline-flex;gap:12px;align-items:center;"><span style="color:var(--geumbak-gold);">◆</span><span style="font-family:var(--font-serif-kr);font-weight:800;font-size:22px;color:var(--geumbak-gold);">生</span><span style="color:var(--hanji);">생활화</span><span style="font-family:var(--font-serif-en);font-style:italic;color:rgba(246,241,232,0.55);font-size:16px;">Everyday Life</span></span>
+    <span style="display:inline-flex;gap:12px;align-items:center;"><span style="color:var(--geumbak-gold);">◆</span><span style="font-family:var(--font-serif-kr);font-weight:800;font-size:22px;color:var(--geumbak-gold);">衆</span><span style="color:var(--hanji);">대중화</span><span style="font-family:var(--font-serif-en);font-style:italic;color:rgba(246,241,232,0.55);font-size:16px;">Popularization</span></span>
+    <span style="display:inline-flex;gap:12px;align-items:center;"><span style="color:var(--geumbak-gold);">◆</span><span style="font-family:var(--font-serif-kr);font-weight:800;font-size:22px;color:var(--geumbak-gold);">界</span><span style="color:var(--hanji);">세계화</span><span style="font-family:var(--font-serif-en);font-style:italic;color:rgba(246,241,232,0.55);font-size:16px;">Globalization</span></span>
+    <span style="display:inline-flex;gap:12px;align-items:center;"><span style="color:var(--geumbak-gold);">◆</span><span style="font-family:var(--font-serif-kr);font-weight:800;font-size:22px;color:var(--geumbak-gold);">來</span><span style="color:var(--hanji);">미래화</span><span style="font-family:var(--font-serif-en);font-style:italic;color:rgba(246,241,232,0.55);font-size:16px;">Future</span></span>
+    <!-- 무한 스크롤용 중복 -->
+    <span style="display:inline-flex;gap:12px;align-items:center;"><span style="color:var(--geumbak-gold);">◆</span><span style="font-family:var(--font-serif-kr);font-weight:800;font-size:22px;color:var(--geumbak-gold);">與民同樂</span><span style="color:var(--hanji);">여민동락</span><span style="font-family:var(--font-serif-en);font-style:italic;color:rgba(246,241,232,0.55);font-size:16px;">Joy with the People</span></span>
+    <span style="display:inline-flex;gap:12px;align-items:center;"><span style="color:var(--geumbak-gold);">◆</span><span style="font-family:var(--font-serif-kr);font-weight:800;font-size:22px;color:var(--geumbak-gold);">現</span><span style="color:var(--hanji);">현대화</span><span style="font-family:var(--font-serif-en);font-style:italic;color:rgba(246,241,232,0.55);font-size:16px;">Modernization</span></span>
+    <span style="display:inline-flex;gap:12px;align-items:center;"><span style="color:var(--geumbak-gold);">◆</span><span style="font-family:var(--font-serif-kr);font-weight:800;font-size:22px;color:var(--geumbak-gold);">生</span><span style="color:var(--hanji);">생활화</span><span style="font-family:var(--font-serif-en);font-style:italic;color:rgba(246,241,232,0.55);font-size:16px;">Everyday Life</span></span>
+    <span style="display:inline-flex;gap:12px;align-items:center;"><span style="color:var(--geumbak-gold);">◆</span><span style="font-family:var(--font-serif-kr);font-weight:800;font-size:22px;color:var(--geumbak-gold);">衆</span><span style="color:var(--hanji);">대중화</span><span style="font-family:var(--font-serif-en);font-style:italic;color:rgba(246,241,232,0.55);font-size:16px;">Popularization</span></span>
+    <span style="display:inline-flex;gap:12px;align-items:center;"><span style="color:var(--geumbak-gold);">◆</span><span style="font-family:var(--font-serif-kr);font-weight:800;font-size:22px;color:var(--geumbak-gold);">界</span><span style="color:var(--hanji);">세계화</span><span style="font-family:var(--font-serif-en);font-style:italic;color:rgba(246,241,232,0.55);font-size:16px;">Globalization</span></span>
+    <span style="display:inline-flex;gap:12px;align-items:center;"><span style="color:var(--geumbak-gold);">◆</span><span style="font-family:var(--font-serif-kr);font-weight:800;font-size:22px;color:var(--geumbak-gold);">來</span><span style="color:var(--hanji);">미래화</span><span style="font-family:var(--font-serif-en);font-style:italic;color:rgba(246,241,232,0.55);font-size:16px;">Future</span></span>
   </div>
 </div>
 
+<!-- VIDEO REEL CSS — 컴포넌트 스타일은 위에서 정의, section markup은 SEASON GRID 다음으로 이동 -->
+<style>
+.vidreel{padding:88px 44px 96px;max-width:var(--max-w);margin:0 auto;position:relative;z-index:2;}
+.vidreel-hd{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:40px;border-bottom:1px solid var(--border-strong);padding-bottom:20px;}
+.vidreel-hd .lbl{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;color:var(--dancheong-red);text-transform:uppercase;margin-bottom:14px;}
+.vidreel-hd h2{font-family:var(--font-serif-kr);font-weight:800;font-size:clamp(36px,4.5vw,56px);line-height:1.1;letter-spacing:-.03em;margin:0;color:var(--ink);}
+.vidreel-hd .meta{font-family:var(--font-sans-kr);font-weight:400;font-size:13px;color:var(--fg2);max-width:320px;text-align:right;line-height:1.6;word-break:keep-all;}
+.vidreel-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+@media (max-width:1100px){.vidreel-grid{grid-template-columns:repeat(2,1fr);}}
+@media (max-width:600px){.vidreel-grid{grid-template-columns:1fr;}.vidreel{padding:64px 20px 72px;}}
+.vidreel-grid a{text-decoration:none;color:inherit;display:block;background:var(--hanji-deep);transition:transform var(--dur-base) var(--ease-gentle);position:relative;}
+.vidreel-grid a:hover{transform:translateY(-4px);}
+.vidreel-grid .thumb{aspect-ratio:16/9;background:var(--ink);position:relative;overflow:hidden;}
+.vidreel-grid .thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform var(--dur-slow) var(--ease-gentle);}
+.vidreel-grid a:hover .thumb img{transform:scale(1.05);}
+.vidreel-grid .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:56px;height:56px;background:rgba(184,52,42,0.92);display:flex;align-items:center;justify-content:center;color:var(--hanji);font-size:22px;transition:all var(--dur-fast) var(--ease-gentle);}
+.vidreel-grid a:hover .play{background:var(--dancheong-red);transform:translate(-50%,-50%) scale(1.08);}
+.vidreel-grid .play::before{content:"";display:block;border-style:solid;border-width:9px 0 9px 14px;border-color:transparent transparent transparent var(--hanji);margin-left:3px;}
+.vidreel-grid .bd{padding:18px 18px 20px;}
+.vidreel-grid .bd h4{font-family:var(--font-serif-kr);font-weight:700;font-size:16px;line-height:1.4;letter-spacing:-.01em;margin:0 0 8px;color:var(--ink);word-break:keep-all;}
+.vidreel-grid .bd .m{font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;color:var(--fg3);text-transform:uppercase;}
+</style>
+
 <!-- ==================== PHILOSOPHY ==================== -->
 <section class="philos">
-  <aside class="philos-side">
-    <div>
-      <div class="eb">CH. 01 — Philosophy</div>
-      <div class="vlabel">악단소개</div>
+  <aside class="philos-side fade-up fade-up-sm">
+    <!-- v2.8.3 readdy: 좌상단 큰 한자 부조 -->
+    <div style="display:flex;flex-direction:column;gap:14px;align-items:flex-start;">
+      <div class="han-3d" style="font-family:var(--font-serif-kr);font-weight:800;font-size:clamp(120px,12vw,180px);line-height:0.85;color:var(--ink);letter-spacing:-.04em;">樂</div>
+      <div style="font-family:var(--font-serif-en);font-style:italic;font-size:14px;color:var(--fg2);letter-spacing:.04em;">樂 · Ak / Nak / Yo</div>
+      <div style="font-family:var(--font-sans-kr);font-size:13px;color:var(--fg2);">음악 · 즐거움 · 좋아함</div>
     </div>
   </aside>
   <div class="philos-main">
-    <h2>백성과 <span class="red">함께</span><br>즐긴다는 것,<br><span class="xl">여민동락.</span></h2>
-    <div class="sub">— Sharing joy with the people, the foundation of Korean music.</div>
-    <div class="body">
+    <div class="fade-up fade-up-sm" style="font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;color:var(--dancheong-red);text-transform:uppercase;margin-bottom:24px;">PHILOSOPHY</div>
+    <h2 class="fade-up">백성과 <span class="red">함께</span><br>즐긴다는 것,<br><span class="xl">여민동락.</span></h2>
+    <div class="sub fade-up fade-up-sm delay-1">— Sharing joy with the people, the foundation of Korean music.</div>
+    <div class="body fade-up fade-up-sm delay-2">
       <p>1992년, 지휘자 <strong>박호성</strong>이 한국음악의 현대적 발전을 도모하고 진정한 국민음악으로서 생활 속에 정착시켜 나간다는 <strong>여민동락</strong>의 정신 아래 세종국악관현악단을 창단하였습니다.</p>
       <p>2015년부터 <strong>김혜성 대표</strong>가 이끄는 지금, 우리는 국악기와 양악기가 함께 편성된 대한민국 최초의 국악심포니오케스트라로서 그 정신을 실현하고 있습니다. 세종대왕의 애민사상을 이어받아, 한국음악의 올바른 보존과 계승, 그리고 시대가 요구하는 현대적 재창조를 동시에 추구합니다.</p>
       <p>우리다움을 잃지 않는 새로운 한국음악 — 그것이 세종의 길입니다.</p>
@@ -521,9 +825,9 @@ body::before{
         <div class="dsc">1992년 창단부터 오늘까지, 국악 현대화의 최전선.</div>
       </div>
       <div class="stat">
-        <div class="num">1,750<span class="u">+</span></div>
-        <div class="lb">Musicians · 누적 단원</div>
-        <div class="dsc">국악·양악·재즈·K-pop 최정상급 연주자와 함께.</div>
+        <div class="num">1,900<span class="u">+</span></div>
+        <div class="lb">Performances · 누적 공연</div>
+        <div class="dsc">정기연주회 · 기획공연 · 가족콘서트 · 배리어프리 · 해외 초청까지.</div>
       </div>
       <div class="stat">
         <div class="num">First<span class="u">★</span></div>
@@ -549,9 +853,9 @@ body::before{
 
     <div class="season-grid" data-db="upcoming-grid">
       <!-- 관리자 > 공연 > "다가오는 공연" 체크한 항목이 여기 자동 렌더. 없으면 아래 샘플 유지. -->
-      <div class="perf">
+      <div class="perf card-3d fade-up">
         <div class="perf-n">N° 01</div>
-        <div class="perf-thumb" data-ch="和" style="background-image:url('assets/photos/performances/perf-01.jpg')"></div>
+        <div class="perf-thumb" data-ch="和" style="background-image:url('assets/photos/performances/perf-yeoeum-thumb.jpg');background-size:cover;background-position:center;"></div>
         <div class="perf-title">
           <h3>한낮의 음악회 〈여음〉 두번째 시리즈</h3>
           <div class="perf-sub">송현민 사회 · 이영조 작곡가 · 안소은 & 소리소은 소리단. '소리'는 어떻게 '곡'이 되고, '곡'은 다시 '소리'가 되는가.</div>
@@ -565,48 +869,34 @@ body::before{
 
       <div class="perf">
         <div class="perf-n">N° 02</div>
-        <div class="perf-thumb" data-ch="樂" style="background-image:url('assets/photos/performances/perf-02.jpg')"></div>
+        <div class="perf-thumb" data-ch="阿" style="background-image:url('assets/photos/performances/perf-symphony-arirang-thumb.jpg');background-size:cover;background-position:center;"></div>
         <div class="perf-title">
-          <h3>제30회 정기연주회 — 도전과 개척</h3>
-          <div class="perf-sub">박상우 지휘 · 창단 30주년 기념 무대. 국악심포니오케스트라의 정수를 한 자리에서 만나는 대형 무대.</div>
+          <h3>세종국악심포니오케스트라 & 김경호의 〈아리랑 목동〉</h3>
+          <div class="perf-sub">예술경영지원센터 공연예술지역유통사업. 인천·부산 2개 도시 순회 공연.</div>
         </div>
         <div class="perf-meta">
-          <span class="big">2026.06.08</span>
-          <span>MON · 19:30 · SEJONG GRAND HALL</span>
+          <span class="big">2026.06.13 · 06.19</span>
+          <span>SAT 17:00 인천중구 / FRI 19:30 부산동래</span>
         </div>
         <div class="perf-cta">예매처 안내 <span class="arrow"><i class="ph ph-arrow-up-right"></i></span></div>
       </div>
 
       <div class="perf">
         <div class="perf-n">N° 03</div>
-        <div class="perf-thumb" data-ch="音" style="background-image:url('assets/photos/performances/perf-03.jpg')"></div>
+        <div class="perf-thumb" data-ch="豚" style="background-image:url('assets/photos/performances/perf-09.jpg')"></div>
         <div class="perf-title">
-          <h3>달달한 콘서트 — 가야금산조 협주곡 〈파사칼리아〉</h3>
-          <div class="perf-sub">강태홍류 가야금산조. 가족과 함께 즐기는 한낮의 국악 콘서트.</div>
+          <h3>찾아가는 배리어프리공연 〈친절한 돼지씨〉 국악갈라콘서트</h3>
+          <div class="perf-sub">2026 장애예술활성화 지원사업 · 포천 / 세종 / 전남 3개 지역 무료 공연.</div>
         </div>
         <div class="perf-meta">
-          <span class="big">2026.07.12</span>
-          <span>SUN · 15:00 · GUNPO CAC SURI HALL</span>
+          <span class="big">2026.05.22 · 06.04 · 06.26</span>
+          <span>찾아가는 배리어프리 공연 · 무료</span>
         </div>
-        <div class="perf-cta">예매처 안내 <span class="arrow"><i class="ph ph-arrow-up-right"></i></span></div>
+        <div class="perf-cta">사전예약 안내 <span class="arrow"><i class="ph ph-arrow-up-right"></i></span></div>
       </div>
 
       <div class="perf">
         <div class="perf-n">N° 04</div>
-        <div class="perf-thumb" data-ch="夢" style="background-image:url('assets/photos/performances/perf-04.jpg')"></div>
-        <div class="perf-title">
-          <h3>국악심포니 초청공연 〈고래의 꿈〉</h3>
-          <div class="perf-sub">지휘 박상우 · 국악관현악 창작 초연. 해양을 주제로 한 신작 국악관현악.</div>
-        </div>
-        <div class="perf-meta">
-          <span class="big">2026.08.24</span>
-          <span>SAT · 19:00 · SEOUL ARTS CENTER</span>
-        </div>
-        <div class="perf-cta">예매처 안내 <span class="arrow"><i class="ph ph-arrow-up-right"></i></span></div>
-      </div>
-
-      <div class="perf">
-        <div class="perf-n">N° 05</div>
         <div class="perf-thumb" data-ch="流" style="background-image:url('assets/photos/performances/perf-05.jpg')"></div>
         <div class="perf-title">
           <h3>세종 × 클래식 — 동서의 만남</h3>
@@ -619,6 +909,35 @@ body::before{
         <div class="perf-cta">예매처 안내 <span class="arrow"><i class="ph ph-arrow-up-right"></i></span></div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ==================== VIDEO REEL (v2.8.42 — 다가오는 무대들 다음으로 이동) ==================== -->
+<section class="vidreel">
+  <div class="vidreel-hd">
+    <div>
+      <div class="lbl">CH. 02½ — Watch on YouTube</div>
+      <h2>무대 위의 순간들.</h2>
+    </div>
+    <div class="meta">세종국악관현악단·세종국악심포니오케스트라의 공연 영상.<br>YouTube 채널 바로가기.</div>
+  </div>
+  <div class="vidreel-grid">
+    <a href="https://www.youtube.com/watch?v=prNt08QwbUk" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://i.ytimg.com/vi/prNt08QwbUk/hqdefault.jpg" alt="" loading="lazy"><span class="play"></span></div>
+      <div class="bd"><h4>친절한 돼지씨 — 어린이 음악극</h4><div class="m">YouTube · 가족 콘서트</div></div>
+    </a>
+    <a href="https://www.youtube.com/watch?v=0kGRpMfmHMU" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://i.ytimg.com/vi/0kGRpMfmHMU/hqdefault.jpg" alt="" loading="lazy"><span class="play"></span></div>
+      <div class="bd"><h4>청소년 대상 공연</h4><div class="m">YouTube · 학교 순회</div></div>
+    </a>
+    <a href="https://www.youtube.com/watch?v=1_8f_K15ji0" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://i.ytimg.com/vi/1_8f_K15ji0/hqdefault.jpg" alt="" loading="lazy"><span class="play"></span></div>
+      <div class="bd"><h4>지역유통 · 기획공연</h4><div class="m">YouTube · 예술경영지원센터</div></div>
+    </a>
+    <a href="https://www.youtube.com/watch?v=iPv52gipojA" target="_blank" rel="noopener">
+      <div class="thumb"><img src="https://i.ytimg.com/vi/iPv52gipojA/hqdefault.jpg" alt="" loading="lazy"><span class="play"></span></div>
+      <div class="bd"><h4>송년 · 해피 콘서트</h4><div class="m">YouTube · 시즌 갈라</div></div>
+    </a>
   </div>
 </section>
 
@@ -740,12 +1059,15 @@ body::before{
   </div>
 </section>
 <style>
-  .partner-logo { display:inline-flex; align-items:center; justify-content:center; min-height:60px; text-decoration:none; color:inherit; }
-  .partner-logo img { transition: filter 0.3s var(--ease-gentle); }
-  .partner-logo:hover img { filter: grayscale(0) opacity(1) !important; }
+  /* v2.8.12 partner card grid — 5 official SVG logos */
+  .partner-card { display: block; transition: transform 0.3s var(--ease-gentle); }
+  .partner-card:hover .partner-card-inner { background: var(--hanji) !important; }
+  .partner-card:hover .partner-mark { transform: scale(1.06); background: var(--ink) !important; }
+  .partner-card:hover img { transform: scale(1.04); }
   @media (max-width: 768px) {
-    .partners-strip { gap: 24px 32px !important; }
-    .partner-logo img { height: 36px !important; max-width: 120px !important; }
+    .partner-card-inner { min-height: 130px !important; padding: 20px 14px !important; }
+    .partner-card-inner img { height: 44px !important; max-width: 140px !important; }
+    .partner-mark { width: 44px !important; height: 44px !important; font-size: 16px !important; }
   }
 </style>
 
@@ -762,14 +1084,14 @@ body::before{
           15820 경기도 군포시 고산로 599<br>
           군포문화예술회관 內<br><br>
           T. 031-391-8784 · 010-6228-8784<br>
-          E. sejong8784@hanmail.net<br>
+          E. sejong8785@naver.com<br>
           화–토 09:00 ~ 18:00
         </div>
         <div class="social">
-          <a><i class="ph ph-youtube-logo"></i></a>
-          <a><i class="ph ph-facebook-logo"></i></a>
-          <a><i class="ph ph-instagram-logo"></i></a>
-          <a style="font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;">CAFE</a>
+          <a href="https://www.youtube.com/channel/UC1bDwqbsVZEEW-0pBsp9ktQ" target="_blank" rel="noopener" aria-label="YouTube"><img src="assets/sns/youtube.png?v=1" alt="YouTube"></a>
+          <a href="https://www.facebook.com/sejonggugak/" target="_blank" rel="noopener" aria-label="Facebook"><img src="assets/sns/facebook.png?v=1" alt="Facebook"></a>
+          <a href="https://www.instagram.com/sejong_gugak" target="_blank" rel="noopener" aria-label="Instagram"><img src="assets/sns/instagram.png?v=1" alt="Instagram"></a>
+          <a href="http://cafe.daum.net/isejong21" target="_blank" rel="noopener" aria-label="다음카페"><img src="assets/sns/cafe.png?v=1" alt="다음카페"></a>
         </div>
       </div>
       <div class="col">
@@ -816,7 +1138,7 @@ body::before{
 <!-- ==================== SIDE RAIL ==================== -->
 <div class="rail">
   <button onclick="location.href='tickets.html'"><i class="ph ph-ticket"></i><span>예매안내</span></button>
-  <button><i class="ph ph-chat-circle"></i><span>문의</span></button>
+  <button onclick="location.href='inquiry.html'"><i class="ph ph-chat-circle"></i><span>문의</span></button>
   <button onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="ph ph-caret-up"></i><span>TOP</span></button>
 </div>
 
@@ -825,20 +1147,23 @@ const hdr = document.getElementById('hdr');
 window.addEventListener('scroll', () => {
   if (window.scrollY > 30) hdr.classList.add('scrolled');
   else hdr.classList.remove('scrolled');
-});
+}, { passive: true });
+// SCROLL 인디케이터 페이드는 site-data.js의 setupScrollIndicator()가 단독 처리 (충돌 방지)
 </script>
 <style>
-.sns-rail{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:55;display:flex;flex-direction:column;gap:8px;}
-.sns-rail a{width:56px;height:56px;background:var(--hanji);color:var(--ink);border:1px solid var(--border-hairline);display:flex;align-items:center;justify-content:center;font-size:24px;transition:all var(--dur-fast) var(--ease-gentle);text-decoration:none;}
-.sns-rail a:hover{background:var(--dancheong-red);color:var(--hanji);border-color:var(--dancheong-red);}
-.sns-rail a .cafe{font-family:var(--font-serif-kr);font-weight:700;font-size:15px;letter-spacing:-.02em;line-height:1;}
-@media (max-width:900px){.sns-rail{right:12px;top:auto;bottom:96px;transform:none;}.sns-rail a{width:48px;height:48px;font-size:20px;}.sns-rail a .cafe{font-size:13px;}}
+.sns-rail{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:55;display:flex;flex-direction:column;gap:10px;}
+.sns-rail a{width:52px;height:52px;background:var(--hanji);border:1px solid var(--border-hairline);display:flex;align-items:center;justify-content:center;transition:all var(--dur-fast) var(--ease-gentle);text-decoration:none;padding:6px;box-sizing:border-box;}
+.sns-rail a img{width:100%;height:100%;object-fit:contain;display:block;transition:transform var(--dur-fast) var(--ease-gentle);}
+.sns-rail a:hover{border-color:var(--ink);box-shadow:0 4px 12px rgba(26,22,20,0.12);}
+.sns-rail a:hover img{transform:scale(1.06);}
+@media (max-width:900px){.sns-rail{right:12px;top:auto;bottom:96px;transform:none;}.sns-rail a{width:46px;height:46px;padding:5px;}}
 </style>
 <aside class="sns-rail" aria-label="SNS links">
-  <a href="https://www.youtube.com/channel/UC1bDwqbsVZEEW-0pBsp9ktQ" target="_blank" rel="noopener" title="YouTube" aria-label="YouTube"><i class="ph ph-youtube-logo"></i></a>
-  <a href="https://www.instagram.com/sejong_gugak" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram"><i class="ph ph-instagram-logo"></i></a>
-  <a href="https://www.facebook.com/sejonggugak/" target="_blank" rel="noopener" title="Facebook" aria-label="Facebook"><i class="ph ph-facebook-logo"></i></a>
-  <a href="http://cafe.daum.net/isejong21" target="_blank" rel="noopener" title="다음카페" aria-label="다음카페"><span class="cafe">카페</span></a>
+  <a href="https://www.youtube.com/channel/UC1bDwqbsVZEEW-0pBsp9ktQ" target="_blank" rel="noopener" title="YouTube" aria-label="YouTube"><img src="assets/sns/youtube.png?v=1" alt="YouTube"></a>
+  <a href="https://www.instagram.com/sejong_gugak" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram"><img src="assets/sns/instagram.png?v=1" alt="Instagram"></a>
+  <a href="https://www.facebook.com/sejonggugak/" target="_blank" rel="noopener" title="Facebook" aria-label="Facebook"><img src="assets/sns/facebook.png?v=1" alt="Facebook"></a>
+  <a href="http://cafe.daum.net/isejong21" target="_blank" rel="noopener" title="다음카페" aria-label="다음카페"><img src="assets/sns/cafe.png?v=1" alt="다음카페"></a>
 </aside>
-<script src="assets/js/site-data.js?v=2.7.0"></script>
+<script src="assets/js/mobile-extras.js?v=2.8.90"></script>
+<script src="assets/js/site-data.js?v=2.8.90"></script>
 </body></html>

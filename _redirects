@@ -1,0 +1,63 @@
+# v2.8.90 — Cloudflare Pages 리다이렉트 (옛 Gnuboard URL 전수 매핑)
+# 검색엔진(네이버·구글) 옛 인덱스 클릭 시 신규 사이트로 자동 안착.
+# 평가 순서: 위에서 아래로, 첫 매칭 win.
+
+# ---- 호스트 정규화: www → apex (canonical·sitemap·robots 전부 apex 기준) ----
+https://www.sejonggugak.com/* https://sejonggugak.com/:splat 301
+
+# ---- 정확 매칭 우선 ----
+/index.php           /                  301
+/index.htm           /                  301
+/index.html          /                  301!
+/main                /                  301
+/home                /                  301
+
+# 옛 메뉴 경로 (Gnuboard 표준 + 커스텀)
+/company/intro.php   /about              301
+/company/history.php /about#history      301
+/company/member.php  /about#musicians    301
+/company/greeting.php /about#greet       301
+/company/contact.php /inquiry            301
+/company/location.php /inquiry#location  301
+/company/*           /about              301
+/intro.php           /about              301
+/intro/*             /about              301
+/about_us/*          /about              301
+/contact.php         /inquiry            301
+/contact/*           /inquiry            301
+/info/notice.php     /notices            301
+/info/press.php      /notices?cat=press  301
+/info/*              /                   301
+/board/notice/*      /notices            301
+/board/press/*       /notices?cat=press  301
+/board/list.php      /notices            301
+/board/*             /notices            301
+
+# 옛 게시판 카테고리 (.html 별칭)
+/schedule.html       /schedule           301
+/notice.html         /notices            301
+/press.html          /notices?cat=press  301
+/gallery.html        /archive            301
+/member.html         /member-parksangwoo 301
+/member              /member-parksangwoo 301
+/members.html        /about#musicians    301
+/members             /about#musicians    301
+/inquiry.html        /inquiry            301
+/about.html          /about              301
+/tickets.html        /tickets            301
+
+# 옛 board.php(쿼리) — 개별 글 ID는 Functions가 처리. 여긴 fallback.
+/bbs/                /notices            301
+/bbs                 /notices            301
+
+# 옛 이미지·파일 경로 → R2 프록시 (legacy 이관본)
+# R2 키 구조 실측 확인 (2026-08-12): legacy/<게시판>/<파일> — 'file/' 세그먼트 없음.
+# 프록시는 api 서브도메인에만 있으므로 절대 URL로 보낸다 (www의 /public/media/*는 존재하지 않음).
+/data/file/*         https://api.sejonggugak.com/public/media/legacy/:splat        301
+/data/editor/*       https://api.sejonggugak.com/public/media/legacy/editor/:splat 301
+/img/*               /assets/:splat                     301
+/upload/*            https://api.sejonggugak.com/public/media/legacy/upload/:splat 301
+
+# ---- 최종 catch-all: 매칭 안 된 모든 .php 파일 → 홈 ----
+# (검색엔진이 인덱스한 임의의 .php URL이 깨진 페이지 대신 홈 노출)
+/*.php               /                   301

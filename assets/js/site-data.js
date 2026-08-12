@@ -9,12 +9,12 @@
    - API 실패/데이터 없음 → 하드코딩 유지
    - 관리자가 공연/공지/아카이브 입력 전에도 사이트는 정상 동작
 
-   데이터 소스: https://sejong-admin-api.eyejw29.workers.dev/public/*
+   데이터 소스: https://api.sejonggugak.com/public/*
    ========================================================================= */
 (function () {
   'use strict';
 
-  const API_BASE = 'https://sejong-admin-api.eyejw29.workers.dev';
+  const API_BASE = 'https://api.sejonggugak.com';
 
   // -----------------------------------------------------------------------
   // API fetchers (JSON, fail-safe)
@@ -100,10 +100,13 @@
   //   - legacy/<board>/<file>  (백업 이관)
   //   - partners/<file>        (협력체 로고)
   const R2_KEY_RES = [
-    /^\d{4}\/\d{2}\/[a-z0-9]{20,}\.(?:jpg|jpeg|png|webp|svg|pdf)$/i,
-    /^legacy\/[a-z0-9]+\/[\w\-.]+\.(?:jpg|jpeg|png|webp|svg|pdf|gif|hwp|hwpx)$/i,
-    /^partners\/[\w\-.]+\.(?:jpg|jpeg|png|webp|svg)$/i,
+    // v2.8.52: HWP/HWPX/DOCX/XLSX/PPTX 첨부파일 다운로드 지원
+    /^\d{4}\/\d{2}\/[a-z0-9]{20,}\.(?:jpg|jpeg|png|webp|svg|pdf|hwp|hwpx|docx|xlsx|pptx)$/i,
+    /^legacy\/[a-z0-9]+\/[^\/]+\.(?:jpg|jpeg|png|webp|svg|pdf|gif|hwp|hwpx|docx|xlsx|pptx)$/i,
+    /^partners\/[^\/]+\.(?:jpg|jpeg|png|webp|svg|gif)$/i,
   ];
+  // v2.8.13: CORP 헤더 수정 후 브라우저 캐시 무효화용 cache-bust 토큰
+  const MEDIA_CACHE_BUST = 'corp20260426';
   function mediaUrl(key) {
     if (!key) return null;
     // 구 Gnuboard 백업의 http:// 외부 URL은 mixed content + 호스트 사망 가능성 → null
@@ -111,7 +114,7 @@
     if (key.startsWith('https://')) return key;
     const cleaned = key.replace(/^\/+/, '');
     if (R2_KEY_RES.some(re => re.test(cleaned))) {
-      return API_BASE + '/public/media/' + cleaned;
+      return API_BASE + '/public/media/' + cleaned + '?v=' + MEDIA_CACHE_BUST;
     }
     return 'assets/' + cleaned;
   }
@@ -150,11 +153,14 @@
 
     // v2.6.2: main_banner 전용이 없으면 upcoming 상위 3건으로 자동 폴백
     const [bannerData, upcomingData] = await Promise.all([
-      safeFetch('/public/performances?region=main_banner&limit=5'),
-      safeFetch('/public/performances?region=upcoming&limit=3'),
+      safeFetch('/public/performances?region=main_banner&limit=8'),
+      safeFetch('/public/performances?region=upcoming&limit=6'),
     ]);
-    const bannerItems = (bannerData?.items || []).filter((p) => p.visibility !== 'private');
-    const upcomingItems = (upcomingData?.items || []).filter((p) => p.visibility !== 'private');
+    // v2.8.27: 과거 공연 자동 제외 (booking_status에 의존 X, 날짜 기준)
+    const now = new Date();
+    const isFuture = (p) => { const d = new Date(p.starts_at); return !isNaN(d) && d >= now; };
+    const bannerItems = (bannerData?.items || []).filter((p) => p.visibility !== 'private' && isFuture(p));
+    const upcomingItems = (upcomingData?.items || []).filter((p) => p.visibility !== 'private' && isFuture(p));
     // 배너로 명시 체크된 것 우선, 모자라면 upcoming 최상위 3건까지 채움
     const seen = new Set(bannerItems.map((p) => p.id));
     const fillers = upcomingItems.filter((p) => !seen.has(p.id));
@@ -196,22 +202,41 @@
       ` : ''}
     `;
 
-    // 자동 롤링
+    // 자동 롤링 + 모바일 swipe (v2.8.26)
     if (items.length > 1) {
       let idx = 0;
       const slides = host.querySelectorAll('.hero-slide');
       const dots = host.querySelectorAll('.hero-dot');
       const interval = 6000;
       function show(i) {
-        slides.forEach((s, n) => { s.style.display = n === i ? 'flex' : 'none'; });
-        dots.forEach((d, n) => { d.style.background = n === i ? 'var(--hanji)' : 'transparent'; });
-        idx = i;
+        const next = (i + items.length) % items.length;
+        slides.forEach((s, n) => { s.style.display = n === next ? 'flex' : 'none'; });
+        dots.forEach((d, n) => { d.style.background = n === next ? 'var(--hanji)' : 'transparent'; });
+        idx = next;
       }
-      const timer = setInterval(() => show((idx + 1) % items.length), interval);
-      dots.forEach((d) => d.addEventListener('click', () => {
-        clearInterval(timer);
-        show(Number(d.dataset.dot));
-      }));
+      let timer = setInterval(() => show(idx + 1), interval);
+      function resetTimer() { clearInterval(timer); timer = setInterval(() => show(idx + 1), interval); }
+      dots.forEach((d) => d.addEventListener('click', () => { resetTimer(); show(Number(d.dataset.dot)); }));
+
+      // v2.8.26: 모바일 swipe (좌→다음, 우→이전)
+      let touchX = null;
+      let touchY = null;
+      host.addEventListener('touchstart', (e) => {
+        if (e.touches.length !== 1) return;
+        touchX = e.touches[0].clientX;
+        touchY = e.touches[0].clientY;
+      }, { passive: true });
+      host.addEventListener('touchend', (e) => {
+        if (touchX == null) return;
+        const dx = (e.changedTouches[0].clientX - touchX);
+        const dy = (e.changedTouches[0].clientY - touchY);
+        // 가로 이동이 세로보다 크고 30px 이상일 때만 swipe로 인식
+        if (Math.abs(dx) > 30 && Math.abs(dx) > Math.abs(dy)) {
+          resetTimer();
+          show(idx + (dx < 0 ? 1 : -1));
+        }
+        touchX = null; touchY = null;
+      }, { passive: true });
     }
   }
 
@@ -222,19 +247,26 @@
     const host = document.querySelector('[data-db="upcoming-grid"]');
     if (!host) return;
 
-    const data = await safeFetch('/public/performances?region=upcoming&upcoming=1&limit=6');
-    const items = data?.items || [];
+    const data = await safeFetch('/public/performances?region=upcoming&upcoming=1&limit=12');
+    // v2.8.27: 클라이언트 측에서 한 번 더 미래 공연만 필터 (관리자가 booking_status 갱신 안 했어도 자동 마감 처리)
+    const now = new Date();
+    const items = (data?.items || []).filter(p => {
+      const d = new Date(p.starts_at);
+      return !isNaN(d) && d >= now;
+    }).slice(0, 6);
     if (items.length === 0) return;
 
+    const HAN_BY_INDEX = ['樂', '和', '音', '夢', '流', '響'];
     host.innerHTML = items.map((p, i) => {
       const n = String(i + 1).padStart(2, '0');
       // poster > hero > placeholder
       const poster = mediaUrl(p.poster_key) || mediaUrl(p.hero_image_key) || placeholderUrl('performance');
       const bookable = p.ticket_url && bookingAvailable(p.booking_status);
+      const han = HAN_BY_INDEX[i % HAN_BY_INDEX.length];
       return `
-        <a class="perf" href="${bookable ? escAttr(p.ticket_url) : 'schedule.html'}" ${bookable ? 'target="_blank" rel="noopener"' : ''} style="text-decoration: none; color: inherit; display: block;">
+        <a class="perf card-3d img-zoom fade-up delay-${(i % 3) + 1}" href="${bookable ? escAttr(p.ticket_url) : 'schedule.html'}" ${bookable ? 'target="_blank" rel="noopener"' : ''} style="text-decoration: none; color: inherit; display: block;">
           <div class="perf-n">N° ${n}</div>
-          <div class="perf-thumb" data-ch="樂" style="background-image:url('${escAttr(poster)}')"></div>
+          <div class="perf-thumb" data-ch="${han}" style="background-image:url('${escAttr(poster)}')"></div>
           <div class="perf-title">
             <h3>${escHtml(p.title)}</h3>
             <div class="perf-sub">${escHtml(p.program_summary || p.subtitle || '')}</div>
@@ -260,20 +292,40 @@
     const pressHost = document.querySelector('[data-db="press-col"]');
     const featureHost = document.querySelector('[data-db="notice-feature"]');
 
-    const [notices, press] = await Promise.all([
+    // v2.8.61: 공지·모집·보도 3개 카테고리를 한 컬럼에 통합 표시
+    const [notices, press, recruit] = await Promise.all([
       safeFetch('/public/posts?category=notice&limit=10'),
       safeFetch('/public/posts?category=press&limit=10'),
+      safeFetch('/public/posts?category=recruit&limit=10'),
     ]);
 
     const noticeItems = notices?.items || [];
     const pressItems = press?.items || [];
+    const recruitItems = recruit?.items || [];
 
-    // 3-1) 피처 (is_pinned 우선 / 없으면 최신 1건)
+    // 3개 카테고리 통합 + is_pinned 우선 + 발행일 내림차순
+    const allItems = [...noticeItems, ...pressItems, ...recruitItems]
+      .sort((a, b) => {
+        if (a.is_pinned !== b.is_pinned) return a.is_pinned ? -1 : 1;
+        return new Date(b.published_at) - new Date(a.published_at);
+      });
+
+    // 카테고리별 태그 (라벨 + CSS 클래스)
+    function catTag(c) {
+      if (c === 'press') return '<span class="tag g">PRESS</span>';
+      if (c === 'recruit') return '<span class="tag" style="background:var(--dancheong-red);color:var(--hanji);">오디션</span>';
+      return '<span class="tag">NOTICE</span>';
+    }
+
+    // 3-1) 피처 (모든 카테고리 중 pinned 우선 / 없으면 최신 1건)
     if (featureHost) {
-      const pinned = noticeItems.find((p) => p.is_pinned) || noticeItems[0];
+      const pinned = allItems.find((p) => p.is_pinned) || allItems[0];
       if (pinned) {
+        const featCat = pinned.category === 'press' ? 'PRESS · 보도자료'
+                      : pinned.category === 'recruit' ? 'AUDITION · 모집'
+                      : 'ANNOUNCEMENT · 공지';
         featureHost.innerHTML = `
-          <div class="eb">ANNOUNCEMENT · PRIMARY</div>
+          <div class="eb">${featCat}</div>
           <h3>${escHtml(pinned.title)}</h3>
           <div class="dates" style="margin-top:16px;">
             <span>${fmtKrDate(pinned.published_at)}</span>
@@ -283,14 +335,14 @@
       }
     }
 
-    // 3-2) 공지 컬럼
-    if (colHost && noticeItems.length > 0) {
-      colHost.innerHTML = noticeItems.slice(0, 5).map((p) => `
-        <li><a href="notices.html?slug=${encodeURIComponent(p.slug)}" style="display:flex;gap:14px;text-decoration:none;color:inherit;"><span class="d">${fmtKrDate(p.published_at).slice(5)}</span><div class="tt">${p.is_pinned ? '<span class="tag r">PIN</span>' : '<span class="tag">NOTICE</span>'}${escHtml(p.title)}</div></a></li>
+    // 3-2) 통합 공지 컬럼 (모든 카테고리 5건)
+    if (colHost && allItems.length > 0) {
+      colHost.innerHTML = allItems.slice(0, 5).map((p) => `
+        <li><a href="notices.html?slug=${encodeURIComponent(p.slug)}" style="display:flex;gap:14px;text-decoration:none;color:inherit;"><span class="d">${fmtKrDate(p.published_at).slice(5)}</span><div class="tt">${p.is_pinned ? '<span class="tag r">PIN</span>' : catTag(p.category)}${escHtml(p.title)}</div></a></li>
       `).join('');
     }
 
-    // 3-3) 보도 컬럼
+    // 3-3) 보도 컬럼 (별도 영역 — 보도자료만)
     if (pressHost && pressItems.length > 0) {
       pressHost.innerHTML = pressItems.slice(0, 5).map((p) => `
         <li><a href="notices.html?slug=${encodeURIComponent(p.slug)}" style="display:flex;gap:14px;text-decoration:none;color:inherit;"><span class="d">${fmtKrDate(p.published_at).slice(5)}</span><div class="tt"><span class="tag g">PRESS</span>${escHtml(p.title)}</div></a></li>
@@ -363,6 +415,70 @@
   }
 
   // -----------------------------------------------------------------------
+  // 5-A) notices.html 상단 핀 공지 — 최신 notice / recruit / press 1건씩 (v2.8.8)
+  // -----------------------------------------------------------------------
+  async function hydratePinnedNotices() {
+    const host = document.querySelector('[data-db="pinned-notices"]');
+    if (!host) return;
+    const cards = host.querySelectorAll('.pin');
+    if (cards.length < 3) return;
+
+    const [notices, recruits, press] = await Promise.all([
+      safeFetch('/public/posts?category=notice&limit=1'),
+      safeFetch('/public/posts?category=recruit&limit=1'),
+      safeFetch('/public/posts?category=press&limit=1'),
+    ]);
+    const items = [
+      { post: notices?.items?.[0], tag: 'Featured Notice', ty: 'Notice · 공지', icon: 'ph-calendar-blank', cta: '자세히 보기', cls: 'red' },
+      { post: recruits?.items?.[0], tag: 'Audition', ty: 'Audition · 단원 모집', icon: 'ph-clock', cta: '공고문 보기', cls: '' },
+      { post: press?.items?.[0], tag: 'Press', ty: 'Press · 보도자료', icon: 'ph-newspaper', cta: '기사 원문', cls: 'paper' },
+    ];
+
+    items.forEach((it, i) => {
+      const card = cards[i];
+      if (!it.post) {
+        // v2.8.31: 데이터 없을 때 placeholder 안내 (빈 카드 방치 X)
+        try {
+          card.querySelector('.row .tag').textContent = it.tag;
+          card.querySelector('.ty').textContent = it.ty;
+          card.querySelector('h3').textContent = '등록된 ' + (i === 1 ? '모집공고' : i === 2 ? '보도자료' : '공지') + '가 아직 없습니다';
+          card.querySelector('.dsc').textContent = '관리자 페이지에서 등록해 주세요.';
+          card.querySelector('.foot .d').textContent = '—';
+          card.querySelector('.foot .more').textContent = '준비 중';
+        } catch (e) {}
+        return;
+      }
+      const p = it.post;
+      // press는 외부 링크 있으면 새 탭, 아니면 상세
+      const isPress = i === 2;
+      const useExternal = isPress && p.external_url;
+      const href = useExternal ? p.external_url : `notices.html?slug=${encodeURIComponent(p.slug)}`;
+      card.setAttribute('href', href);
+      if (useExternal) { card.target = '_blank'; card.rel = 'noopener'; }
+      // D-day 또는 NEW 배지
+      const days = Math.round((Date.now() - new Date(p.published_at).getTime()) / (1000 * 3600 * 24));
+      const stampText = days < 7 ? 'NEW' : days < 30 ? `${days}일 전` : '';
+      card.querySelector('.row .tag').textContent = it.tag;
+      const stampEl = card.querySelector('.row .stamp');
+      stampEl.innerHTML = `<i class="ph ${it.icon}"></i>${stampText}`;
+      card.querySelector('.ty').textContent = it.ty;
+      card.querySelector('h3').textContent = p.title;
+      // dsc는 attachment / external 안내
+      const dscParts = [];
+      if (p.attachment_count > 0) dscParts.push(`📎 첨부 ${p.attachment_count}건`);
+      if (p.external_url) dscParts.push('🔗 외부 원문');
+      const dscEl = card.querySelector('.dsc');
+      if (dscParts.length) {
+        dscEl.textContent = dscParts.join(' · ');
+      } else {
+        dscEl.textContent = '클릭하여 상세 내용을 확인하세요.';
+      }
+      card.querySelector('.foot .d').textContent = fmtKrDate(p.published_at);
+      card.querySelector('.foot .more').innerHTML = `${it.cta} <i class="ph ${useExternal ? 'ph-arrow-up-right' : 'ph-arrow-right'}"></i>`;
+    });
+  }
+
+  // -----------------------------------------------------------------------
   // 5) notices.html — 카테고리 필터 + 리스트 (기존 .list > .row 스타일 준수)
   //    - [data-db="notices-rows"] : list-head 아래 row들 컨테이너
   //    - 카테고리 칩은 기존 notices.html의 .chips 버튼 사용
@@ -380,7 +496,25 @@
       return hydrateNoticeDetail(listSection, slug);
     }
 
-    let currentCat = 'all';
+    // ?id=<ULID> — sitemap·외부 링크가 쓰는 id 딥링크를 slug로 해석해 상세로 (v2.8.90)
+    const idParam = params.get('id');
+    if (idParam) {
+      const cats = ['notice', 'press', 'recruit', 'general'];
+      const results = await Promise.all(
+        cats.map((c) => safeFetch(`/public/posts?category=${c}&limit=100`))
+      );
+      const hit = results.flatMap((r) => r?.items || []).find((p) => String(p.id) === idParam);
+      if (hit && hit.slug) {
+        const listSection = host.closest('section.list') || host;
+        return hydrateNoticeDetail(listSection, hit.slug);
+      }
+      // 매칭 실패 시 목록으로 계속 진행
+    }
+
+    // ?cat=<category> — 옛 게시판 리다이렉트(board.php)·딥링크의 카테고리 사전 필터 (v2.8.90)
+    const catParam = params.get('cat');
+    const VALID_CATS = ['notice', 'press', 'recruit', 'general'];
+    let currentCat = VALID_CATS.includes(catParam) ? catParam : 'all';
 
     // 카테고리 칩 이벤트 연결 (기존 notices.html의 .chips button[data-k])
     // 유효 data-k: all | notice | recruit | press | general
@@ -478,7 +612,16 @@
       }).join('');
     }
 
-    load('all');
+    // 사전 필터가 있으면 해당 칩을 활성화
+    if (currentCat !== 'all' && chipContainer) {
+      const btn = chipContainer.querySelector(`button[data-k="${currentCat}"]`);
+      if (btn) {
+        chipContainer.querySelectorAll('button').forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+      }
+    }
+
+    load(currentCat);
   }
 
   async function hydrateNoticeDetail(host, slug) {
@@ -505,7 +648,8 @@
             const href = a.r2_key ? mediaUrl(a.r2_key) : a.original_url;
             const size = a.byte_size ? ` (${(a.byte_size/1024).toFixed(0)}KB)` : '';
             if (!href) return '';
-            return `<li><a href="${escAttr(href)}" target="_blank" rel="noopener" style="display:inline-flex;gap:8px;align-items:center;padding:8px 12px;background:var(--hanji);border:1px solid var(--border-hairline);text-decoration:none;color:var(--fg1);font-size:14px;"><i class="ph ph-download-simple" style="color:var(--dancheong-red);"></i>${escHtml(name)}${size}</a></li>`;
+            // download 속성으로 브라우저에 다운로드 의도 명시 (서버 Content-Disposition과 이중 안전망)
+            return `<li><a href="${escAttr(href)}" download="${escAttr(name)}" target="_blank" rel="noopener" style="display:inline-flex;gap:8px;align-items:center;padding:10px 14px;background:var(--hanji);border:1px solid var(--border-hairline);text-decoration:none;color:var(--fg1);font-size:14px;transition:all .15s;" onmouseover="this.style.background='var(--hanji-deep)';this.style.borderColor='var(--dancheong-red)';" onmouseout="this.style.background='var(--hanji)';this.style.borderColor='var(--border-hairline)';"><i class="ph ph-download-simple" style="color:var(--dancheong-red);font-size:18px;"></i><span>${escHtml(name)}</span><span style="font-family:var(--font-mono);font-size:11px;color:var(--fg2);margin-left:auto;">${size}</span></a></li>`;
           }).join('')}
         </ul>
         <p style="font-size:12px;color:var(--fg2);margin-top:12px;margin-bottom:0;">※ 원본 파일이 호스팅 이전 시점에 접근 불가일 수 있습니다. 필요 시 대표전화(031-391-8784)로 요청해주세요.</p>
@@ -590,54 +734,104 @@
   }
 
   async function hydrateArchiveDetail(host, slug) {
-    host.innerHTML = '<div style="padding:60px;text-align:center;color:var(--fg2);">불러오는 중…</div>';
+    host.innerHTML = '<div style="padding:120px 20px;text-align:center;color:var(--fg2);font-family:var(--font-mono);font-size:12px;letter-spacing:.14em;">LOADING…</div>';
     const item = await safeFetch(`/public/archive/${encodeURIComponent(slug)}`);
     if (!item) {
       host.innerHTML = `
-        <div style="padding:60px 20px;text-align:center;">
-          <p style="color:var(--fg2);margin-bottom:24px;">아카이브 항목을 찾을 수 없습니다.</p>
-          <a href="archive.html" style="font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;color:var(--dancheong-red);">← 아카이브로</a>
+        <div style="padding:120px 20px;text-align:center;max-width:600px;margin:0 auto;">
+          <p style="color:var(--fg2);margin-bottom:24px;font-size:15px;">아카이브 항목을 찾을 수 없습니다.</p>
+          <a href="archive.html" style="font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;color:var(--dancheong-red);text-decoration:none;">← 아카이브로 돌아가기</a>
         </div>
       `;
       return;
     }
+
+    // 마이그레이션 placeholder 자동 필터
+    const isPlaceholder = (s) => {
+      if (!s) return true;
+      const t = String(s).trim();
+      return /^이관 데이터/.test(t) || /추후 업데이트/.test(t) || /^-+$/.test(t) || t === '';
+    };
+    const cleanVenue = isPlaceholder(item.venue) ? '' : item.venue;
+    const cleanSummary = isPlaceholder(item.summary) ? '' : item.summary;
+    const cleanBodyHtml = (() => {
+      if (!item.body_html) return '';
+      // 본문이 placeholder만 들어 있으면 비움
+      const stripped = String(item.body_html).replace(/<[^>]+>/g, '').trim();
+      return isPlaceholder(stripped) ? '' : item.body_html;
+    })();
+
     const cover = mediaUrl(item.cover_image_key);
-    const gallery = item.gallery_keys || [];
+    const gallery = (item.gallery_keys || []).filter(Boolean);
     const videoEmbed = buildVideoEmbed(item.video_url);
 
-    host.innerHTML = `
-      <article class="archive-detail" style="max-width:1200px;margin:0 auto;padding:40px 20px 80px;">
-        <a href="archive.html" style="display:inline-block;margin-bottom:32px;font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;color:var(--dancheong-red);text-decoration:none;">← 아카이브로</a>
+    // 메타 라인: 날짜 · 장소 · 카테고리 — 모두 같은 라인에 회색 톤
+    const metaParts = [];
+    if (item.performed_at) metaParts.push(fmtKrDate(item.performed_at));
+    if (cleanVenue) metaParts.push(escHtml(cleanVenue));
 
-        <header style="display:grid;grid-template-columns:1fr auto;gap:40px;align-items:end;padding-bottom:28px;border-bottom:1px solid var(--border-strong);margin-bottom:40px;">
-          <div>
-            <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;color:var(--dancheong-red);text-transform:uppercase;margin-bottom:12px;">${archiveCategoryLabel(item.category)}</div>
-            <h1 style="font-family:var(--font-serif-kr);font-weight:800;font-size:clamp(32px,5vw,56px);line-height:1.15;letter-spacing:-.025em;margin:0;">${escHtml(item.title)}</h1>
+    host.innerHTML = `
+      <article class="archive-detail" style="max-width:880px;margin:0 auto;padding:32px 24px 96px;">
+        <a href="archive.html" style="display:inline-flex;align-items:center;gap:8px;margin-bottom:48px;font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;color:var(--dancheong-red);text-decoration:none;text-transform:uppercase;">
+          <span style="font-size:14px;">←</span> 아카이브로 돌아가기
+        </a>
+
+        <header style="margin-bottom:48px;text-align:center;">
+          <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.22em;color:var(--dancheong-red);text-transform:uppercase;margin-bottom:18px;">
+            ${archiveCategoryLabel(item.category)}
           </div>
-          <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;color:var(--fg2);text-align:right;line-height:1.9;">
-            <div>${fmtKrDate(item.performed_at)}</div>
-            ${item.venue ? `<div>${escHtml(item.venue)}</div>` : ''}
-          </div>
+          <h1 style="font-family:var(--font-serif-kr);font-weight:800;font-size:clamp(28px,4.4vw,46px);line-height:1.3;letter-spacing:-.02em;margin:0 0 22px;word-break:keep-all;color:var(--ink);">
+            ${escHtml(item.title)}
+          </h1>
+          ${metaParts.length > 0 ? `
+            <div style="display:flex;justify-content:center;align-items:center;gap:14px;flex-wrap:wrap;font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;color:var(--fg2);text-transform:uppercase;">
+              ${metaParts.map((m, i) => `${i > 0 ? '<span style="color:var(--fg3);">·</span>' : ''}<span>${m}</span>`).join('')}
+            </div>
+          ` : ''}
+          <div style="width:48px;height:1px;background:var(--dancheong-red);margin:32px auto 0;"></div>
         </header>
 
-        ${cover ? `<img src="${escAttr(cover)}" alt="${escAttr(item.title)}" style="width:100%;max-height:600px;object-fit:cover;margin-bottom:40px;">` : ''}
+        ${cover ? `
+          <figure style="margin:0 0 56px;">
+            <img src="${escAttr(cover)}" alt="${escAttr(item.title)}" style="width:100%;height:auto;max-height:680px;object-fit:contain;background:var(--hanji-deep);display:block;">
+          </figure>
+        ` : ''}
 
-        ${item.summary ? `<p style="font-family:var(--font-serif-kr);font-weight:300;font-size:20px;line-height:1.7;color:var(--fg1);margin:0 0 40px;letter-spacing:-.005em;word-break:keep-all;">${escHtml(item.summary)}</p>` : ''}
+        ${cleanSummary ? `
+          <p style="font-family:var(--font-serif-kr);font-weight:400;font-size:clamp(16px,1.6vw,19px);line-height:1.85;color:var(--fg1);margin:0 0 40px;letter-spacing:-.005em;word-break:keep-all;text-align:center;max-width:680px;margin-left:auto;margin-right:auto;">
+            ${escHtml(cleanSummary)}
+          </p>
+        ` : ''}
 
-        ${item.body_html ? `<div class="archive-body" style="font-size:16px;line-height:1.9;color:var(--fg1);max-width:800px;margin:0 auto 40px;">${safeBodyHtml(item.body_html)}</div>` : ''}
+        ${cleanBodyHtml ? `
+          <div class="archive-body" style="font-family:var(--font-sans-kr);font-size:15.5px;line-height:1.9;color:var(--fg1);max-width:680px;margin:0 auto 56px;word-break:keep-all;">
+            ${safeBodyHtml(cleanBodyHtml)}
+          </div>
+        ` : ''}
 
         ${videoEmbed}
 
         ${gallery.length > 0 ? `
-          <section class="archive-gallery" style="margin-top:60px;">
-            <h2 style="font-family:var(--font-serif-kr);font-weight:800;font-size:28px;letter-spacing:-.015em;margin:0 0 24px;">갤러리</h2>
-            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;">
+          <section class="archive-gallery" style="margin-top:72px;padding-top:48px;border-top:1px solid var(--border-hairline);">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;">
+              <h2 style="font-family:var(--font-serif-kr);font-weight:800;font-size:22px;letter-spacing:-.015em;margin:0;color:var(--ink);">갤러리</h2>
+              <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;color:var(--fg3);text-transform:uppercase;">${gallery.length} Photos</span>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;">
               ${gallery.map((k) => `
-                <img src="${escAttr(mediaUrl(k))}" alt="" loading="lazy" style="width:100%;aspect-ratio:4/3;object-fit:cover;cursor:zoom-in;">
+                <a href="${escAttr(mediaUrl(k))}" target="_blank" rel="noopener" style="display:block;overflow:hidden;background:var(--hanji-deep);">
+                  <img src="${escAttr(mediaUrl(k))}" alt="" loading="lazy" style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block;transition:transform .4s var(--ease-gentle);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+                </a>
               `).join('')}
             </div>
           </section>
         ` : ''}
+
+        <nav style="margin-top:80px;padding-top:32px;border-top:1px solid var(--border-strong);text-align:center;">
+          <a href="archive.html" style="display:inline-flex;align-items:center;gap:10px;padding:14px 28px;background:var(--ink);color:var(--hanji);font-family:var(--font-sans-kr);font-weight:600;font-size:13px;letter-spacing:.04em;text-decoration:none;transition:background .2s var(--ease-gentle);">
+            <span style="font-family:var(--font-mono);">←</span> 아카이브 전체 보기
+          </a>
+        </nav>
       </article>
     `;
   }
@@ -736,26 +930,103 @@
     if (data.popup) renderPopup(data.popup);
   }
 
-  function renderTopBar(tb) {
-    if (!tb || !tb.enabled || !tb.message) return;
-    // 24시간 dismiss 쿠키 (메시지 해시로 키 — 새 공지 시 다시 노출)
-    const cookieKey = 'topbar_dismiss_' + simpleHash(tb.message);
+  // v2.8.20: Top Bar = 가장 가까운 다가오는 공연 1개만 노출 (롤링 제거)
+  //   message 비어있으면 자동 모드 (공연 1개 고정 노출)
+  //   message 입력시 그 메시지만 노출
+  async function renderTopBar(tb) {
+    if (!tb || !tb.enabled) return;
+    const isAuto = !tb.message || tb.message.trim() === '';
+
+    // dismiss 쿠키 — 24시간 후 자동 만료 (모드 + 메시지 해시 기반)
+    const cookieKey = 'topbar_dismiss_' + (isAuto ? 'auto' : simpleHash(tb.message));
     if (getCookie(cookieKey)) return;
 
     const color = TOPBAR_COLOR[tb.bg_color] || TOPBAR_COLOR.red;
+
     const bar = document.createElement('div');
     bar.className = 'sejong-topbar';
-    bar.style.cssText = `position: sticky; top: 0; left: 0; right: 0; z-index: 100; background: ${color.bg}; color: ${color.fg}; padding: 10px 20px; display: flex; justify-content: center; align-items: center; gap: 16px; font-size: 14px; line-height: 1.4; box-shadow: 0 1px 4px rgba(0,0,0,0.08);`;
+    // v2.7.7: comfortps + readdy 패턴 — 일반 flow에서 GNB 위에 배치
+    //   Top Bar는 페이지 첫 자식 (자연 흐름) → 스크롤 시 자연스럽게 위로 사라짐
+    //   헤더는 sticky top:0 → 스크롤 시 viewport 상단에 stick
+    bar.style.cssText = `position: relative; z-index: 65; background: ${color.bg}; color: ${color.fg}; padding: 11px 24px; display: flex; justify-content: center; align-items: center; gap: 14px; font-size: 15px; line-height: 1.4; min-height: 46px;`;
     bar.innerHTML = `
-      <span style="font-family: var(--font-serif-kr); font-weight: 600; letter-spacing: -0.005em;">${escHtml(tb.message)}</span>
-      ${tb.link_url ? `<a href="${escAttr(tb.link_url)}" target="_blank" rel="noopener" style="color: inherit; text-decoration: underline; font-weight: 700; font-size: 13px;">${escHtml(tb.link_label || '자세히')} →</a>` : ''}
-      <button class="topbar-close" aria-label="닫기" style="background: transparent; border: 0; color: inherit; font-size: 16px; cursor: pointer; opacity: 0.85; padding: 4px 8px;">×</button>
+      <div class="tb-content" style="flex: 1; display: flex; justify-content: center; align-items: center; gap: 14px; min-width: 0; overflow: hidden; transition: opacity 0.3s var(--ease-gentle);">
+        <span class="tb-msg" style="font-family: var(--font-serif-kr); font-weight: 600; letter-spacing: -0.005em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0;"></span>
+        <a class="tb-link" target="_blank" rel="noopener" style="display:none; color: inherit; text-decoration: underline; font-weight: 700; font-size: 14px; white-space: nowrap; flex-shrink: 0;"></a>
+      </div>
+      <div class="tb-dots" style="display:none; gap: 5px; flex-shrink: 0;"></div>
+      <button class="topbar-close" aria-label="닫기" style="background: transparent; border: 0; color: inherit; font-size: 22px; cursor: pointer; opacity: 0.9; padding: 4px 12px; line-height: 1; flex-shrink: 0;">×</button>
     `;
     document.body.insertBefore(bar, document.body.firstChild);
+
+    // 헤더와 본문이 가려지지 않도록 위치 보정
+    // v2.7.7: Top Bar = 일반 flow + 헤더 = sticky → 위치 계산 불필요. 단지 CSS 변수만 갱신.
+    function applyOffset() {
+      document.documentElement.style.setProperty('--topbar-h', bar.offsetHeight + 'px');
+    }
+    applyOffset();
+    window.addEventListener('resize', applyOffset);
+
+    // 닫기
     bar.querySelector('.topbar-close').addEventListener('click', () => {
       setCookie(cookieKey, '1', 24);
       bar.remove();
+      document.documentElement.style.setProperty('--topbar-h', '0px');
     });
+
+    const msgEl = bar.querySelector('.tb-msg');
+    const linkEl = bar.querySelector('.tb-link');
+    const dotsEl = bar.querySelector('.tb-dots');
+    const contentEl = bar.querySelector('.tb-content');
+
+    if (isAuto) {
+      // v2.8.20: 가장 가까운 다가오는 공연 1건만 fetch
+      const data = await safeFetch('/public/performances?region=upcoming&limit=5');
+      // v2.8.27: 과거 공연 자동 제외 (관리자 status 미갱신 대응)
+      const _now = new Date();
+      const items = (data?.items || []).filter(p => {
+        if (p.visibility === 'private') return false;
+        const d = new Date(p.starts_at);
+        return !isNaN(d) && d >= _now;
+      }).slice(0, 1);
+      if (items.length === 0) {
+        // 노출할 공연 없으면 Top Bar 자체 제거
+        bar.remove();
+        document.documentElement.style.setProperty('--topbar-h', '0px');
+        document.querySelectorAll('.hdr').forEach(hdr => { hdr.style.top = ''; });
+        document.body.style.paddingTop = '';
+        return;
+      }
+      // 1건만 노출 — 도트·롤링 제거
+      const p = items[0];
+      const d = new Date(p.starts_at);
+      const yyyy = d.getFullYear();
+      const md = String(d.getMonth() + 1).padStart(2, '0') + '.' + String(d.getDate()).padStart(2, '0');
+      // v2.8.26: 모바일 seamless 마키 위해 메시지 2회 복사
+      const inner = `<span style="font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;opacity:.85;margin-right:14px;">UPCOMING ▶</span><strong style="font-family:var(--font-mono);letter-spacing:.04em;margin-right:10px;">${yyyy}.${md}</strong>${escHtml(p.title)}<span style="opacity:.75;margin:0 8px;">—</span>${escHtml(p.venue)}`;
+      msgEl.innerHTML = `<span class="tb-once" style="display:inline-block;padding-right:60px;">${inner}</span><span class="tb-once" aria-hidden="true" style="display:inline-block;padding-right:60px;">${inner}</span>`;
+      const bookable = p.ticket_url && bookingAvailable(p.booking_status);
+      if (bookable) {
+        linkEl.href = p.ticket_url;
+        linkEl.textContent = '예매하기 →';
+        linkEl.style.display = '';
+      } else if (p.ticket_url) {
+        linkEl.href = p.ticket_url;
+        linkEl.textContent = '자세히 →';
+        linkEl.style.display = '';
+      } else {
+        linkEl.style.display = 'none';
+      }
+      contentEl.style.opacity = '1';
+    } else {
+      // 수동 메시지
+      msgEl.textContent = tb.message;
+      if (tb.link_url) {
+        linkEl.href = tb.link_url;
+        linkEl.textContent = (tb.link_label || '자세히') + ' →';
+        linkEl.style.display = '';
+      }
+    }
   }
 
   function renderPopup(pp) {
@@ -841,22 +1112,44 @@
     return Math.abs(h).toString(36).slice(0, 8);
   }
 
-  // 8-A) 협력체 로고 띠 (v2.6.4)
+  // 8-A) 협력체 카드 — 로고 + 한글명 + 영문명 (v2.8.9 깔끔한 그리드)
   async function hydratePartners() {
     const host = document.querySelector('[data-db="partners-strip"]');
     if (!host) return;
     const data = await safeFetch('/public/partners');
     const items = data?.items || [];
     if (items.length === 0) return;
+
+    // 그리드로 전환 — 5개 카드 고정 (auto-fit으로 모바일 자동 줄바꿈)
+    host.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:1px;background:var(--border-hairline);border:1px solid var(--border-hairline);max-width:1200px;margin:0 auto;';
+
+    // 협력체별 한자/식별 마커 매핑 (브랜드 식별용 단정한 단청 레드 배지)
+    const HAN_MARK = {
+      '국립국악원': '國', '세종문화회관': '世',
+      '군포시': '軍', '군포문화재단': '軍文',
+      '경기문화재단': '京', '한국문화예술위원회': '韓',
+      '한국문화예술회관연합회': '韓會', '경기문화의전당': '京殿',
+    };
+
     host.innerHTML = items.map((p) => {
       const logo = mediaUrl(p.logo_key);
-      const inner = logo
-        ? `<img src="${escAttr(logo)}" alt="${escAttr(p.name)}" loading="lazy" style="height:48px;max-width:160px;object-fit:contain;filter:grayscale(0.2) opacity(0.85);transition:filter 0.3s;">`
-        : `<span style="font-family:var(--font-serif-kr);font-weight:700;font-size:14px;color:var(--fg2);padding:14px 20px;border:1px solid var(--border-hairline);">${escHtml(p.name)}</span>`;
-      const wrap = (content) => p.url
-        ? `<a href="${escAttr(p.url)}" target="_blank" rel="noopener" title="${escAttr(p.name)}" class="partner-logo">${content}</a>`
-        : `<span title="${escAttr(p.name)}" class="partner-logo">${content}</span>`;
-      return wrap(inner);
+      const mark = HAN_MARK[p.name] || p.name.charAt(0);
+      const markFontSize = mark.length > 1 ? '15px' : '20px';
+      const cardInner = `
+        <div class="partner-card-inner" style="background:var(--paper);padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;min-height:160px;text-align:center;transition:all 0.3s var(--ease-gentle);">
+          ${logo
+            ? `<img src="${escAttr(logo)}" alt="${escAttr(p.name)}" decoding="async" style="height:56px;max-width:180px;object-fit:contain;transition:transform 0.3s var(--ease-gentle);">`
+            : `<div class="partner-mark" style="width:52px;height:52px;background:var(--dancheong-red);color:var(--hanji);display:flex;align-items:center;justify-content:center;font-family:var(--font-serif-kr);font-weight:800;font-size:${markFontSize};letter-spacing:-.02em;transition:transform 0.3s var(--ease-gentle);">${escHtml(mark)}</div>`
+          }
+          <div style="display:flex;flex-direction:column;gap:3px;line-height:1.35;">
+            <div style="font-family:var(--font-serif-kr);font-weight:700;font-size:14px;color:var(--ink);letter-spacing:-.005em;word-break:keep-all;">${escHtml(p.name)}</div>
+            ${p.name_en ? `<div style="font-family:var(--font-serif-en);font-style:italic;font-size:11px;color:var(--fg2);letter-spacing:.02em;">${escHtml(p.name_en)}</div>` : ''}
+          </div>
+        </div>
+      `;
+      return p.url
+        ? `<a href="${escAttr(p.url)}" target="_blank" rel="noopener" title="${escAttr(p.name)}" class="partner-card" style="text-decoration:none;color:inherit;">${cardInner}</a>`
+        : `<div title="${escAttr(p.name)}" class="partner-card">${cardInner}</div>`;
     }).join('');
   }
 
@@ -869,20 +1162,191 @@
     placeholder.textContent = stats.member_total + '명';
   }
 
+  // 9) 단원 사진·소개·신규 단원 동기화 (admin DB → about.html 자동)
+  //    v2.8.60: 신규 단원 추가도 자동 — 매칭 안 되는 DB 단원은 "추가 단원" 섹션에 노출
+  async function hydrateMemberPhotos() {
+    const cards = document.querySelectorAll('.mcard[data-name]');
+    if (!cards.length) return;
+    const data = await safeFetch('/public/members?limit=200');
+    if (!data?.items) return;
+
+    // 이름 → DB 단원 매핑
+    const byName = {};
+    data.items.forEach(m => { if (m.name) byName[m.name.trim()] = m; });
+
+    // HTML에 이미 있는 이름 set (대조용)
+    const namesInHtml = new Set();
+    cards.forEach(card => namesInHtml.add((card.dataset.name || '').trim()));
+
+    // 1단계: 기존 카드의 사진/역할/bio 갱신
+    cards.forEach(card => {
+      const name = (card.dataset.name || '').trim();
+      const dbMember = byName[name];
+      if (!dbMember) return;
+      if (dbMember.photo_key) {
+        const photoUrl = mediaUrl(dbMember.photo_key);
+        const img = card.querySelector('img.mphoto');
+        if (img && photoUrl) {
+          img.src = photoUrl;
+          img.alt = (dbMember.name || '') + ' ' + (dbMember.part || '');
+        }
+      }
+      if (dbMember.part) {
+        const roleEl = card.querySelector('.mrole');
+        if (roleEl) roleEl.textContent = dbMember.part;
+        card.dataset.role = dbMember.part;
+      }
+      if (dbMember.bio_html) {
+        const tmp = document.createElement('div');
+        tmp.innerHTML = dbMember.bio_html;
+        const lines = [];
+        tmp.querySelectorAll('li, p').forEach(el => {
+          const t = el.textContent.trim();
+          if (t) lines.push('- ' + t);
+        });
+        if (lines.length) card.dataset.bio = lines.join('||');
+      }
+    });
+
+    // 2단계: 신규 단원 (HTML에 없는 DB 단원) — "신규 추가" 섹션에 자동 렌더링
+    const newMembers = data.items.filter(m => m.name && !namesInHtml.has(m.name.trim()));
+    if (newMembers.length === 0) return;
+
+    // 추가 섹션이 이미 있으면 갱신, 없으면 about.html 끝에 추가
+    let addSection = document.getElementById('sec-newcomers');
+    const lastMemberSec = Array.from(document.querySelectorAll('section.sec'))
+      .filter(s => s.querySelector('.members-grid'))
+      .pop();
+    if (!lastMemberSec) return;
+
+    if (!addSection) {
+      addSection = document.createElement('section');
+      addSection.className = 'sec';
+      addSection.id = 'sec-newcomers';
+      addSection.innerHTML = `
+        <div class="sec-hd">
+          <div class="sec-glyph">新</div>
+          <div class="sec-titles">
+            <div class="sec-eb" data-newcomers-count>NEW · ${newMembers.length}명</div>
+            <h2>신규 단원</h2>
+          </div>
+          <div class="sec-line"></div>
+        </div>
+        <div class="members-grid" data-newcomers-grid></div>
+      `;
+      lastMemberSec.parentNode.insertBefore(addSection, lastMemberSec.nextSibling);
+    } else {
+      const eb = addSection.querySelector('[data-newcomers-count]');
+      if (eb) eb.textContent = `NEW · ${newMembers.length}명`;
+    }
+
+    const grid = addSection.querySelector('[data-newcomers-grid]');
+    if (grid) {
+      grid.innerHTML = newMembers.map(m => {
+        const photoUrl = m.photo_key ? mediaUrl(m.photo_key) : '';
+        const safeName = String(m.name || '').replace(/"/g, '&quot;');
+        const safeRole = String(m.part || '').replace(/"/g, '&quot;');
+        // bio_html에서 줄별 텍스트 추출
+        let bioLines = '';
+        if (m.bio_html) {
+          const tmp = document.createElement('div');
+          tmp.innerHTML = m.bio_html;
+          const lines = [];
+          tmp.querySelectorAll('li, p').forEach(el => {
+            const t = el.textContent.trim();
+            if (t) lines.push('- ' + t);
+          });
+          bioLines = lines.join('||').replace(/"/g, '&quot;');
+        }
+        const photoHtml = photoUrl
+          ? `<img class="mphoto" src="${photoUrl}" alt="${safeName} ${safeRole}" loading="lazy">`
+          : `<div class="mphoto noph">${(m.name || '').charAt(0)}</div>`;
+        return `
+          <div class="mcard" data-name="${safeName}" data-role="${safeRole}" data-bio="${bioLines}">
+            ${photoHtml}
+            <div class="mname">${escHtml(m.name)}</div>
+            <div class="mrole">${escHtml(m.part || '')}</div>
+          </div>
+        `;
+      }).join('');
+    }
+  }
+
   // -----------------------------------------------------------------------
   // 초기화 — DOM ready 시 자동 실행
   // -----------------------------------------------------------------------
+  // Intersection Observer — 모든 .fade-up 요소가 viewport 진입 시 .in-view 추가 (readdy 스타일)
+  function setupFadeUp() {
+    // 1) IntersectionObserver 미지원 환경 또는 즉시 가시 요소 즉시 in-view
+    function applyInstant() {
+      document.querySelectorAll('.fade-up:not(.in-view)').forEach((el) => {
+        const r = el.getBoundingClientRect();
+        // 이미 viewport 안에 (적어도 일부) 있으면 즉시 적용
+        if (r.top < window.innerHeight && r.bottom > 0) {
+          el.classList.add('in-view');
+        }
+      });
+    }
+    applyInstant();
+    if (!('IntersectionObserver' in window)) {
+      window.addEventListener('scroll', applyInstant);
+      return;
+    }
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in-view');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.05, rootMargin: '0px 0px 0px 0px' });
+    document.querySelectorAll('.fade-up:not(.in-view)').forEach((el) => obs.observe(el));
+    // 동적으로 추가되는 요소 (hydrate 결과) 도 자동 관찰 — MutationObserver
+    const mo = new MutationObserver(() => {
+      document.querySelectorAll('.fade-up:not(.in-view)').forEach((el) => {
+        const r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) {
+          el.classList.add('in-view');
+        } else {
+          obs.observe(el);
+        }
+      });
+    });
+    mo.observe(document.body, { childList: true, subtree: true });
+  }
+
+  // SCROLL 인디케이터 — 5초 자동 페이드 + 스크롤 시 즉시 페이드 (한 번 사라지면 복귀 X)
+  function setupScrollIndicator() {
+    const ind = document.getElementById('scroll-ind');
+    if (!ind) return;
+    let dismissed = false;
+    const dismiss = () => {
+      if (dismissed) return;
+      dismissed = true;
+      ind.style.opacity = '0';
+      ind.style.pointerEvents = 'none';
+    };
+    setTimeout(dismiss, 5000);
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 40) dismiss();
+    }, { passive: true });
+  }
+
   function init() {
+    setupScrollIndicator();
     hydrateHeroRotator();
     hydrateUpcomingGrid();
     hydrateNoticesPreview();
     hydrateScheduleList();
     hydrateNoticesList();
+    hydratePinnedNotices();
     hydrateArchive();
     hydrateArchiveCounter();
     hydrateMemberCount();
+    hydrateMemberPhotos();
     hydratePartners();
     hydrateAnnouncements();
+    setupFadeUp();
   }
 
   if (document.readyState === 'loading') {
@@ -892,5 +1356,5 @@
   }
 
   // 디버그용 전역 노출
-  window.siteData = { API_BASE, safeFetch, hydrateHeroRotator, hydrateUpcomingGrid, hydrateNoticesPreview, hydrateScheduleList, hydrateNoticesList, hydrateArchive };
+  window.siteData = { API_BASE, safeFetch, hydrateHeroRotator, hydrateUpcomingGrid, hydrateNoticesPreview, hydrateScheduleList, hydrateNoticesList, hydrateArchive, hydrateArchiveCounter, hydrateMemberCount, hydrateMemberPhotos, hydratePartners, hydrateAnnouncements, setupFadeUp };
 })();

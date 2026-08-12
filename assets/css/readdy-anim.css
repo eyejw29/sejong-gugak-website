@@ -1,0 +1,102 @@
+/* =========================================================================
+   readdy-anim.css (v2.8.0) — readdy preview에서 발견된 핵심 keyframes + transition
+   ========================================================================= */
+
+/* 1) 페이지 진입 fade-in */
+body { transition: opacity 0.2s ease-in; }
+
+/* 2) Hero 하단 스크롤 인디케이터 */
+@keyframes scrollLine {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+.scroll-line-bar {
+  height: 16px;
+  background: var(--ink);
+  animation: scrollLine 1.5s cubic-bezier(0.2, 0.6, 0.2, 1) infinite;
+  transform-origin: top;
+}
+
+/* 3) 마키 가로 무한 스크롤 */
+@keyframes marqueeScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.marquee-track-readdy {
+  display: flex;
+  gap: 48px;
+  animation: marqueeScroll 40s linear infinite;
+  width: max-content;
+  max-width: none;             /* body * { max-width:100vw } 충돌 방어 */
+}
+.marquee-track-readdy > * {
+  flex-shrink: 0;
+  max-width: none;             /* 자식 span도 클램프 차단 */
+}
+/* v2.8.30: hover pause 제거 — PC에서도 항상 돌아가게 */
+
+/* 4) Fade-up 진입 (IntersectionObserver로 .in-view 추가) */
+.fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s cubic-bezier(0.2, 0.6, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0.6, 0.2, 1);
+}
+.fade-up.in-view { opacity: 1; transform: translateY(0); }
+.fade-up-sm { transform: translateY(20px); }
+.fade-up.delay-1 { transition-delay: 0.1s; }
+.fade-up.delay-2 { transition-delay: 0.2s; }
+.fade-up.delay-3 { transition-delay: 0.3s; }
+.fade-up.delay-4 { transition-delay: 0.4s; }
+
+/* 5) 3D 카드 hover (시즌 그리드 등) */
+.card-3d {
+  transition: transform 0.3s cubic-bezier(0.2, 0.6, 0.2, 1), box-shadow 0.3s;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.card-3d:hover {
+  transform: translateY(-6px) rotateX(2deg);
+  box-shadow: 0 24px 48px -16px rgba(26, 22, 20, 0.25);
+}
+
+/* 6) 이미지 줌 hover */
+.img-zoom { overflow: hidden; }
+.img-zoom > img,
+.img-zoom > .bg-img {
+  transition: transform 0.6s cubic-bezier(0.2, 0.6, 0.2, 1);
+}
+.img-zoom:hover > img,
+.img-zoom:hover > .bg-img { transform: scale(1.05); }
+
+/* 7) 한자 부조 — 3D perspective tilt */
+.han-3d {
+  transform: perspective(1000px) rotateX(8deg) rotateY(-3deg);
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.2, 0.6, 0.2, 1);
+  filter: drop-shadow(0 8px 24px rgba(184, 52, 42, 0.15));
+}
+.han-3d:hover { transform: perspective(1000px) rotateX(4deg) rotateY(-1deg) scale(1.04); }
+
+/* 8) 헤더 transition (스크롤 시 backdrop blur) */
+.hdr {
+  transition: padding 0.3s cubic-bezier(0.2, 0.6, 0.2, 1), background 0.3s, backdrop-filter 0.3s !important;
+}
+
+/* 10) 한자 포인트 — 작은 영역에서 숨김 + 이미지 간섭 방지 (v2.8.8) */
+@media (max-width: 768px) {
+  .han-3d { font-size: 80px !important; }
+  .hero-poster .hanja, .perf-thumb::after, .card .han { display: none !important; }
+}
+/* archive 카드 큰 한자도 작게 — 사람 얼굴 등 간섭 방지 */
+.card .han { font-size: 36px !important; opacity: 0.5; }
+
+/* 9) reduce-motion 대응 — 마키는 정보 표시라 항상 흐르게 둠 (장모님 폰 설정 영향 X) */
+@media (prefers-reduced-motion: reduce) {
+  .fade-up, .scroll-line-bar, .card-3d, .img-zoom > *, .han-3d {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+  /* .marquee-track-readdy 는 일부러 제외 — 한자 띠배너는 콘텐츠 표시상 흐름 필요 */
+}

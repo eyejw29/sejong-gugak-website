@@ -62,17 +62,17 @@
   --font-sans-en:    'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --font-mono:       'IBM Plex Mono', ui-monospace, monospace;
 
-  /* Sizes — v2.6.1 (2026-04-25) 가독성 상향
-     연령대 높은 사용자 대응. 작은 라벨(12→13), 본문(14→16, 16→17) 중점 확대.
+  /* Sizes — v2.7.1 (2026-04-26) 추가 가독성 상향 (장모님 피드백 — 100%에서도 작음)
+     모든 본문 +1~2px 추가. 12px 자체 제거 (최소 14px).
      제목(32 이상)은 이미 충분하므로 유지. */
-  --size-12:  13px;  /* was 12 — 작은 라벨/메타 */
-  --size-14:  16px;  /* was 14 — 보조 본문 */
-  --size-16:  17px;  /* was 16 — 본문 기본 */
-  --size-18:  18px;  /* new — 본문 강조 */
-  --size-20:  21px;  /* was 20 — 리드 문단 */
-  --size-24:  26px;  /* was 24 */
-  --size-32:  34px;  /* was 32 */
-  --size-44:  44px;  /* 유지 */
+  --size-12:  14px;  /* was 13 — 작은 라벨/메타 (12→14, +2px) */
+  --size-14:  17px;  /* was 16 — 보조 본문 */
+  --size-16:  18px;  /* was 17 — 본문 기본 */
+  --size-18:  19px;  /* new — 본문 강조 */
+  --size-20:  22px;  /* was 21 — 리드 문단 */
+  --size-24:  27px;  /* was 26 */
+  --size-32:  36px;  /* was 34 */
+  --size-44:  46px;  /* was 44 */
   --size-60:  60px;  /* 유지 */
   --size-80:  80px;  /* 유지 */
   --size-108: 108px; /* 유지 */
@@ -249,44 +249,59 @@
    - 인라인 style이나 독립 <style> 블록에서 선언하지 않은 모든 텍스트의 최소치를 보장.
    - 연령대 있는 사용자 타깃 — body 16px → 17px, line-height 강화.
    ========================================================================= */
-html { font-size: 17px; }
+/* v2.7.1 — 장모님 피드백: 모든 페이지 폰트 추가 상향 */
+html { font-size: 18px; }
 body {
   font-family: var(--font-sans-kr);
-  font-size: 17px;
-  line-height: 1.75;
+  font-size: 18px;
+  line-height: 1.8;
   color: var(--fg1);
   -webkit-text-size-adjust: 100%;
   text-rendering: optimizeLegibility;
 }
 
-/* 본문 텍스트 기본 (기존 클래스 미적용 요소) */
-p { font-size: 17px; line-height: 1.85; word-break: keep-all; }
+p { font-size: 18px; line-height: 1.9; word-break: keep-all; }
 
-/* PC 해상도 — 조금 더 여유 */
-@media (min-width: 1024px) {
-  html { font-size: 17px; }
-  body { font-size: 17px; }
+/* 인라인 style 작은 폰트 강제 상향 (광범위 보강) */
+[style*="font-size:10px"], [style*="font-size: 10px"] { font-size: 13px !important; }
+[style*="font-size:11px"], [style*="font-size: 11px"] { font-size: 14px !important; }
+[style*="font-size:12px"], [style*="font-size: 12px"] { font-size: 14px !important; }
+[style*="font-size:13px"], [style*="font-size: 13px"] { font-size: 15px !important; }
+[style*="font-size:14px"], [style*="font-size: 14px"] { font-size: 16px !important; }
+
+/* 메타 / 캡션 / 코드 / 영문 메타 */
+.meta-mono, .caption, .eb, .crumb, .lbl, .lb, .l, .tag, .perf-n, .nl .d,
+.sl, .ty, .stamp, .num.k, .perf-meta span, .yr, .han, .en,
+.ftr-grid .col h4, .pin .ty, .pin .stamp { font-size: 14px !important; letter-spacing: 0.06em; }
+
+/* 본문/카드 텍스트 광범위 강화 */
+.perf-sub, .feature .desc, .nl .tt, .desc, .sub, .lede, .body, .dsc, .psub,
+.bio, .greet-main .body, .career .txt, .heritage .txt,
+.evt-row .meta, .pin .dsc, .feature h3 small, .qc .lft .n small,
+.fld label, .nav a, .util .t,
+.hero-poster .psub, .hero-poster .prow .date,
+.season .desc, .philos-main .body p,
+.notice-row .notice-title, .arr-card .info,
+.list .row .ti h4, .list .row .cat, .list .row .date {
+  font-size: 16px !important;
+  line-height: 1.75 !important;
 }
 
-/* 태블릿 */
-@media (max-width: 1024px) and (min-width: 641px) {
-  html { font-size: 17px; }
-}
+/* 약력 라벨 (about.html) — 좌측 회색 작은 라벨이 너무 작다는 피드백 반영 */
+.career-row .lbl, .heritage-row .lbl, .info-list .ir .k,
+.q-item .lbl, [class*="-row"] [class*="lbl"] { font-size: 14px !important; }
 
-/* 모바일 — 가독성 보정 */
+/* 모바일 — 16px 이상 보장 */
 @media (max-width: 640px) {
-  html { font-size: 16px; }
-  body { font-size: 16px; line-height: 1.7; }
-  /* 너무 작은 라벨 강제 상향 */
-  .meta-mono, .caption { font-size: 13px !important; }
-  /* 본문 강제 상향 */
-  .p-sm { font-size: 15px !important; }
-  .p { font-size: 16px !important; }
-  .p-lead { font-size: 18px !important; }
+  html { font-size: 17px; }
+  body { font-size: 17px; line-height: 1.78; }
+  .meta-mono, .caption { font-size: 14px !important; }
+  .p-sm { font-size: 16px !important; }
+  .p { font-size: 17px !important; }
+  .p-lead { font-size: 19px !important; }
 }
 
-/* 아주 작은 모바일 */
 @media (max-width: 380px) {
-  html { font-size: 15.5px; }
-  body { font-size: 15.5px; }
+  html { font-size: 16.5px; }
+  body { font-size: 16.5px; }
 }

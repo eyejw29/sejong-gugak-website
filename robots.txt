@@ -1,0 +1,25 @@
+# 세종국악관현악단 robots.txt
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /functions/
+Disallow: /*?_=
+Disallow: /*?bust=
+Disallow: /*?v=corp
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Yeti
+Allow: /
+
+User-agent: Naverbot
+Allow: /
+
+User-agent: Daum
+Allow: /
+
+Sitemap: https://sejonggugak.com/sitemap-index.xml
+Sitemap: https://sejonggugak.com/sitemap.xml
+Sitemap: https://sejonggugak.com/sitemap-news.xml

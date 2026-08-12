@@ -1,56 +1,54 @@
-# 배포 폴더 (dist)
+# 배포 폴더 — sejonggugak.com 원본 (v2.8.x)
 
-정적 호스팅(GitHub Pages / Netlify / Vercel)에 **이 폴더 내용을 그대로** 업로드하면 된다.
+> ⚠️ **이 폴더가 곧 라이브 사이트의 원본이다.** 부서_02_웹프로토타입은 v2.5 시점에 동결된 역사 자료이며,
+> 여기서 프로토타입으로 "재빌드"하는 과거 절차(rm -rf 후 복사)는 **절대 실행 금지** — v2.8 작업 전체가 파괴된다.
 
-## 구조
+## 배포 방법 (Cloudflare Pages 직접 업로드)
+
+```bash
+cd 06_웹사이트리뉴얼/배포
+bash deploy-cf.sh          # = npx wrangler pages deploy . --project-name sejong-gugak-website
+```
+
+- wrangler 로그인 세션 필요 (`npx wrangler login`, OAuth). 만료 시 재로그인.
+- 배포 후 1~2분 내 https://sejonggugak.com 반영.
+- **배포 전 반드시 git commit** — GitHub 저장소(eyejw29/sejong-gugak-website)가 백업이다.
+  (2026-08-12 감사에서 4개월치 미커밋 상태가 발견됨. 재발 금지.)
+
+## 구조 (2026-08-12 기준)
+
 ```
 배포/
-├── index.html              ← 홈 (부서_02_웹프로토타입/renewal.html 승격본)
-├── about.html              ← 악단소개
-├── schedule.html           ← 공연일정
-├── performance.html        ← 공연 상세
-├── notices.html            ← 공지사항
-├── member.html             ← 상임지휘자 소개
-├── tickets.html            ← 예매안내
-├── inquiry.html            ← 문의 (폼)
-├── outreach.html           ← 교육·아웃리치
-├── archive.html            ← 아카이브
-├── colors_and_type.css     ← 디자인 토큰
-└── assets/                 ← 로고·모티프·텍스처·플레이스홀더 8종
+├── *.html                  ← 페이지 14종 (index, about, schedule, notices, ...)
+│                              member.html·members.html은 _redirects가 먼저 처리하는 백업 스텁
+├── 404.html                ← 커스텀 404 (soft-404 방지, Pages가 자동 인식)
+├── favicon.ico             ← /favicon.ico 직접 요청 대응
+├── colors_and_type.css     ← 디자인 토큰 (원본: 디자인시스템/, 수정 시 양쪽 동기화)
+├── mobile-ux.css, musicians.css
+├── manifest.webmanifest
+├── robots.txt, sitemap*.xml
+├── _headers                ← 보안(HSTS 등)·캐시 헤더
+├── _redirects              ← 옛 Gnuboard URL 매핑 + www→apex + legacy 미디어 → api 프록시
+├── functions/bbs/board.php.js ← 옛 게시판 URL 301 리다이렉터 (Pages Function)
+└── assets/
+    ├── css/, js/           ← 페이지 공용 스타일·site-data.js(API 하이드레이션)
+    ├── icon-{32,192,512}.png ← 정방형 파비콘 세트
+    ├── og-cover.jpg        ← SNS 공유 이미지 (1200x630, og-cover.svg에서 래스터)
+    └── photos/             ← 로컬 서빙 사진 (hero, members, performances)
 ```
 
-## 로컬 미리보기
-```
-cd 06_웹사이트리뉴얼/배포
-python -m http.server 8000
-# → http://localhost:8000
-```
-또는 `index.html` 더블클릭. 인터넷 연결 필요 (Google Fonts / Phosphor Icons CDN).
+## 운영 규칙
 
-## 갱신 방법
-1. 원본 수정: `부서_02_웹프로토타입/*.html` (또는 토큰: `디자인시스템/colors_and_type.css`)
-2. 재빌드 커맨드 (수동):
+1. **캐시 버전**: 로컬 css/js 참조는 전 페이지 동일한 `?v=` 를 쓴다 (현재 2.8.90).
+   릴리스 시 아래 한 줄로 일괄 갱신:
    ```bash
-   cd 06_웹사이트리뉴얼
-   rm -rf 배포 && mkdir -p 배포/assets
-   cp 부서_02_웹프로토타입/*.html 배포/
-   cp 디자인시스템/colors_and_type.css 배포/
-   cp 부서_03_자산관리/assets/* 배포/assets/
-   rm 배포/README.md  # 혹은 건드리지 말 것
-   # 경로 평탄화
-   cd 배포
-   for f in *.html; do
-     sed -i 's|href="\.\./디자인시스템/colors_and_type\.css"|href="colors_and_type.css"|g; s|src="\.\./부서_03_자산관리/assets/|src="assets/|g' "$f"
-   done
+   node -e "const fs=require('fs');fs.readdirSync('.').filter(f=>f.endsWith('.html')).forEach(f=>{let s=fs.readFileSync(f,'utf8');s=s.replace(/((?:href|src)=\"(?!https?:)[^\"]+?\.(?:css|js))\?v=[^\"]*(\")/g,'\$1?v=NEW_VERSION\$2');fs.writeFileSync(f,s)})"
    ```
-3. 호스팅 repo에 push
+2. **이미지**: 500KB 넘는 원본을 그대로 넣지 않는다. `npx sharp-cli --input in.jpg --output out.jpg --quality 80 resize 1200` 으로 압축.
+3. **데이터**: 공연·공지·단원 데이터는 admin(api.sejonggugak.com) 이 원천 — HTML 하드코딩 최소화, site-data.js가 하이드레이션.
+4. **외부 CDN 의존**: unpkg(phosphor-icons)·Google Fonts — 향후 셀프호스팅 전환 검토 (CSP 강화 선행 조건).
 
-## 외부 의존성 (CDN)
-- `fonts.googleapis.com` — Nanum Myeongjo, Noto Sans KR 등
-- `unpkg.com/@phosphor-icons/web@2.1.1` — UI 아이콘
-- `http://www.sejonggugak.com/data/file/member/*` — 단원 사진 (hotlink, 차단 가능성 있음)
+## 도메인·인프라
 
-## 알려진 이슈
-- **단원 사진 hotlink**: `about.html`, `member.html`이 현 공식 사이트 이미지를 직접 참조. 호스팅 측에서 CORS/hotlink 차단 시 깨질 수 있음. 대응: 이미지 다운로드 후 `assets/members/`로 이전.
-- **공식 로고·서체 미수령**: SVG 임시 로고 + Google Fonts 사용 중. 교체 대기.
-- **공연 사진 부재**: 히어로·갤러리가 그라데이션/한자 glyph placeholder 상태.
+- apex `sejonggugak.com` = canonical. www는 _redirects로 301.
+- admin.sejonggugak.com (Pages: sejong-admin) / api.sejonggugak.com (Workers) / 소스: 부서_04·05 참조.

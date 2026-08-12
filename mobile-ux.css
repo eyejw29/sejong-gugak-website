@@ -7,8 +7,9 @@
    ================================================================== */
 
 /* ----- 기본 리듬 ----- */
-html{font-size:17px;} /* 기존 17px 유지 — body는 16→18 */
-body{font-size:16px;line-height:1.75;}
+/* v2.7.1: 18px 기본 (장모님 피드백 — 100%에서도 작아 보임) */
+html{font-size:18px !important;}
+body{font-size:18px !important;line-height:1.8 !important;}
 
 /* ----- Focus ring (접근성) ----- */
 a:focus-visible,button:focus-visible,input:focus-visible,
@@ -31,7 +32,7 @@ textarea:focus-visible,select:focus-visible,.chip:focus-visible,
 /* ----- 모바일 가독성 부스트 ----- */
 @media (max-width:768px){
   /* 기본 폰트 크기 확대 (연령대 고려) */
-  body{font-size:17px;line-height:1.8;}
+  body{font-size:17px !important;line-height:1.8 !important;}
 
   /* 헤더 — 브랜드명 살리고 nav는 충분히 큼직 */
   .hdr{padding:14px 18px !important;gap:12px !important;}
