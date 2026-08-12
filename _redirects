@@ -2,8 +2,10 @@
 # 검색엔진(네이버·구글) 옛 인덱스 클릭 시 신규 사이트로 자동 안착.
 # 평가 순서: 위에서 아래로, 첫 매칭 win.
 
-# ---- 호스트 정규화: www → apex (canonical·sitemap·robots 전부 apex 기준) ----
-https://www.sejonggugak.com/* https://sejonggugak.com/:splat 301
+# ---- 호스트 정규화: www → apex ----
+# Pages _redirects는 호스트 매칭 미지원 (2026-08-13 라이브 확인).
+# 실제 적용은 Cloudflare 대시보드 → sejonggugak.com zone → Rules → Redirect Rules
+# → 템플릿 "Redirect from WWW to Root" 1클릭 (사용자 액션, 1분).
 
 # ---- 정확 매칭 우선 ----
 /index.php           /                  301
