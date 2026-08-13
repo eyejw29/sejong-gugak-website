@@ -612,8 +612,18 @@ body::before{
 }
 @media (min-width:1400px){.sejong-conduct{width:136px;right:0;}}
 @keyframes sejongFloat{0%,100%{transform:translateY(0) rotate(-1.2deg)}50%{transform:translateY(-9px) rotate(1.2deg)}}
-@media (max-width:1240px){.sejong-conduct{display:none;}}
+/* 좁은 화면: 숨기지 않고 흐름 배치로 전환 — 항상 보임 (라벨 위, 겹침 불가) */
+@media (max-width:1240px){.sejong-conduct{position:static;display:block;width:84px;margin:0 0 16px;}}
 @media (prefers-reduced-motion:reduce){.sejong-conduct{animation:none}}
+
+/* 공지사항 섹션 배경 워터마크 — 은은한 세종이 (PC/MO 공통, 텍스트 뒤 z-index:-1) */
+.notice{position:relative;z-index:0;}
+.notice::before{
+  content:"";position:absolute;right:28px;bottom:10px;width:270px;height:382px;
+  background:url('assets/character/sejong-base-left.png?v=2.8.91') center/contain no-repeat;
+  opacity:.08;pointer-events:none;z-index:-1;
+}
+@media (max-width:900px){.notice::before{width:150px;height:212px;right:10px;bottom:6px;}}
 </style>
 </head>
 <body>
