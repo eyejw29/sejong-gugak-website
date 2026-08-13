@@ -11,7 +11,10 @@
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{background:var(--hanji,#F6F1E8);color:var(--ink,#1A1614);}
 body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;text-align:center;}
-.code{font-family:'Nanum Myeongjo',Batang,serif;font-weight:800;font-size:clamp(72px,16vw,140px);line-height:1;color:var(--dancheong-red,#B8342A);}
+.sejong{width:min(230px,52vw);height:auto;margin-bottom:4px;animation:sejongFloat 3.8s ease-in-out infinite;}
+@keyframes sejongFloat{0%,100%{transform:translateY(0) rotate(-1.2deg)}50%{transform:translateY(-9px) rotate(1.2deg)}}
+@media (prefers-reduced-motion:reduce){.sejong{animation:none}}
+.code{font-family:'Nanum Myeongjo',Batang,serif;font-weight:800;font-size:clamp(56px,12vw,110px);line-height:1;color:var(--dancheong-red,#B8342A);}
 h1{font-family:'Nanum Myeongjo',Batang,serif;font-weight:800;font-size:clamp(20px,4vw,28px);margin-top:20px;}
 p{margin-top:12px;color:var(--stone-400,#5A544B);font-size:15px;max-width:46ch;line-height:1.6;}
 .links{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:32px;}
@@ -22,6 +25,7 @@ p{margin-top:12px;color:var(--stone-400,#5A544B);font-size:15px;max-width:46ch;l
 </style>
 </head>
 <body>
+<img class="sejong" src="/assets/character/sejong-sign.png?v=2.8.91" alt="안내 간판을 든 세종이 캐릭터">
 <div class="code">404</div>
 <h1>페이지를 찾을 수 없습니다</h1>
 <p>주소가 바뀌었거나 삭제된 페이지입니다.<br>홈페이지가 새로 단장되면서 옛 주소 일부는 더 이상 사용되지 않습니다.</p>

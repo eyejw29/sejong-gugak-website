@@ -600,6 +600,17 @@ body::before{
   })();
 </script>
 <link rel="stylesheet" href="assets/css/mobile-fix.css?v=2.8.90">
+<style id="sejong-deco-css">
+/* 세종이 캐릭터 장식 (v2.8.91) — 레이아웃 불간섭: absolute + pointer-events:none */
+.sejong-deco{position:absolute;pointer-events:none;user-select:none;z-index:1;}
+.sejong-float{animation:sejongFloat 3.8s ease-in-out infinite;}
+@keyframes sejongFloat{0%,100%{transform:translateY(0) rotate(-1.2deg)}50%{transform:translateY(-9px) rotate(1.2deg)}}
+.notice .feature{position:relative;overflow:hidden;}
+.sejong-feature{width:132px;right:16px;top:12px;opacity:.97;}
+@media (max-width:1100px){.sejong-feature{width:104px;}}
+@media (max-width:900px){.sejong-feature{display:none;}}
+@media (prefers-reduced-motion:reduce){.sejong-float{animation:none}}
+</style>
 </head>
 <body>
 
@@ -1009,6 +1020,7 @@ body::before{
 <!-- ==================== NOTICES ==================== -->
 <section class="notice">
   <div class="feature" data-db="notice-feature">
+    <img class="sejong-deco sejong-float sejong-feature" src="assets/character/sejong-sign.png?v=2.8.91" alt="" aria-hidden="true" loading="lazy">
     <div class="eb">ANNOUNCEMENT · PRIMARY</div>
     <h3>2026년도 상반기 신입단원 모집(추가)</h3>
     <div class="desc">대한민국 최초의 양·국악 혼합편성 관현악단인 세종국악관현악단 & 세종국악심포니오케스트라는 2026년도 도전과 개척정신으로 함께 할 진취적이고 열정적인 상반기 신입단원을 공개 모집합니다.</div>

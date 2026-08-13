@@ -202,6 +202,15 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"홈","item":"https://sejonggugak.com/"},{"@type":"ListItem","position":2,"name":"공지사항","item":"https://sejonggugak.com/notices"}]}</script>
 <link rel="stylesheet" href="assets/css/mobile-fix.css?v=2.8.90">
+<style id="sejong-deco-css">
+/* 세종이 캐릭터 장식 (v2.8.91) — 레이아웃 불간섭: absolute + pointer-events:none */
+.sejong-deco{position:absolute;pointer-events:none;user-select:none;z-index:1;}
+.sejong-float{animation:sejongFloat 3.8s ease-in-out infinite;}
+@keyframes sejongFloat{0%,100%{transform:translateY(0) rotate(-1.2deg)}50%{transform:translateY(-9px) rotate(1.2deg)}}
+.sejong-sub{display:block;width:148px;margin:22px 0 -10px;pointer-events:none;user-select:none;}
+@media (max-width:900px){.sejong-sub{width:100px;margin:16px auto 0;}}
+@media (prefers-reduced-motion:reduce){.sejong-float{animation:none}}
+</style>
 </head>
 <body>
 
@@ -605,6 +614,7 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
       <div class="l">Stay in Tune · 구독 신청</div>
       <h3>세종의 소식을,<br>가장 먼저 받아보세요.<small>— Monthly newsletter & priority ticket access.</small></h3>
       <p>매월 첫째 주 월요일에 발송되는 세종국악관현악단 뉴스레터. 공연 일정·티켓 사전예매·단원 인터뷰·아카이브 영상 공개 소식을 메일로 전해드립니다. 후원회원은 일반 예매보다 1주일 먼저 티켓을 구매할 수 있습니다.</p>
+      <img class="sejong-float sejong-sub" src="assets/character/sejong-base-left.png?v=2.8.91" alt="" aria-hidden="true" loading="lazy">
     </div>
     <form id="subscribeForm" class="sub-form" novalidate>
       <div class="row"><input id="subEmail" name="email" type="email" placeholder="이메일 주소 · sejong8785@naver.com" required autocomplete="email"><button id="subBtn" type="submit">구독하기 <i class="ph ph-arrow-right"></i></button></div>
