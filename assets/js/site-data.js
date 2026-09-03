@@ -174,7 +174,12 @@
         <div class="hero-slide" data-slide="${i}" style="position: absolute; inset: 0; padding: 36px 36px 32px; display: ${i === 0 ? 'flex' : 'none'}; flex-direction: column; justify-content: space-between;">
           ${(() => {
             // hero_image_key > poster_key > placeholder SVG (단청 한자) — 빈 그라디언트 회피
-            const url = mediaUrl(p.hero_image_key) || mediaUrl(p.poster_key) || placeholderUrl('performance');
+            // 예외(v2.8.91.3): hero가 초기 세팅 정적 경로(photos/…)로 남아 있고 관리자가 포스터를
+            // 업로드한 경우 포스터 우선 — 관리자 UI에 hero 입력란이 없어 낡은 씨드가 새 포스터를
+            // 영구히 가리는 문제 방지 (2026-08-13 여음 3rd 배너 미반영 건)
+            const heroKey = (p.hero_image_key && p.hero_image_key.startsWith('photos/') && p.poster_key)
+              ? p.poster_key : p.hero_image_key;
+            const url = mediaUrl(heroKey) || mediaUrl(p.poster_key) || placeholderUrl('performance');
             return `<img class="hero-photo" src="${escAttr(url)}" alt="${escAttr(p.title)}" onerror="this.onerror=null;this.src='${placeholderUrl('performance').replace(/'/g, '%27')}'">`;
           })()}
           <div class="hanja">樂</div>
